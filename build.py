@@ -4,8 +4,36 @@ import html as html_mod
 import json, os, shutil, urllib.parse
 from data import WA, WA_DISPLAY, SITE, DOMAIN, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "site")
+RAIZ = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(RAIZ, "site")
 TODAY = "2026-08-14"
+
+
+def preparar_assets():
+    """Copia las imágenes, el CSS y el JS al sitio generado.
+
+    Busca la carpeta 'assets' donde esté: en la raíz del proyecto (lo normal)
+    o dentro de site/. Así el proyecto funciona sin importar cómo se haya
+    organizado el repositorio.
+    """
+    destino = os.path.join(OUT, "assets")
+    for candidata in (os.path.join(RAIZ, "assets"), destino):
+        if os.path.isdir(candidata):
+            origen = candidata
+            break
+    else:
+        print("AVISO: no encontré la carpeta 'assets' (imágenes, CSS y JS).")
+        return
+    os.makedirs(OUT, exist_ok=True)
+    if os.path.abspath(origen) != os.path.abspath(destino):
+        if os.path.isdir(destino):
+            shutil.rmtree(destino)
+        shutil.copytree(origen, destino)
+    n = sum(len(f) for _, _, f in os.walk(destino))
+    print(f"Assets listos: {n} archivos desde {os.path.relpath(origen, RAIZ)}/")
+
+
+preparar_assets()
 
 ALL_PRODUCTS = {p["slug"]: p for p in POWDERS}
 ALL_PRODUCTS[FRUIT_POWDER["slug"]] = FRUIT_POWDER
