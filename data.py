@@ -9,8 +9,8 @@ WA_DISPLAY = "+57 301 8656016"
 # Dominio del sitio. Se puede cambiar sin tocar el código:
 #   - En local:  SITE_URL=https://otrodominio.com python3 build.py
 #   - En CI:     definir la variable de entorno SITE_URL (ver README)
-# Cuando migres a insumospop.com, solo cambias esa variable.
-SITE = os.environ.get("SITE_URL", "https://taropop.co").rstrip("/")
+# El dominio de producción actual es insumospop.co.
+SITE = os.environ.get("SITE_URL", "https://insumospop.co").rstrip("/")
 DOMAIN = SITE.replace("https://", "").replace("http://", "")
 
 POWDERS = [

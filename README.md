@@ -40,18 +40,15 @@ Ver `DESPLIEGUE.md`. Es una sola variable, no hay que editar código.
 ├── data.py                    Todo el contenido: productos, precios, recetas, perfiles
 ├── build.py                   Genera las 32 páginas HTML desde data.py
 ├── verificar.py               Revisa enlaces, JSON-LD, precios y títulos antes de publicar
-├── site/                      El sitio generado (esto es lo que se publica)
+├── site/                      Salida generada localmente (no se versiona)
 │   ├── index.html             ...y las demás páginas
-│   └── assets/
-│       ├── img/               Fotos optimizadas en WebP ← NO se regeneran, no las borres
-│       ├── styles.css         Estilos, incluye el modo claro
-│       └── site.js            Menú, cotizador y cambio de tema
+│   └── assets/                Copia de los recursos durante el build
 ├── .github/workflows/         Publicación automática
 ├── DESPLIEGUE.md              Cómo publicar y cómo migrar el dominio
 └── LEEME-PUBLICAR.md          Guía para quien no es técnico
 ```
 
-**Importante:** `build.py` regenera los archivos `.html`, pero **no** toca `assets/`. Las imágenes, el CSS y el JS viven en el repositorio. Por eso `site/` está versionado y no ignorado.
+**Importante:** `build.py` regenera `site/` completa para publicar, copiando los recursos desde `assets/`. Las imágenes, el CSS y el JS fuente viven en `assets/`; `site/` es una salida local ignorada por Git.
 
 ---
 
@@ -66,7 +63,7 @@ cd site && python3 -m http.server 8000 # ábrelo en http://localhost:8000
 Para ver cómo quedaría con otro dominio:
 
 ```bash
-SITE_URL=https://insumospop.com python3 build.py
+SITE_URL=https://insumospop.co python3 build.py
 ```
 
 ---
