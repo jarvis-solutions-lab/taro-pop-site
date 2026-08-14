@@ -14,12 +14,12 @@
       themeBtn.textContent = t === "light" ? "🌙" : "☀️";
       themeBtn.setAttribute("aria-label", t === "light" ? "Cambiar a modo oscuro" : "Cambiar a modo claro");
     }
-    try { localStorage.setItem("ip_theme", t); } catch (e) {}
+    try { localStorage.setItem("ip_theme_v2", t); } catch (e) {}
   }
   if (themeBtn) {
-    applyTheme(document.documentElement.getAttribute("data-theme") || "dark");
+    applyTheme(document.documentElement.getAttribute("data-theme") || "light");
     themeBtn.addEventListener("click", function () {
-      var cur = document.documentElement.getAttribute("data-theme") || "dark";
+      var cur = document.documentElement.getAttribute("data-theme") || "light";
       applyTheme(cur === "light" ? "dark" : "light");
     });
   }

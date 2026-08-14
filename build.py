@@ -64,7 +64,7 @@ def head(title, desc, canonical, root, jsonld=None, og_img=None, preload=None):
     og = og_img or (SITE + "/assets/img/polvo-taro-bubble-tea.webp")
     pre = f'<link rel="preload" as="image" href="{preload}">' if preload else ""
     return f"""<!doctype html>
-<html lang="es-CO">
+<html lang="es-CO" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -77,8 +77,8 @@ def head(title, desc, canonical, root, jsonld=None, og_img=None, preload=None):
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="{og}">
 <meta property="og:url" content="{canonical}">
-<meta name="theme-color" content="#0b0b0f">
-<script>(function(){{try{{var t=localStorage.getItem("ip_theme");if(t==="light")document.documentElement.setAttribute("data-theme","light");}}catch(e){{}}}})()</script>
+<meta name="theme-color" content="#faf7f0">
+<script>(function(){{try{{var t=localStorage.getItem("ip_theme_v2");if(t==="dark"){{document.documentElement.setAttribute("data-theme","dark");document.querySelector('meta[name="theme-color"]').setAttribute("content","#0b0b0f");}}}}catch(e){{}}}})()</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%230b0b0f'/%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%23d8b46a' stroke-width='4'/%3E%3Ctext x='50' y='66' font-size='48' text-anchor='middle' fill='%23d8b46a' font-family='Arial' font-weight='bold'%3EIP%3C/text%3E%3C/svg%3E">
 {pre}
 <link rel="stylesheet" href="{root}assets/styles.css">
