@@ -35,6 +35,11 @@ def preparar_assets():
 
 preparar_assets()
 
+# Navegadores y rastreadores también buscan /favicon.ico directamente.
+favicon_src = os.path.join(OUT, "assets", "favicon.ico")
+if os.path.isfile(favicon_src):
+    shutil.copy2(favicon_src, os.path.join(OUT, "favicon.ico"))
+
 ALL_PRODUCTS = {p["slug"]: p for p in POWDERS}
 ALL_PRODUCTS[FRUIT_POWDER["slug"]] = FRUIT_POWDER
 ALL_PRODUCTS[SYRUP["slug"]] = SYRUP
@@ -79,7 +84,11 @@ def head(title, desc, canonical, root, jsonld=None, og_img=None, preload=None):
 <meta property="og:url" content="{canonical}">
 <meta name="theme-color" content="#faf7f0">
 <script>(function(){{try{{var t=localStorage.getItem("ip_theme_v2");if(t==="dark"){{document.documentElement.setAttribute("data-theme","dark");document.querySelector('meta[name="theme-color"]').setAttribute("content","#0b0b0f");}}}}catch(e){{}}}})()</script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%230b0b0f'/%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%23d8b46a' stroke-width='4'/%3E%3Ctext x='50' y='66' font-size='48' text-anchor='middle' fill='%23d8b46a' font-family='Arial' font-weight='bold'%3EIP%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="{root}favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="{root}assets/img/favicon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="{root}assets/img/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="{root}assets/img/apple-touch-icon.png">
+<link rel="manifest" href="{root}site.webmanifest">
 {pre}
 <link rel="stylesheet" href="{root}assets/styles.css">
 {j}</head>
@@ -955,7 +964,12 @@ org_ld = {
     "name": "Insumos Pop",
     "legalName": "Taro Pop S.A.S.",
     "url": SITE + "/",
-    "logo": SITE + "/assets/img/polvo-taro-bubble-tea-card.webp",
+    "logo": {
+        "@type": "ImageObject",
+        "url": SITE + "/assets/img/logo-insumos-pop.png",
+        "width": 512,
+        "height": 512,
+    },
     "description": "Importador directo de insumos premium de bubble tea desde Taiwán para negocios en Colombia.",
     "areaServed": "CO",
     "contactPoint": {"@type": "ContactPoint", "contactType": "sales",
@@ -1106,7 +1120,22 @@ html += """
 html += footer_html("/")
 write_page("404.html", html)
 
-# ---------------------------------------------------------------- sitemap + robots
+# ---------------------------------------------------------------- manifest + sitemap + robots
+manifest = {
+    "name": "Insumos Pop",
+    "short_name": "Insumos Pop",
+    "start_url": "/",
+    "scope": "/",
+    "display": "browser",
+    "background_color": "#faf7f0",
+    "theme_color": "#faf7f0",
+    "icons": [
+        {"src": "/assets/img/favicon-192.png", "sizes": "192x192", "type": "image/png"},
+        {"src": "/assets/img/logo-insumos-pop.png", "sizes": "512x512", "type": "image/png"},
+    ],
+}
+write_page("site.webmanifest", json.dumps(manifest, ensure_ascii=False, separators=(",", ":")))
+
 urls = ["", "polvos-bubble-tea/", "siropes-bubble-tea/", "recetas-bubble-tea/",
         "guia-emprender-bubble-tea/", "nosotros/", "envios-y-pagos/",
         "preguntas-frecuentes/", "cotizar/"]
