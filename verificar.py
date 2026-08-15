@@ -80,7 +80,7 @@ for titulo, cuales in titulos.items():
         errores.append(f"Título duplicado en {len(cuales)} páginas: {', '.join(cuales)}")
 
 # 6. Archivos que GitHub Pages necesita
-for necesario in ["CNAME", "sitemap.xml", "robots.txt", "index.html"]:
+for necesario in ["CNAME", "sitemap.xml", "robots.txt", "index.html", "favicon.ico", "site.webmanifest"]:
     if not os.path.exists(os.path.join(SITE_DIR, necesario)):
         errores.append(f"Falta el archivo {necesario} en site/")
 
