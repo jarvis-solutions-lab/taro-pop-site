@@ -6,7 +6,6 @@ from data import WA, WA_DISPLAY, SITE, DOMAIN, POWDERS, FRUIT_POWDER, SYRUP, REC
 
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(RAIZ, "site")
-TODAY = "2026-08-14"
 
 
 def preparar_assets():
@@ -1143,9 +1142,12 @@ urls += [product_url(p["slug"]) for p in POWDERS]
 urls += [product_url(FRUIT_POWDER["slug"]), product_url(SYRUP["slug"])]
 urls += ["recetas-bubble-tea/" + r["slug"] + "/" for r in RECIPES]
 urls += [pr["slug"] + "/" for pr in PROFILES]
+# Sin <lastmod>: es un catálogo comercial, no un sitio de noticias. Google
+# desaconseja fechas de modificación imprecisas, y omitirlas evita que muestre
+# "hace X horas" junto al resultado de búsqueda.
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
-    sm += f"  <url><loc>{SITE}/{u}</loc><lastmod>{TODAY}</lastmod></url>\n"
+    sm += f"  <url><loc>{SITE}/{u}</loc></url>\n"
 sm += "</urlset>\n"
 write_page("sitemap.xml", sm)
 write_page("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
