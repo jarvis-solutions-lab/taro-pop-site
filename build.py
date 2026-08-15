@@ -131,7 +131,7 @@ def footer_html(root, wa_url=None):
   <div class="wrap foot">
     <div>
       <p class="brand" style="font-size:1.3rem">Insumos <span class="gold">Pop</span></p>
-      <p class="muted">Sabores premium de Asia para negocios en Colombia. Importación directa de Taiwán, sin intermediarios: de la fábrica a tu local.</p>
+      <p class="muted">Polvos y siropes para cafeterías, bares y tiendas de bubble tea en Colombia. Precios con IVA, factura y asesoría por WhatsApp.</p>
       <p><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">{WA_ICON} WhatsApp {WA_DISPLAY}</a></p>
     </div>
     <div>
@@ -361,9 +361,10 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
     uses_chips = "".join(f'<span class="chip">{u}</span>' for u in p["uses"])
     desc_html = "".join(f"<p>{d}</p>" for d in p["desc"])
     spec_flavor = f"<tr><th>Sabores</th><td>{', '.join(p['flavors'])}</td></tr>" if p.get("flavors") else ""
+    seo_name = p.get("seo_name", p["name"])
     html = head(
-        f"{p['name']} | {p['format']} · {fmt_cop(p['price'])} | Insumos Pop",
-        f"{p['teaser']} {p['format']}, {fmt_cop(p['price'])} IVA incluido. Importación directa. Cotiza por WhatsApp para tu negocio en Colombia.",
+        f"{seo_name} · {p['format']} | Insumos Pop",
+        f"{seo_name} para {p['uses'][0].lower()} y {p['uses'][1].lower()}. {p['format']}, {fmt_cop(p['price'])} con IVA. Consulta ficha técnica y envío en Colombia.",
         canonical, root,
         jsonld=[product_ld(p), breadcrumb_ld(crumbs)],
         og_img=SITE + "/assets/img/" + p["img"] + ".webp",
@@ -387,12 +388,13 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
     {audience_chips(p, root)}
     <div class="price-box">
       <span class="big">{fmt_cop(p['price'])}</span> · {p['format']}
-      <div class="cond">IVA incluido · Importación directa — confirma disponibilidad y tiempos de entrega por WhatsApp</div>
-      <div class="cond"><strong class="gold">Muestra gratis para negocios</strong> disponible: pídela por WhatsApp antes de tu primer pedido.</div>
+      <a class="btn btn-wa pdp-quick-cta" href="{wa_msg}" target="_blank" rel="noopener">{WA_ICON} Cotizar ahora</a>
+      <div class="cond">IVA incluido · Confirma disponibilidad y envío por WhatsApp</div>
+      <div class="cond"><strong class="gold">Muestra para negocios:</strong> consulta condiciones antes del primer pedido.</div>
     </div>
     {flavor_select}
     <div class="cta-row">
-      <a class="btn btn-wa" href="{wa_msg}" target="_blank" rel="noopener">{WA_ICON} Cotizar por WhatsApp</a>
+      <a class="btn btn-wa pdp-main-cta" href="{wa_msg}" target="_blank" rel="noopener">{WA_ICON} Cotizar por WhatsApp</a>
       {add_btn(p, root)}
     </div>
   </div>
@@ -593,8 +595,8 @@ canonical = SITE + "/polvos-bubble-tea/"
 crumbs = [("polvos-bubble-tea/", "Polvos para bubble tea")]
 premium_cards = "".join(card(p, root) for p in POWDERS)
 html = head(
-    "Polvos para Bubble Tea | Taro, Matcha, Hojicha y más | Insumos Pop",
-    "Polvos premium para bubble tea importados directo de Taiwán: taro, matcha, hojicha, brown sugar, thai milk tea, cheese foam y polvos de fruta. Precios con IVA para negocios en Colombia.",
+    "Polvos para Bubble Tea en Colombia | Insumos Pop",
+    "Polvos para bubble tea: taro, matcha, hojicha, brown sugar, milk tea, cheese foam y frutas. Precios con IVA para negocios en Colombia.",
     canonical, root, jsonld=[breadcrumb_ld(crumbs)],
 )
 html += header_html(root, "polvos")
@@ -604,9 +606,9 @@ html += f"""
   <p class="eyebrow">Catálogo</p>
   <h1>Polvos para bubble tea</h1>
   <hr class="rule">
-  <p style="max-width:46em">Polvos saborizados premium importados directo de Taiwán y Japón, sin intermediarios. Son la base de milk teas, frappés, lattes y postres: sabores que en Colombia no se conseguían, o solo en réplicas de baja calidad y sobreprecio.</p>
-  <p class="muted" style="max-width:46em">Todos los precios incluyen IVA. ¿No sabes por dónde empezar? <a href="{root}guia-emprender-bubble-tea/">Mira la guía para armar tu menú</a> o <a href="{WA_GENERIC}" target="_blank" rel="noopener">escríbenos por WhatsApp</a>.</p>
-  <h2 style="margin-top:34px">Joyas Premium <span class="muted" style="font-weight:500;font-size:1rem">· sabores ultra premium originales de Asia</span></h2>
+  <p style="max-width:46em">Mezclas para preparar milk tea, frappés y lattes, además de matcha y hojicha puros para cartas de especialidad. Compara presentación, origen, aplicaciones y precio antes de cotizar.</p>
+  <p class="muted" style="max-width:46em">Los precios incluyen IVA. Si estás armando una carta nueva, revisa la <a href="{root}guia-emprender-bubble-tea/">guía para empezar</a> o <a href="{WA_GENERIC}" target="_blank" rel="noopener">pide una recomendación por WhatsApp</a>.</p>
+  <h2 style="margin-top:34px">Milk tea, matcha, hojicha y toppings <span class="muted" style="font-weight:500;font-size:1rem">· mezclas listas y puros</span></h2>
   <div class="grid">{premium_cards}</div>
   <h2 style="margin-top:44px">Polvos de Fruta <span class="muted" style="font-weight:500;font-size:1rem">· 6 sabores asiáticos</span></h2>
   <div class="grid">{card(FRUIT_POWDER, root)}</div>
@@ -620,7 +622,7 @@ canonical = SITE + "/siropes-bubble-tea/"
 crumbs = [("siropes-bubble-tea/", "Siropes para bubble tea")]
 chips = "".join(f'<span class="chip on">{f}</span>' for f in SYRUP["flavors"])
 html = head(
-    "Siropes para Bubble Tea y Bebidas | 12 sabores | Insumos Pop",
+    "Siropes para Bebidas y Coctelería | Insumos Pop",
     "Siropes concentrados de fruta hechos en Taiwán para bubble tea, cócteles, frappés, limonadas y sodas italianas. 12 sabores en botella de 1.9 L, $110.000 IVA incluido.",
     canonical, root, jsonld=[breadcrumb_ld(crumbs)],
 )
@@ -631,8 +633,8 @@ html += f"""
   <p class="eyebrow">Catálogo</p>
   <h1>Siropes de fruta para bebidas</h1>
   <hr class="rule">
-  <p style="max-width:46em">Concentrados de fruta nacidos en Taiwán, con sabor intenso, limpio y natural — sin el gusto artificial de los jarabes comunes. Un solo chorro transforma un cóctel, un frappé, un latte, una limonada o una soda italiana.</p>
-  <p style="max-width:46em">Son concentrados de verdad: rinden muchísimo, así que tu carta gana sabor y tú cuidas el margen.</p>
+  <p style="max-width:46em">Concentrados de fruta de Taiwán para cócteles, mocktails, frappés, limonadas, sodas italianas y tés fríos. La botella de 1,9 L cuesta $110.000 con IVA incluido.</p>
+  <p style="max-width:46em">Define la dosis por bebida para estandarizar sabor y costo. Como referencia matemática, una dosis de 20 ml representa cerca de $1.158 de sirope y una botella alcanza para 95 preparaciones.</p>
   <h2 style="margin-top:30px">12 sabores disponibles</h2>
   <div class="chips">{chips}</div>
   <div class="grid" style="margin-top:22px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">{card(SYRUP, root)}</div>
@@ -661,7 +663,7 @@ for r in RECIPES:
 </article>"""
 html = head(
     "Recetas de Bubble Tea para tu negocio | Insumos Pop",
-    "Recetas base de bubble tea para cafeterías y negocios: taro, brown sugar estilo tigre, matcha latte frío y sodas con sirope de fruta. Paso a paso con insumos premium.",
+    "Recetas base de bubble tea para negocios: taro, brown sugar estilo tigre, matcha latte frío y sodas con sirope. Ingredientes y preparación paso a paso.",
     canonical, root, jsonld=[breadcrumb_ld(crumbs)],
 )
 html += header_html(root, "recetas")
@@ -692,7 +694,7 @@ for r in RECIPES:
             p = ALL_PRODUCTS[s]
             prods += f'<li><a href="{root}{product_url(s)}">{p["name"]}</a> — {fmt_cop(p["price"])} · {p["format"]}</li>'
     html = head(
-        f"{r['title']} | Receta para negocios | Insumos Pop",
+        f"{r['title']} | Receta | Insumos Pop",
         r["metadesc"], canonical, root,
         jsonld=[breadcrumb_ld(crumbs)],
         og_img=SITE + "/assets/img/" + img + ".webp",
@@ -730,8 +732,8 @@ root = "../"
 canonical = SITE + "/guia-emprender-bubble-tea/"
 crumbs = [("guia-emprender-bubble-tea/", "Guía para emprender con bubble tea")]
 html = head(
-    "Cómo emprender con Bubble Tea en Colombia | Guía + proveedor | Insumos Pop",
-    "Guía práctica para montar bubble tea en tu cafetería o negocio en Colombia: insumos básicos, cómo armar el menú inicial y cómo cotizar con un proveedor de importación directa.",
+    "Cómo Emprender con Bubble Tea en Colombia | Insumos Pop",
+    "Guía para montar un menú de bubble tea en Colombia: insumos básicos, recetas, costo por vaso y cómo elegir un proveedor para tu negocio.",
     canonical, root, jsonld=[breadcrumb_ld(crumbs)],
 )
 html += header_html(root, "guia")
@@ -741,38 +743,38 @@ html += f"""
   <p class="eyebrow">Guía B2B</p>
   <h1>Cómo emprender con bubble tea en Colombia</h1>
   <hr class="rule">
-  <p>El bubble tea pasó de moda pasajera a categoría estable: es visual, rentable por vaso y perfecto para redes sociales. La buena noticia es que no necesitas montar una tienda exclusiva de bubble tea para aprovecharlo — cafeterías, heladerías, reposterías y restaurantes lo están sumando a su carta como línea adicional.</p>
+  <p>Puedes incorporar bubble tea y bebidas asiáticas sin convertir todo tu negocio en una tienda especializada. Esta guía te ayuda a elegir un menú corto, estandarizar recetas y calcular el costo del insumo por vaso antes de comprar.</p>
 
   <h2>1. Lo que necesitas para empezar</h2>
   <p>Con un menú corto y bien elegido puedes arrancar sin sobre-invertir:</p>
   <ul class="list">
-    <li><strong>2 o 3 polvos base:</strong> un clásico visual (<a href="{root}polvos-bubble-tea/polvo-taro/">Taro</a>), un lácteo familiar (<a href="{root}polvos-bubble-tea/polvo-hokkaido-milk-tea/">Hokkaido Milk Tea</a>) y una tendencia (<a href="{root}polvos-bubble-tea/polvo-matcha-taiwan/">Matcha</a> u <a href="{root}polvos-bubble-tea/polvo-hojicha/">Hojicha</a>).</li>
+    <li><strong>2 o 3 polvos base:</strong> una opción visual (<a href="{root}polvos-bubble-tea/polvo-taro/">Taro</a>), una de perfil lácteo (<a href="{root}polvos-bubble-tea/polvo-hokkaido-milk-tea/">Hokkaido Milk Tea</a>) y una de té (<a href="{root}polvos-bubble-tea/polvo-matcha-taiwan/">Matcha</a> u <a href="{root}polvos-bubble-tea/polvo-hojicha/">Hojicha</a>).</li>
     <li><strong>1 o 2 siropes de fruta</strong> para limonadas, sodas italianas y tés fríos: <a href="{root}siropes-bubble-tea/siropes-de-fruta/">12 sabores disponibles</a>.</li>
-    <li><strong>Un diferenciador:</strong> <a href="{root}polvos-bubble-tea/polvo-cheese-foam/">Cheese Foam</a> o el efecto tigre con <a href="{root}polvos-bubble-tea/polvo-okinawa-brown-sugar/">Okinawa Brown Sugar</a> te permiten cobrar más por vaso.</li>
+    <li><strong>Un producto adicional:</strong> <a href="{root}polvos-bubble-tea/polvo-cheese-foam/">Cheese Foam</a> o el efecto tigre con <a href="{root}polvos-bubble-tea/polvo-okinawa-brown-sugar/">Okinawa Brown Sugar</a> amplían las opciones de la carta.</li>
     <li><strong>Básicos de barra:</strong> té preparado, leche, hielo, perlas de tapioca, vasos con tapa de cúpula y pitillos gruesos.</li>
   </ul>
 
   <h2>2. Arma un menú corto que rote</h2>
-  <p>Es mejor vender 6 bebidas excelentes que 20 regulares. Una estructura probada: dos milk teas (uno clásico y uno visual), una bebida de matcha o hojicha, dos bebidas frutales con sirope y un especial de temporada. En nuestras <a href="{root}recetas-bubble-tea/">recetas base</a> tienes el paso a paso de cada estilo.</p>
+  <p>Un menú corto facilita la capacitación, el inventario y la consistencia. Como punto de partida: dos milk teas, una bebida de matcha o hojicha, dos bebidas frutales y un especial. En nuestras <a href="{root}recetas-bubble-tea/">recetas base</a> tienes el paso a paso de cada estilo.</p>
 
   <h2>3. Cuida el costo por vaso</h2>
   <p>Los polvos y siropes concentrados te permiten estandarizar: define la dosis por bebida, pésala y calcula tu costo real por vaso antes de fijar el precio de carta. Escríbenos y te ayudamos a calcular la dosificación según tu vaso y tu receta.</p>
 
   <h2>4. Hazlo visible</h2>
-  <p>El bubble tea se vende por los ojos: el violeta del taro, las vetas del tiger sugar, el degradé del matcha o el azul del <a href="{root}polvos-bubble-tea/polvo-coral-azul/">Coral Azul</a>. Diseña tus bebidas para la cámara y deja que tus clientes hagan el marketing.</p>
+  <p>El color y la presentación influyen en la elección: el violeta del taro, las vetas del brown sugar, el degradé del matcha o el azul del <a href="{root}polvos-bubble-tea/polvo-coral-azul/">Coral Azul</a>. Define una receta que tu equipo pueda repetir antes de pensar en la foto.</p>
 
   <h2>5. Según tu negocio</h2>
   <p>Preparamos una página con la selección, el kit y las respuestas específicas de cada tipo de negocio:</p>
   <ul class="list">
     <li><strong>Cafetería de especialidad:</strong> matcha de origen, hojicha y cheese foam. <a href="{root}bubble-tea-para-cafeterias/">Mira los insumos para cafeterías →</a></li>
-    <li><strong>Tienda de bubble tea:</strong> los polvos originales de Taiwán con precio de importador. <a href="{root}proveedor-bubble-tea/">Mira el proveedor para tiendas de bubble tea →</a></li>
+    <li><strong>Tienda de bubble tea:</strong> polvos de Taiwán con precio y presentación publicados. <a href="{root}proveedor-bubble-tea/">Mira la selección para tiendas de bubble tea →</a></li>
     <li><strong>Bar o coctelería:</strong> siropes concentrados con costo por copa calculable. <a href="{root}siropes-para-cocteleria/">Mira los siropes para coctelería →</a></li>
     <li><strong>Primer negocio:</strong> kit inicial, recetas y asesoría para arrancar sin adivinar. <a href="{root}kit-emprendedor-bubble-tea/">Mira el kit para emprendedores →</a></li>
     <li><strong>Heladería o repostería:</strong> <a href="{root}polvos-bubble-tea/polvo-taro/">Taro</a>, <a href="{root}polvos-bubble-tea/polvo-mango-coco-hong-kong/">Mango Coconut</a> y <a href="{root}polvos-bubble-tea/polvos-de-fruta/">polvos de fruta</a> para frappés, helados y postres.</li>
   </ul>
 
   <h2>6. Elige bien a tu proveedor</h2>
-  <p>La diferencia entre un bubble tea memorable y uno del montón está en el insumo. En Insumos Pop importamos directo de Taiwán, sin intermediarios: sabores originales de Asia con precio de importador, factura y asesoría real por WhatsApp.</p>
+  <p>Compara al proveedor por información útil: presentación, precio con IVA, origen, ficha técnica, dosificación, disponibilidad y soporte después de la compra. En Insumos Pop publicamos los precios, emitimos factura y confirmamos por WhatsApp la ficha técnica, el envío y las existencias.</p>
 
   <div class="panel center" style="margin-top:30px">
     <h2>¿Montamos tu menú juntos?</h2>
@@ -788,8 +790,8 @@ write_page("guia-emprender-bubble-tea/index.html", html)
 canonical = SITE + "/nosotros/"
 crumbs = [("nosotros/", "Nosotros")]
 html = head(
-    "Nosotros | Importador directo de insumos asiáticos | Insumos Pop",
-    "Insumos Pop importa directo de Taiwán los sabores premium de Asia para cafeterías, restaurantes y tiendas de bubble tea en Colombia. Sin intermediarios, de la fábrica a tu local.",
+    "Proveedor de Insumos para Bebidas en Colombia | Insumos Pop",
+    "Conoce a Insumos Pop, proveedor de polvos y siropes para cafeterías, bares y tiendas de bubble tea. Precios con IVA, factura y muestras para negocios.",
     canonical, root, jsonld=[breadcrumb_ld(crumbs)],
 )
 html += header_html(root, "nosotros")
@@ -797,16 +799,16 @@ html += breadcrumb(root, crumbs)
 html += f"""
 <section class="wrap" style="padding-top:26px;max-width:860px">
   <p class="eyebrow">Quiénes somos</p>
-  <h1>Lo premium de Asia, directo a tu carta</h1>
+  <h1>Proveedor de polvos y siropes para negocios en Colombia</h1>
   <hr class="rule">
-  <p>En Insumos Pop importamos directo de Taiwán los sabores premium de Asia que en Colombia no se conseguían, o se encontraban en réplicas de baja calidad y sobreprecio. Trabajamos sin intermediarios, de la fábrica a tu local, para que cafeterías de especialidad, restaurantes, heladerías, reposterías y tiendas de bubble tea puedan ofrecer sabores que nadie más tiene: Taro, Hojicha, Matcha, Coral Azul, Mango-Coco de Hong Kong y mucho más, con la máxima calidad de origen y a un precio justo.</p>
-  <p class="gold" style="font-style:italic">Más que insumos, te brindamos la diferencia que hace que tu carta destaque y que tus clientes siempre quieran regresar.</p>
-  <p>Emitimos factura (Taro Pop S.A.S.) y compartimos ficha técnica y documentación del producto al cotizar. Si quieres probar antes de comprar, pide tu muestra gratis para negocios.</p>
+  <p>Insumos Pop distribuye polvos para milk tea, matcha, hojicha, cheese foam, polvos de fruta y siropes concentrados para cafeterías, restaurantes, bares y tiendas de bubble tea.</p>
+  <p>Publicamos presentación y precio con IVA de cada referencia. Al cotizar confirmamos disponibilidad, envío a tu ciudad y documentación del producto.</p>
+  <p>Emitimos factura como Taro Pop S.A.S. y ofrecemos muestras para que los negocios prueben el producto con su propia receta antes del primer pedido.</p>
   <div class="benefits" style="margin-top:26px">
-    <div class="benefit"><h3>Calidad de origen</h3><p class="muted">Premium taiwanés, no imitaciones.</p></div>
-    <div class="benefit"><h3>Precio de importador</h3><p class="muted">Directo de fábrica, sin intermediarios.</p></div>
-    <div class="benefit"><h3>Sabores únicos</h3><p class="muted">Lo que tu competencia no tiene.</p></div>
-    <div class="benefit"><h3>Asesoría real</h3><p class="muted">Un asesor comercial directo por WhatsApp.</p></div>
+    <div class="benefit"><h3>Información antes de comprar</h3><p class="muted">Formato, precio, origen y usos en cada ficha.</p></div>
+    <div class="benefit"><h3>Compra formal</h3><p class="muted">Precios con IVA y factura.</p></div>
+    <div class="benefit"><h3>Prueba en tu operación</h3><p class="muted">Muestras disponibles para negocios.</p></div>
+    <div class="benefit"><h3>Asesoría por WhatsApp</h3><p class="muted">Disponibilidad, dosificación y envío.</p></div>
   </div>
   <div class="cta-row" style="margin-top:30px">
     <a class="btn btn-wa" href="{WA_GENERIC}" target="_blank" rel="noopener">{WA_ICON} Escríbenos por WhatsApp</a>
@@ -969,7 +971,7 @@ org_ld = {
         "width": 512,
         "height": 512,
     },
-    "description": "Importador directo de insumos premium de bubble tea desde Taiwán para negocios en Colombia.",
+    "description": "Proveedor de polvos y siropes para tiendas de bubble tea, cafeterías y bares en Colombia.",
     "areaServed": "CO",
     "contactPoint": {"@type": "ContactPoint", "contactType": "sales",
                      "telephone": "+57-301-8656016", "availableLanguage": "es"},
@@ -983,7 +985,7 @@ HOME_KIT1 = dict(name="Kit Primer Menú",
     items=[("polvo-taro", 1, None), ("polvo-hokkaido-milk-tea", 1, None),
            ("polvo-matcha-taiwan", 1, None), ("siropes-de-fruta", 2, " — sabores a elección")])
 HOME_KIT2 = dict(name="Kit Diferenciador",
-    pitch="El topping y el efecto tigre que te dejan cobrar más por vaso: lo que tu competencia no tiene.",
+    pitch="Dos referencias para sumar cheese foam y bebidas estilo tiger brown sugar a tu carta.",
     items=[("polvo-cheese-foam", 1, None), ("polvo-okinawa-brown-sugar", 1, None)])
 home_faqs = [
     ("¿Atienden negocios en cualquier ciudad de Colombia?",
@@ -994,8 +996,8 @@ home_faqs = [
      "Sí, todos los precios publicados incluyen IVA y emitimos factura (Taro Pop S.A.S.)."),
 ]
 html = head(
-    "Insumos Pop | Insumos premium de Bubble Tea en Colombia — Polvos y Siropes",
-    "Importador directo de Taiwán: polvos de taro, matcha, hojicha, brown sugar y siropes de fruta para cafeterías, restaurantes y tiendas de bubble tea en Colombia. Cotiza por WhatsApp.",
+    "Insumos para Bubble Tea y Cafeterías en Colombia | Insumos Pop",
+    "Polvos para bubble tea, matcha, hojicha, cheese foam y siropes para cafeterías y bares. Precios con IVA, muestra para negocios y envíos en Colombia.",
     canonical, root, jsonld=[org_ld],
     preload="./assets/img/polvo-taro-bubble-tea.webp",
 )
@@ -1004,33 +1006,44 @@ html += f"""
 <div class="hero">
   <div class="wrap hero-grid">
     <div>
-      <p class="eyebrow">Sabores premium de Asia · Importador directo de Taiwán</p>
-      <h1>Insumos de bubble tea para negocios en Colombia</h1>
-      <p class="lead">Polvos y siropes originales de Asia — Taro, Matcha, Hojicha, Brown Sugar, Coral Azul y más — de la fábrica a tu local, sin intermediarios. La diferencia que hace que tu carta destaque.</p>
+      <p class="eyebrow">Polvos y siropes para negocios HORECA</p>
+      <h1>Insumos para bubble tea, cafeterías y bares en Colombia</h1>
+      <p class="lead">Compra polvos para milk tea, matcha, hojicha, cheese foam y siropes concentrados de fruta. Precios publicados con IVA y asesoría para elegir según tu carta.</p>
       <div class="cta-row">
-        <a class="btn btn-wa" href="{WA_GENERIC}" target="_blank" rel="noopener">{WA_ICON} Cotizar por WhatsApp</a>
-        <a class="btn btn-gold" href="{root}polvos-bubble-tea/">Ver polvos</a>
-        <a class="btn btn-line" href="{root}siropes-bubble-tea/">Ver siropes</a>
+        <a class="btn btn-wa" href="{wa_link('Hola Insumos Pop 👋 Quiero cotizar insumos para mi negocio. Mi tipo de negocio es: ')}" target="_blank" rel="noopener">{WA_ICON} Cotizar para mi negocio</a>
+        <a class="btn btn-line" href="#catalogo">Ver catálogo y precios</a>
       </div>
-      <p class="sample-note">Pide tu <strong>muestra gratis para negocios</strong> por WhatsApp y prueba la calidad antes de tu primer pedido.</p>
+      <p class="sample-note"><strong>Muestra gratis para negocios:</strong> prueba el producto con tu receta antes del primer pedido.</p>
       <div class="trust">
-        <div><b>Calidad de origen</b>Premium taiwanés, no imitaciones</div>
-        <div><b>Precio de importador</b>Directo de fábrica</div>
-        <div><b>Sabores únicos</b>Lo que tu competencia no tiene</div>
+        <div><b>Precios claros</b>IVA incluido y factura</div>
+        <div><b>Compra con menos riesgo</b>Muestra para negocios</div>
+        <div><b>Envíos en Colombia</b>Costo y plazo al cotizar</div>
       </div>
     </div>
-    <img src="{root}assets/img/polvo-taro-bubble-tea.webp" alt="Bolsa de polvo de taro premium Insumos Pop de 1 kg junto a un plato con polvo violeta" width="1100" height="1155" fetchpriority="high">
+    <img src="{root}assets/img/polvo-taro-bubble-tea.webp" alt="Bolsa de polvo de taro Insumos Pop de 1 kg junto a un plato con polvo violeta" width="1100" height="1155" fetchpriority="high">
   </div>
 </div>
 
-<section class="wrap">
+<section class="wrap audience-section">
+  <p class="eyebrow">Elige según tu operación</p>
+  <h2>¿Qué tipo de negocio tienes?</h2>
+  <hr class="rule">
+  <div class="audience-grid">
+    <a class="audience-card" href="{root}proveedor-bubble-tea/"><strong>Tienda de bubble tea</strong><span>Taro, milk tea, brown sugar y toppings</span></a>
+    <a class="audience-card" href="{root}bubble-tea-para-cafeterias/"><strong>Cafetería</strong><span>Matcha, hojicha, frappés y cheese foam</span></a>
+    <a class="audience-card" href="{root}siropes-para-cocteleria/"><strong>Bar o restaurante</strong><span>Siropes para cócteles, mocktails y sodas</span></a>
+    <a class="audience-card" href="{root}kit-emprendedor-bubble-tea/"><strong>Voy a empezar</strong><span>Kit inicial, recetas y ayuda para costear</span></a>
+  </div>
+</section>
+
+<section class="wrap" id="catalogo">
   <p class="eyebrow">Catálogo</p>
-  <h2>¿Qué necesita tu barra?</h2>
+  <h2>Compra por tipo de insumo</h2>
   <hr class="rule">
   <div class="tiles">
     <a class="tile" href="{root}polvos-bubble-tea/">
-      <img src="{root}assets/img/polvo-matcha-taiwan-card.webp" alt="Polvos premium para bubble tea: bolsa de Taiwan Matcha de Insumos Pop" loading="lazy">
-      <div class="tile-body"><h3>Polvos para bubble tea</h3><p>Joyas premium de Asia y polvos de fruta: la base de milk teas, frappés y lattes. Desde {fmt_cop(65000)} el kilo.</p><span class="link">Ver los polvos →</span></div>
+      <img src="{root}assets/img/polvo-matcha-taiwan-card.webp" alt="Polvos para bubble tea: bolsa de Taiwan Matcha de Insumos Pop" loading="lazy">
+      <div class="tile-body"><h3>Polvos para bubble tea</h3><p>Mezclas para milk tea, frappés y lattes, además de matcha, hojicha y polvos de fruta. Desde {fmt_cop(65000)} el kilo.</p><span class="link">Ver los polvos →</span></div>
     </a>
     <a class="tile" href="{root}siropes-bubble-tea/">
       <img src="{root}assets/img/siropes-de-fruta-linea-card.webp" alt="Siropes de fruta concentrados de Insumos Pop en botellas de 1.9 litros" loading="lazy">
@@ -1041,16 +1054,16 @@ html += f"""
 
 <section class="wrap">
   <p class="eyebrow">Destacados</p>
-  <h2>Los sabores que diferencian tu carta</h2>
+  <h2>Productos más consultados</h2>
   <hr class="rule">
   <div class="grid">{feat_cards}</div>
 </section>
 
 <section class="wrap" id="kits">
-  <p class="eyebrow">Para empezar sin enredos</p>
+  <p class="eyebrow">Selecciones para una primera compra</p>
   <h2>Kits sugeridos</h2>
   <hr class="rule">
-  <p class="muted" style="max-width:44em">Combos armados con el catálogo real para que no tengas que adivinar. Los agregas a tu cotización en un clic y ajustas cantidades o sabores antes de enviar.</p>
+  <p class="muted" style="max-width:44em">Estos kits agrupan productos del catálogo al mismo precio individual. Puedes ajustar cantidades y sabores antes de enviar la cotización.</p>
   <div class="split" style="margin-top:20px">
     {kit_html(HOME_KIT1, root, "polvo-taro")}
     {kit_html(HOME_KIT2, root, "polvo-cheese-foam")}
@@ -1090,8 +1103,8 @@ html += f"""
 
 <section class="cta-final">
   <div class="wrap center">
-    <h2>¿Listo para diferenciar tu carta?</h2>
-    <p class="muted" style="max-width:38em;margin:0 auto 8px">Insumos disponibles para despacho a negocios en toda Colombia. Escríbenos hoy y pregunta por tu muestra gratis.</p>
+    <h2>Cotiza con precio, disponibilidad y envío claros</h2>
+    <p class="muted" style="max-width:38em;margin:0 auto 8px">Cuéntanos qué negocio tienes y tu ciudad. Te ayudamos a elegir referencias, confirmamos existencias y calculamos el envío antes de que pagues.</p>
     <hr class="rule">
     <a class="btn btn-wa" href="{WA_GENERIC}" target="_blank" rel="noopener">{WA_ICON} WhatsApp directo: {WA_DISPLAY}</a>
   </div>
