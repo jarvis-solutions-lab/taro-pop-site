@@ -391,8 +391,9 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
     {audience_chips(p, root)}
     <div class="price-box">
       <span class="big">{fmt_cop(p['price'])}</span> · {p['format']}
+      <div class="cond stock-status"><span aria-hidden="true">●</span> En stock</div>
       <a class="btn btn-wa pdp-quick-cta" href="{wa_msg}" target="_blank" rel="noopener">{WA_ICON} Cotizar ahora</a>
-      <div class="cond">IVA incluido · Confirma disponibilidad y envío por WhatsApp</div>
+      <div class="cond">IVA incluido · Confirma el costo y plazo del envío por WhatsApp</div>
       <div class="cond"><strong class="gold">Muestra para negocios:</strong> consulta condiciones antes del primer pedido.</div>
     </div>
     {flavor_select}
