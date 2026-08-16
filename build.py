@@ -72,6 +72,9 @@ def head(title, desc, canonical, root, jsonld=None, og_img=None, preload=None):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{canonical}">
@@ -81,8 +84,8 @@ def head(title, desc, canonical, root, jsonld=None, og_img=None, preload=None):
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="{og}">
 <meta property="og:url" content="{canonical}">
-<meta name="theme-color" content="#faf7f0">
-<script>(function(){{try{{var t=localStorage.getItem("ip_theme_v2");if(t==="dark"){{document.documentElement.setAttribute("data-theme","dark");document.querySelector('meta[name="theme-color"]').setAttribute("content","#0b0b0f");}}}}catch(e){{}}}})()</script>
+<meta name="theme-color" content="#fcfaf7">
+<script>(function(){{try{{var t=localStorage.getItem("ip_theme_v2");if(t==="dark"){{document.documentElement.setAttribute("data-theme","dark");document.querySelector('meta[name="theme-color"]').setAttribute("content","#17131b");}}}}catch(e){{}}}})()</script>
 <link rel="icon" href="{root}favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="{root}assets/img/favicon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="{root}assets/img/favicon-192.png">
@@ -116,7 +119,7 @@ def header_html(root, current="", body_class=""):
     <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">☰ Menú</button>
     <ul class="nav-links" id="nav-links">
       {items}
-      <li><a class="nav-cta" href="{root}cotizar/">Cotizar para mi negocio</a></li>
+      <li><a class="nav-cta" href="{root}cotizar/">Mi cotización</a></li>
     </ul>
     <button class="theme-toggle" aria-label="Cambiar a modo claro">☀️</button>
   </div>
@@ -131,7 +134,7 @@ def footer_html(root, wa_url=None):
   <div class="wrap foot">
     <div>
       <p class="brand" style="font-size:1.3rem">Insumos <span class="gold">Pop</span></p>
-      <p class="muted">Polvos y siropes para cafeterías, bares y tiendas de bubble tea en Colombia. Precios con IVA, factura y asesoría por WhatsApp.</p>
+      <p class="muted">Insumos para bebidas, cafeterías, bares y tiendas de bubble tea en Colombia. Precios con IVA, factura y asesoría por WhatsApp.</p>
       <p><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">{WA_ICON} WhatsApp {WA_DISPLAY}</a></p>
     </div>
     <div>
@@ -1000,8 +1003,8 @@ home_faqs = [
      "Sí, todos los precios publicados incluyen IVA y emitimos factura (Taro Pop S.A.S.)."),
 ]
 html = head(
-    "Insumos para Bubble Tea y Cafeterías en Colombia | Insumos Pop",
-    "Polvos para bubble tea, matcha, hojicha, cheese foam y siropes para cafeterías y bares. Precios con IVA, muestra para negocios y envíos en Colombia.",
+    "Insumos HORECA para Bubble Tea, Cafeterías y Bares | Insumos Pop",
+    "Insumos para bebidas: polvos para bubble tea, matcha, hojicha, cheese foam y siropes para cafeterías, bares y restaurantes en Colombia. Precios con IVA.",
     canonical, root, jsonld=[org_ld],
     preload="./assets/img/polvo-taro-bubble-tea.webp",
 )
@@ -1010,18 +1013,18 @@ html += f"""
 <div class="hero">
   <div class="wrap hero-grid">
     <div>
-      <p class="eyebrow">Polvos y siropes para negocios HORECA</p>
+      <p class="eyebrow">Insumos para bebidas y cartas HORECA</p>
       <h1>Insumos para bubble tea, cafeterías y bares en Colombia</h1>
-      <p class="lead">Compra polvos para milk tea, matcha, hojicha, cheese foam y siropes concentrados de fruta. Precios publicados con IVA y asesoría para elegir según tu carta.</p>
+      <p class="lead">Polvos, matcha, hojicha, cheese foam y siropes para ampliar tu carta de bebidas. Precios publicados con IVA y asesoría para escoger según tu operación.</p>
       <div class="cta-row">
         <a class="btn btn-wa" href="{wa_link('Hola Insumos Pop 👋 Quiero cotizar insumos para mi negocio. Mi tipo de negocio es: ')}" target="_blank" rel="noopener">{WA_ICON} Cotizar para mi negocio</a>
         <a class="btn btn-line" href="#catalogo">Ver catálogo y precios</a>
       </div>
       <p class="sample-note"><strong>Muestra gratis para negocios:</strong> prueba el producto con tu receta antes del primer pedido.</p>
       <div class="trust">
-        <div><b>Precios claros</b>IVA incluido y factura</div>
-        <div><b>Compra con menos riesgo</b>Muestra para negocios</div>
-        <div><b>Envíos en Colombia</b>Costo y plazo al cotizar</div>
+        <div><b>Precio claro</b>IVA incluido y factura</div>
+        <div><b>Prueba antes de comprar</b>Muestra para negocios</div>
+        <div><b>Envíos nacionales</b>Costo y plazo al cotizar</div>
       </div>
     </div>
     <img src="{root}assets/img/polvo-taro-bubble-tea.webp" alt="Bolsa de polvo de taro Insumos Pop de 1 kg junto a un plato con polvo violeta" width="1100" height="1155" fetchpriority="high">
@@ -1030,35 +1033,35 @@ html += f"""
 
 <section class="wrap audience-section">
   <p class="eyebrow">Elige según tu operación</p>
-  <h2>¿Qué tipo de negocio tienes?</h2>
+  <h2>Encuentra insumos según tu operación</h2>
   <hr class="rule">
   <div class="audience-grid">
     <a class="audience-card" href="{root}proveedor-bubble-tea/"><strong>Tienda de bubble tea</strong><span>Taro, milk tea, brown sugar y toppings</span></a>
-    <a class="audience-card" href="{root}bubble-tea-para-cafeterias/"><strong>Cafetería</strong><span>Matcha, hojicha, frappés y cheese foam</span></a>
-    <a class="audience-card" href="{root}siropes-para-cocteleria/"><strong>Bar o restaurante</strong><span>Siropes para cócteles, mocktails y sodas</span></a>
-    <a class="audience-card" href="{root}kit-emprendedor-bubble-tea/"><strong>Voy a empezar</strong><span>Kit inicial, recetas y ayuda para costear</span></a>
+    <a class="audience-card" href="{root}bubble-tea-para-cafeterias/"><strong>Cafetería</strong><span>Matcha, hojicha, frappés y toppings para la carta</span></a>
+    <a class="audience-card" href="{root}siropes-para-cocteleria/"><strong>Bar o restaurante</strong><span>Siropes para cócteles, mocktails, limonadas y sodas</span></a>
+    <a class="audience-card" href="{root}kit-emprendedor-bubble-tea/"><strong>Quiero empezar</strong><span>Kit inicial, recetas y guía para costear</span></a>
   </div>
 </section>
 
 <section class="wrap" id="catalogo">
   <p class="eyebrow">Catálogo</p>
-  <h2>Compra por tipo de insumo</h2>
+  <h2>Compra según la bebida que preparas</h2>
   <hr class="rule">
   <div class="tiles">
     <a class="tile" href="{root}polvos-bubble-tea/">
       <img src="{root}assets/img/polvo-matcha-taiwan-card.webp" alt="Polvos para bubble tea: bolsa de Taiwan Matcha de Insumos Pop" loading="lazy">
-      <div class="tile-body"><h3>Polvos para bubble tea</h3><p>Mezclas para milk tea, frappés y lattes, además de matcha, hojicha y polvos de fruta. Desde {fmt_cop(65000)} el kilo.</p><span class="link">Ver los polvos →</span></div>
+      <div class="tile-body"><h3>Polvos para bubble tea y cafetería</h3><p>Mezclas para milk tea, frappés y lattes, además de matcha, hojicha y polvos de fruta. Desde {fmt_cop(65000)} el kilo.</p><span class="link">Ver polvos y matcha →</span></div>
     </a>
     <a class="tile" href="{root}siropes-bubble-tea/">
       <img src="{root}assets/img/siropes-de-fruta-linea-card.webp" alt="Siropes de fruta concentrados de Insumos Pop en botellas de 1.9 litros" loading="lazy">
-      <div class="tile-body"><h3>Siropes de fruta</h3><p>Concentrados taiwaneses en 12 sabores para cócteles, sodas, limonadas y té. Botella 1.9 L, {fmt_cop(110000)}.</p><span class="link">Ver los siropes →</span></div>
+      <div class="tile-body"><h3>Siropes para bebidas y coctelería</h3><p>Concentrados taiwaneses en 12 sabores para cócteles, mocktails, sodas, limonadas y té frío. Botella 1.9 L, {fmt_cop(110000)}.</p><span class="link">Ver siropes →</span></div>
     </a>
   </div>
 </section>
 
 <section class="wrap">
   <p class="eyebrow">Destacados</p>
-  <h2>Productos más consultados</h2>
+  <h2>Referencias para tu carta</h2>
   <hr class="rule">
   <div class="grid">{feat_cards}</div>
 </section>
@@ -1143,8 +1146,8 @@ manifest = {
     "start_url": "/",
     "scope": "/",
     "display": "browser",
-    "background_color": "#faf7f0",
-    "theme_color": "#faf7f0",
+    "background_color": "#fcfaf7",
+    "theme_color": "#fcfaf7",
     "icons": [
         {"src": "/assets/img/favicon-192.png", "sizes": "192x192", "type": "image/png"},
         {"src": "/assets/img/logo-insumos-pop.png", "sizes": "512x512", "type": "image/png"},
