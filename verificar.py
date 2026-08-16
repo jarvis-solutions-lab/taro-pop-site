@@ -49,11 +49,15 @@ for pagina in paginas:
         if bloque.get("@type") == "Product" and bloque.get("offers"):
             availability = bloque["offers"].get("availability")
             permitidas = {
-                "https://schema.org/InStock",
-                "https://schema.org/OutOfStock",
                 "https://schema.org/BackOrder",
-                "https://schema.org/PreOrder",
+                "https://schema.org/Discontinued",
+                "https://schema.org/InStock",
+                "https://schema.org/InStoreOnly",
                 "https://schema.org/LimitedAvailability",
+                "https://schema.org/OnlineOnly",
+                "https://schema.org/OutOfStock",
+                "https://schema.org/PreOrder",
+                "https://schema.org/PreSale",
                 "https://schema.org/SoldOut",
             }
             if availability not in permitidas:
