@@ -41,15 +41,23 @@ for pagina in paginas:
             errores.append(f"{rel}: JSON-LD inválido ({e})")
 
     # 2. Los Product con Offer deben declarar disponibilidad para Google.
-    for m in re.finditer(r'<script type="application/ld\\+json">(.*?)</script>', contenido, re.S):
+    for m in re.finditer(r'<script type="application/ld\+json">(.*?)</script>', contenido, re.S):
         try:
             bloque = json.loads(m.group(1))
         except Exception:
             continue  # El JSON-LD inválido ya se reportó arriba.
         if bloque.get("@type") == "Product" and bloque.get("offers"):
             availability = bloque["offers"].get("availability")
-            if not isinstance(availability, str) or not availability.startswith("https://schema.org/"):
-                errores.append(f"{rel}: Product.offer sin availability de Schema.org")
+            permitidas = {
+                "https://schema.org/InStock",
+                "https://schema.org/OutOfStock",
+                "https://schema.org/BackOrder",
+                "https://schema.org/PreOrder",
+                "https://schema.org/LimitedAvailability",
+                "https://schema.org/SoldOut",
+            }
+            if availability not in permitidas:
+                errores.append(f"{rel}: Product.offer sin availability válida de Schema.org")
 
     # 3. Enlaces internos que existen
     if rel != "404.html":
