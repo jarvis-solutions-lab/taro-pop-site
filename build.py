@@ -237,6 +237,9 @@ def product_ld(p):
             "url": SITE + "/" + product_url(p["slug"]),
             "priceCurrency": "COP",
             "price": str(p["price"]),
+            # El catálogo publicado representa referencias disponibles; actualizar
+            # este valor antes de publicar si una referencia deja de estarlo.
+            "availability": "https://schema.org/InStock",
             "itemCondition": "https://schema.org/NewCondition",
             "seller": {"@type": "Organization", "name": "Insumos Pop"},
         },
