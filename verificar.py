@@ -40,7 +40,18 @@ for pagina in paginas:
         except Exception as e:
             errores.append(f"{rel}: JSON-LD inválido ({e})")
 
-    # 2. Enlaces internos que existen
+    # 2. Los Product con Offer deben declarar disponibilidad para Google.
+    for m in re.finditer(r'<script type="application/ld\\+json">(.*?)</script>', contenido, re.S):
+        try:
+            bloque = json.loads(m.group(1))
+        except Exception:
+            continue  # El JSON-LD inválido ya se reportó arriba.
+        if bloque.get("@type") == "Product" and bloque.get("offers"):
+            availability = bloque["offers"].get("availability")
+            if not isinstance(availability, str) or not availability.startswith("https://schema.org/"):
+                errores.append(f"{rel}: Product.offer sin availability de Schema.org")
+
+    # 3. Enlaces internos que existen
     if rel != "404.html":
         for m in link_re.finditer(contenido):
             url = m.group(1)
@@ -52,13 +63,13 @@ for pagina in paginas:
             if not os.path.exists(destino):
                 errores.append(f"{rel}: enlace roto → {url}")
 
-    # 3. Cada página con título y descripción únicos y no vacíos
+    # 4. Cada página con título y descripción únicos y no vacíos
     if not re.search(r"<title>.{15,}</title>", contenido):
         errores.append(f"{rel}: falta <title> o es demasiado corto")
     if not re.search(r'<meta name="description" content=".{50,}"', contenido):
         avisos.append(f"{rel}: meta description corta o ausente")
 
-    # 4. Los precios de los kits deben coincidir con la suma real del catálogo
+    # 5. Los precios de los kits deben coincidir con la suma real del catálogo
     mostrados = re.findall(r'class="kit-price">([^<]+)', contenido)
     kits = re.findall(r'data-kit="([^"]+)"', contenido)
     for mostrado, kit in zip(mostrados, kits):
@@ -68,7 +79,7 @@ for pagina in paginas:
         if real_txt not in mostrado:
             errores.append(f"{rel}: kit muestra {mostrado.strip()} pero suma {real_txt}")
 
-# 5. Títulos duplicados entre páginas (mala señal para Google)
+# 6. Títulos duplicados entre páginas (mala señal para Google)
 titulos = {}
 for pagina in paginas:
     rel = os.path.relpath(pagina, SITE_DIR)
