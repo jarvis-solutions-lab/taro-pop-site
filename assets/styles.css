@@ -45,6 +45,7 @@ html[data-theme="light"] .eyebrow,
 html[data-theme="light"] .trust b,
 html[data-theme="light"] .price-box .big,
 html[data-theme="light"] .sample-note strong{color:var(--gold-2)}
+html[data-theme="light"] .stock-status{color:#147a3a}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
@@ -182,6 +183,8 @@ header.site{
   padding:18px 20px;margin:18px 0}
 .price-box .big{font-size:1.7rem;font-weight:800;color:var(--gold)}
 .price-box .cond{color:var(--muted);font-size:.92rem;margin-top:2px}
+.price-box .stock-status{color:var(--wa);font-weight:800;margin-top:8px}
+.stock-status span{font-size:.72em;margin-right:4px}
 .pdp-quick-cta{display:none}
 @media(max-width:820px){
   .pdp-quick-cta{display:flex;width:calc(100% - 72px);justify-content:center;margin:12px 72px 12px 0}

@@ -62,6 +62,9 @@ for pagina in paginas:
             }
             if availability not in permitidas:
                 errores.append(f"{rel}: Product.offer sin availability válida de Schema.org")
+            if availability == "https://schema.org/InStock" and not re.search(
+                    r'class="cond stock-status"[^>]*>.*?En stock', contenido, re.S):
+                errores.append(f"{rel}: Product InStock sin estado visible «En stock»")
 
     # 3. Enlaces internos que existen
     if rel != "404.html":
