@@ -20,9 +20,32 @@ MAYOREO = dict(
     detalle="precio especial por volumen para negocios; te lo confirmamos al cotizar.",
 )
 
+# Sección "Calidad y sabor". Datos del fabricante verificados en sus fuentes
+# oficiales (no se nombra al fabricante en el sitio).
+QUALITY = dict(
+    eyebrow="Calidad y sabor",
+    h2="Lo primero que nota tu cliente es el sabor",
+    intro="Cada referencia tiene un perfil de sabor definido y un origen que puedes contar en tu carta. Así es como lo cuidamos.",
+    pillars=[
+        ("Más de 40 años de oficio",
+         "Nuestros polvos y siropes los elabora en Taiwán un fabricante especializado en insumos para bubble tea desde 1983, el mismo tipo de proveedor que abastece casas de té en Asia."),
+        ("Planta con ISO 22000",
+         "Se producen en una planta moderna en Taiwán que opera bajo el sistema de inocuidad alimentaria ISO 22000. Al cotizar te compartimos la ficha técnica de cada referencia."),
+        ("Sabor reconocible, igual en cada vaso",
+         "El violeta cremoso del taro, las vetas de caramelo del brown sugar, el verde herbal del matcha. Al trabajar por gramos, tu bebida sabe igual el lunes y el sábado."),
+        ("Pruébalo tú primero",
+         "Te enviamos una muestra para que la compares con tu insumo actual, con tu propia receta y tu propio paladar."),
+    ],
+    notes=["polvo-taro", "polvo-okinawa-brown-sugar", "polvo-cheese-foam",
+           "matcha-shizuoka", "polvo-thai-milk-tea", "siropes-de-fruta"],
+)
+
 POWDERS = [
     dict(
         slug="polvo-taro",
+        seo_title="Polvo de Taro para Bubble Tea 1 kg | Insumos Pop",
+        seo_desc="Polvo de taro de Taiwán para bubble tea, frappés y postres: dulce, cremoso y violeta. Bolsa 1 kg con IVA, factura y envíos a Colombia.",
+        h1="Polvo de taro para bubble tea",
         name="Polvo de Taro",
         short="Taro",
         zh="芋頭",
@@ -33,11 +56,16 @@ POWDERS = [
         origin="Taiwán",
         uses=["Milk tea", "Frappés", "Postres", "Helados"],
         teaser="Polvo de taro para preparar milk tea, frappés, helados y postres con perfil dulce y cremoso.",
+        sensory="Dulce, cremoso y con ese violeta que se reconoce desde la fila. Recrea el clásico taro con leche de las casas de té de Taiwán: suave, con fondo de tubérculo y un final que invita al siguiente sorbo, frío, caliente o en frappé.",
+        notes=["Dulce", "Cremoso", "Tubérculo suave"],
+        ratio="1 parte de polvo por 8–10 de líquido",
         desc=[
             "Mezcla de taro de perfil dulce y cremoso para bebidas frías o calientes. Aporta el color violeta característico y funciona como base de milk tea o frappé.",
             "La bolsa de 1 kg permite estandarizar la receta por gramos. Solicita la ficha técnica para definir la dosis según el tamaño de vaso, la leche y el nivel de dulzor de tu carta.",
         ],
         faqs=[
+            ("¿Qué es el taro y a qué sabe?",
+             "El taro es un tubérculo muy popular en Asia. Su sabor es dulce y suave, con recuerdos de vainilla y nuez, y en bebidas da ese color violeta tan característico del bubble tea."),
             ("¿Necesito añadir color violeta a la bebida?",
              "No. El producto aporta el tono violeta de la preparación; revisa la ficha técnica si necesitas conocer su composición completa."),
             ("¿Sirve para bebidas frías y calientes?",
@@ -48,6 +76,9 @@ POWDERS = [
     ),
     dict(
         slug="polvo-okinawa-brown-sugar",
+        seo_title="Polvo Brown Sugar (Tiger Sugar) 1 kg | Insumos Pop",
+        seo_desc="Polvo brown sugar de Taiwán para tiger milk tea: notas de caramelo, melaza y té negro. Bolsa 1 kg con IVA y envíos a toda Colombia.",
+        h1="Polvo Okinawa Brown Sugar para tiger milk tea",
         name="Okinawa Brown Sugar",
         short="Okinawa Brown Sugar",
         zh="黑糖",
@@ -58,6 +89,9 @@ POWDERS = [
         origin="Taiwán (estilo Okinawa, Japón)",
         uses=["Tiger sugar / milk tea", "Toppings", "Frappés", "Postres"],
         teaser="Mezcla de brown sugar para milk tea, frappés y preparaciones estilo tiger con notas de caramelo y melaza.",
+        sensory="Azúcar morena de sabor profundo, con notas de caramelo y melaza, un toque de melón de invierno y un fondo de té negro. En jarabe dibuja las vetas doradas del tiger sugar y deja un final cálido en cada sorbo.",
+        notes=["Caramelo", "Melaza", "Té negro"],
+        ratio="1 parte de polvo por 8–10 de líquido",
         desc=[
             "Perfil de azúcar moreno con notas tostadas, de caramelo y melaza. Puede usarse como base de milk tea o para preparar un jarabe espeso que marque las paredes del vaso.",
             "Estandariza la cantidad de polvo y agua del jarabe antes del servicio. Así puedes repetir el sabor y calcular el costo real de cada bebida.",
@@ -73,6 +107,9 @@ POWDERS = [
     ),
     dict(
         slug="polvo-matcha-taiwan",
+        seo_title="Matcha en Polvo para Bebidas 1 kg | Insumos Pop",
+        seo_desc="Matcha en polvo listo para lattes, frappés y helados: herbal, cremoso y balanceado. Bolsa 1 kg con IVA, factura y envíos en Colombia.",
+        h1="Taiwan Matcha: matcha en polvo para lattes",
         name="Taiwan Matcha",
         short="Matcha",
         zh="抹茶",
@@ -83,6 +120,8 @@ POWDERS = [
         origin="Taiwán",
         uses=["Matcha latte", "Frappés", "Repostería", "Helados"],
         teaser="Mezcla lista de matcha para servicio rápido en lattes, frappés, helados y repostería.",
+        sensory="Herbal, cremoso y ya balanceado. El verde intenso del matcha en segundos, sin batidor, con el mismo sabor en cada vaso aunque cambie el turno.",
+        notes=["Herbal", "Cremoso", "Balanceado"],
         desc=[
             "Mezcla sabor matcha pensada para bebidas de preparación rápida. Su perfil herbal y cremoso funciona en lattes fríos o calientes, frappés y postres.",
             "A diferencia del Shizuoka Matcha puro, esta referencia ya está formulada para bebidas. Es una opción práctica cuando la velocidad y la consistencia del servicio pesan más que el control total de la receta.",
@@ -98,6 +137,9 @@ POWDERS = [
     ),
     dict(
         slug="matcha-shizuoka",
+        seo_title="Matcha Puro de Shizuoka, Japón 500 g | Insumos Pop",
+        seo_desc="Matcha 100% puro de Shizuoka, Japón, para lattes de autor y repostería: verde vivo y amargor elegante. Bolsa 500 g con IVA. Envíos en Colombia.",
+        h1="Shizuoka Matcha 100% puro de Japón",
         name="Shizuoka Matcha 100% puro",
         short="Shizuoka Matcha",
         zh="静岡抹茶",
@@ -108,6 +150,8 @@ POWDERS = [
         origin="Shizuoka, Japón (single origin)",
         uses=["Matcha de especialidad", "Lattes de autor", "Repostería premium"],
         teaser="Matcha 100% puro de Shizuoka para lattes de autor, bebidas de especialidad y repostería.",
+        sensory="Verde vivo, notas vegetales y un amargor elegante que tú decides cómo equilibrar. De Shizuoka, la región de té más reconocida de Japón: para lattes que se cuentan con nombre de origen.",
+        notes=["Vegetal", "Umami", "Amargor elegante"],
         desc=[
             "Matcha sin leche ni endulzante añadidos. El barista controla la dosis, la leche, el dulzor y la intensidad para adaptar cada bebida al concepto de la cafetería.",
             "La presentación de 500 g está dirigida a cartas de especialidad y recetas de autor. Para una preparación más rápida y ya balanceada, compara con Taiwan Matcha en mezcla lista.",
@@ -123,6 +167,9 @@ POWDERS = [
     ),
     dict(
         slug="polvo-coral-azul",
+        seo_title="Polvo Azul Blue Coral para Bebidas 1 kg | Insumos Pop",
+        seo_desc="Polvo Blue Coral para bebidas azules, limonadas y frappés, con aroma a soda con helado. Bolsa 1 kg con IVA y envíos a toda Colombia.",
+        h1="Polvo Coral Azul para bebidas azules",
         name="Coral Azul (Blue Coral)",
         short="Coral Azul",
         zh="藍珊瑚",
@@ -133,6 +180,8 @@ POWDERS = [
         origin="Taiwán",
         uses=["Bebidas visuales", "Limonadas y sodas", "Frappés", "Capas de color"],
         teaser="Polvo para bebidas azules, frappés, limonadas cremosas y preparaciones por capas.",
+        sensory="Un azul eléctrico con aroma a soda con helado: cremoso, dulce y refrescante. Convierte limonadas, sodas y frappés en la bebida más fotografiada de tu carta.",
+        notes=["Soda cremosa", "Dulce", "Azul intenso"],
         desc=[
             "Coral Azul aporta un color azul intenso a bebidas lácteas, frappés y preparaciones frías. También puede combinarse con limonadas o sodas para crear contrastes y capas.",
             "Antes de llevarlo a carta, prueba la dosis en tu vaso y documenta la receta. Esto ayuda a que el color y el sabor se repitan entre turnos y sedes.",
@@ -148,6 +197,9 @@ POWDERS = [
     ),
     dict(
         slug="polvo-hojicha",
+        seo_title="Hojicha en Polvo para Lattes 1 kg | Insumos Pop",
+        seo_desc="Hojicha en polvo para lattes, milk tea y postres: té verde tostado con notas de caramelo y nuez. Bolsa 1 kg con IVA. Envíos en Colombia.",
+        h1="Polvo de hojicha para lattes",
         name="Hojicha",
         short="Hojicha",
         zh="ほうじ茶",
@@ -158,6 +210,8 @@ POWDERS = [
         origin="Taiwán (té verde tostado estilo Japón)",
         uses=["Hojicha latte", "Milk tea", "Frappés", "Postres"],
         teaser="Mezcla lista de hojicha para lattes, milk tea, frappés y postres con perfil tostado.",
+        sensory="Té verde tostado con notas de caramelo, nuez y madera. Más suave y menos vegetal que el matcha: el latte para quien dice que «el matcha no es lo suyo».",
+        notes=["Tostado", "Caramelo", "Nuez"],
         desc=[
             "Mezcla para bebidas con perfil de té tostado y notas que recuerdan al caramelo, la nuez y la madera. Suele resultar más suave y menos vegetal que un matcha latte.",
             "Está formulada para un servicio rápido y consistente. Si tu cafetería busca controlar cada ingrediente, compara con Pure Hojicha 100% puro.",
@@ -173,6 +227,9 @@ POWDERS = [
     ),
     dict(
         slug="hojicha-puro",
+        seo_title="Hojicha Puro de Japón 500 g | Insumos Pop",
+        seo_desc="Hojicha 100% puro de Japón para lattes y postres de autor: tostado, cálido y sin azúcar. Bolsa 500 g con IVA, factura y envíos en Colombia.",
+        h1="Pure Hojicha 100% puro de Japón",
         name="Pure Hojicha 100% puro",
         short="Pure Hojicha",
         zh="ほうじ茶",
@@ -183,6 +240,8 @@ POWDERS = [
         origin="Japón (single origin)",
         uses=["Lattes de autor", "Postres de especialidad", "Bebidas bajas en cafeína"],
         teaser="Hojicha 100% puro de Japón para lattes, postres y bebidas de autor con perfil tostado.",
+        sensory="Hojicha puro de Japón, cálido y tostado, con aroma a caramelo y madera. Sin azúcar ni leche añadidos: tú construyes la bebida desde el té.",
+        notes=["Tostado", "Madera", "Aroma cálido"],
         desc=[
             "Té verde tostado molido, sin leche ni endulzante añadidos. Tiene un perfil cálido con notas de caramelo, nuez y madera para lattes y postres.",
             "Al ser puro, permite controlar la dosis y el dulzor de cada receta. La presentación de 500 g está pensada para barras que desarrollan bebidas de autor.",
@@ -198,6 +257,9 @@ POWDERS = [
     ),
     dict(
         slug="polvo-thai-milk-tea",
+        seo_title="Polvo Thai Tea (Té Tailandés) 1 kg | Insumos Pop",
+        seo_desc="Polvo de thai tea para té tailandés frío, milk tea y frappés: té negro, leche condensada y el naranja icónico. Bolsa 1 kg con IVA.",
+        h1="Polvo Thai Milk Tea (té tailandés)",
         name="Thai Milk Tea",
         short="Thai Milk Tea",
         zh="泰式奶茶",
@@ -208,6 +270,8 @@ POWDERS = [
         origin="Taiwán (estilo Tailandia)",
         uses=["Thai tea frío", "Milk tea", "Frappés"],
         teaser="Mezcla de Thai Milk Tea para preparar té frío, milk tea y frappés con perfil dulce y especiado.",
+        sensory="Té negro molido fino con notas de leche condensada: dulce, especiado y cremoso, con el naranja icónico del thai tea. Brilla con mucho hielo.",
+        notes=["Té negro", "Leche condensada", "Especiado"],
         desc=[
             "Mezcla para bebidas de estilo tailandés, con perfil dulce, cremoso y especiado. Aporta el color naranja característico de este tipo de preparación.",
             "Puede servirse con hielo, leche condensada o leche evaporada. Define una dosis fija para que el dulzor y el color no cambien entre preparaciones.",
@@ -223,6 +287,9 @@ POWDERS = [
     ),
     dict(
         slug="polvo-lemon-condensed-milk",
+        seo_title="Polvo Limón con Leche Condensada 1 kg | Insumos Pop",
+        seo_desc="Polvo de limón con leche condensada para limonadas cremosas y frappés: fresco, cremoso y refrescante. Bolsa 1 kg con IVA y envíos.",
+        h1="Polvo de limón con leche condensada",
         name="Taiwan Lemon Condensed Milk",
         short="Lemon Condensed Milk",
         zh="檸檬煉乳",
@@ -233,6 +300,8 @@ POWDERS = [
         origin="Taiwán",
         uses=["Bebidas cítricas", "Frappés", "Limonadas cremosas"],
         teaser="Mezcla de limón y leche condensada para frappés, bebidas cítricas y limonadas cremosas.",
+        sensory="Aroma de cáscara de limón fresco envuelto en leche condensada: brillante, cremoso y sin agresividad ácida. Limonadas y frappés con cuerpo que refrescan de verdad.",
+        notes=["Cáscara de limón", "Cremoso", "Refrescante"],
         desc=[
             "Perfil cítrico y cremoso que combina limón con leche condensada. Está pensado para bebidas frías, frappés y limonadas con mayor cuerpo.",
             "Prueba la mezcla con la leche o base que uses en tu negocio y ajusta la dosis antes de publicarla en carta.",
@@ -248,6 +317,9 @@ POWDERS = [
     ),
     dict(
         slug="polvo-hokkaido-milk-tea",
+        seo_title="Polvo Hokkaido Milk Tea 1 kg | Insumos Pop",
+        seo_desc="Polvo Hokkaido milk tea de Taiwán: lácteo, suave y redondo, el clásico del bubble tea. Bolsa 1 kg con IVA, factura y envíos a Colombia.",
+        h1="Polvo Hokkaido Milk Tea para bubble tea",
         name="Hokkaido Milk Tea",
         short="Hokkaido Milk Tea",
         zh="北海道奶茶",
@@ -258,6 +330,9 @@ POWDERS = [
         origin="Taiwán (estilo Hokkaido, Japón)",
         uses=["Milk tea", "Bebidas calientes", "Frappés"],
         teaser="Mezcla de Hokkaido Milk Tea para bebidas frías, calientes y frappés con perfil lácteo suave.",
+        sensory="Lácteo, suave y redondo: el milk tea que todos entienden al primer sorbo. La puerta de entrada perfecta a tu carta y el favorito de quien prueba bubble tea por primera vez.",
+        notes=["Lácteo", "Suave", "Redondo"],
+        ratio="1 parte de polvo por 8–10 de líquido",
         desc=[
             "Mezcla estilo Hokkaido de perfil suave, lácteo y cremoso. Puede prepararse fría, caliente o en frappé.",
             "Su sabor familiar la convierte en una referencia sencilla para ampliar una carta. Pide la dosificación recomendada y calcula el costo según tu tamaño de vaso.",
@@ -273,6 +348,9 @@ POWDERS = [
     ),
     dict(
         slug="polvo-mango-coco-hong-kong",
+        seo_title="Polvo de Mango y Coco para Frappés 1 kg | Insumos Pop",
+        seo_desc="Polvo de mango y coco para frappés, smoothies y helados: tropical y cremoso, al estilo Hong Kong. Bolsa 1 kg con IVA y envíos.",
+        h1="Polvo de mango y coco estilo Hong Kong",
         name="Hong Kong Mango Coconut",
         short="Mango Coconut",
         zh="芒果椰子",
@@ -283,6 +361,9 @@ POWDERS = [
         origin="Taiwán (estilo Hong Kong)",
         uses=["Frappés", "Smoothies", "Postres tropicales"],
         teaser="Mezcla de mango y coco para frappés, smoothies, bebidas frías y postres tropicales.",
+        sensory="Mango maduro y coco cremoso en un solo polvo, al estilo de los postres de Hong Kong. Sabe a trópico en frappés, smoothies y helados.",
+        notes=["Mango maduro", "Coco", "Tropical"],
+        ratio="1 parte de polvo por 8–10 de líquido",
         desc=[
             "Combina un perfil de mango maduro con coco cremoso. Funciona como base de frappés, smoothies y postres.",
             "También puede mezclarse con fruta fresca o congelada para ajustar intensidad y textura. Estandariza la receta antes del servicio.",
@@ -298,6 +379,9 @@ POWDERS = [
     ),
     dict(
         slug="polvo-cheese-foam",
+        seo_title="Polvo Cheese Foam para Bubble Tea 1 kg | Insumos Pop",
+        seo_desc="Polvo cheese foam para coronar té, café y matcha: espuma sedosa, dulce y ligeramente salada. Bolsa 1 kg con IVA y envíos en Colombia.",
+        h1="Polvo Cheese Foam para bubble tea y café",
         name="Taiwan Cheese Foam",
         short="Cheese Foam",
         zh="芝士奶蓋",
@@ -308,6 +392,8 @@ POWDERS = [
         origin="Taiwán",
         uses=["Topping de bebidas", "Té frío", "Café frío", "Frappés"],
         teaser="Mezcla para preparar cheese foam, un topping cremoso y ligeramente salado para té, café y frappés.",
+        sensory="Espuma sedosa, dulce y ligeramente salada, con sabor a queso y leche, que corona té, café o matcha. El contraste que hace que el cliente vuelva por «el de la espumita».",
+        notes=["Lácteo", "Dulce-salado", "Sedoso"],
         desc=[
             "Mezcla para una espuma cremosa de queso, dulce y ligeramente salada. Se sirve como capa superior sobre té frío, café, matcha o milk tea.",
             "Requiere batidora o shaker, pero no maquinaria especializada. Define el gramaje por porción para controlar textura, velocidad de preparación y costo.",
@@ -325,6 +411,9 @@ POWDERS = [
 
 FRUIT_POWDER = dict(
     slug="polvos-de-fruta",
+    seo_title="Polvos de Fruta para Frappés 1 kg | Insumos Pop",
+    seo_desc="Polvos de fruta para frappés, smoothies y postres en 6 sabores: mango, fresa, coco, banana, sandía y aguacate. Bolsa 1 kg con IVA.",
+    h1="Polvos de fruta para frappés y bebidas",
     seo_name="Polvos de fruta para bebidas",
     name="Polvos de Fruta — Sabores Asiáticos",
     short="Polvos de Fruta",
@@ -339,6 +428,8 @@ FRUIT_POWDER = dict(
     flavors=["Mango", "Fresa", "Coco", "Banana", "Sandía", "Aguacate"],
     uses=["Frappés", "Smoothies", "Milk tea de fruta", "Postres"],
     teaser="Polvos de fruta en seis sabores para frappés, smoothies, milk tea, helados y postres.",
+    sensory="Seis frutas con sabor intenso y textura cremosa: mango, fresa, coco, banana, sandía y aguacate. Frappés y postres que saben a fruta desde el primer sorbo.",
+    notes=["Frutal", "Cremoso", "Intenso"],
     desc=[
         "Línea en sabores mango, fresa, coco, banana, sandía y aguacate. Cada bolsa contiene 1 kg y puede utilizarse en bebidas o postres.",
         "Puedes combinar varios sabores en una cotización. Antes de comprar volumen, prueba la dosis con la base y el tamaño de vaso de tu operación.",
@@ -355,6 +446,9 @@ FRUIT_POWDER = dict(
 
 SYRUP = dict(
     slug="siropes-de-fruta",
+    seo_title="Siropes de Fruta para Bubble Tea 1,9 L | Insumos Pop",
+    seo_desc="Siropes de fruta de Taiwán en 12 sabores para bubble tea, sodas, limonadas y cócteles. Botella 1,9 L con IVA. Envíos en Colombia.",
+    h1="Siropes de fruta concentrados",
     seo_name="Siropes de fruta para bebidas",
     name="Siropes de Fruta — Concentrados Asiáticos",
     short="Siropes de Fruta",
@@ -372,6 +466,9 @@ SYRUP = dict(
              "Arándano", "Limón", "Naranja", "Toronja", "Cereza", "Manzana Verde"],
     uses=["Cócteles", "Frappés", "Lattes", "Limonadas", "Sodas italianas", "Té de frutas"],
     teaser="Siropes concentrados de fruta en 12 sabores para cócteles, mocktails, sodas, limonadas y té frío.",
+    sensory="Doce concentrados de Taiwán con sabor frutal limpio, del lychee floral a la toronja amarga-cítrica. Una botella cubre cócteles, mocktails, sodas y limonadas.",
+    notes=["Frutal limpio", "Intenso", "Versátil"],
+    ratio="1 parte de sirope por 6–8 de agua o soda",
     desc=[
         "Concentrados de fruta de Taiwán en botella de 1,9 L. La línea incluye mango, maracuyá, fresa, lychee, melocotón, piña, arándano, limón, naranja, toronja, cereza y manzana verde.",
         "La dosis la define cada barra. Con 20 ml por bebida, una botella alcanza para 95 preparaciones y el sirope cuesta cerca de $1.332 por vaso; los demás ingredientes se calculan aparte.",
@@ -387,6 +484,28 @@ SYRUP = dict(
 )
 
 RECIPES = [
+    dict(
+        slug="como-hacer-bubble-tea",
+        title="Cómo hacer bubble tea (milk tea con perlas)",
+        metadesc="Paso a paso para preparar bubble tea en tu negocio: té base, polvo para milk tea, cocción de perlas de tapioca, dosis y montaje del vaso.",
+        intro="La receta madre del bubble tea: un milk tea cremoso con perlas de tapioca suaves y masticables. Domínala con Hokkaido Milk Tea y luego cambia el polvo para crear taro, thai tea o brown sugar.",
+        uses=["polvo-hokkaido-milk-tea", "polvo-taro", "polvo-thai-milk-tea"],
+        ingredients=[
+            "Polvo Hokkaido Milk Tea Insumos Pop (punto de partida: 1 parte de polvo por 8–10 de líquido)",
+            "250 ml de té negro preparado y frío (o agua, si prefieres un sabor más lácteo)",
+            "Perlas de tapioca (60–80 g cocidas por vaso)",
+            "Azúcar o jarabe para las perlas",
+            "Hielo",
+        ],
+        steps=[
+            "Hierve abundante agua, agrega las perlas y cocínalas según las indicaciones del fabricante hasta que estén suaves por fuera y masticables por dentro.",
+            "Escurre las perlas y cúbrelas con azúcar o jarabe; así conservan su textura y sabor durante el servicio.",
+            "En el shaker, disuelve el polvo Hokkaido en el té frío y agita con hielo hasta que la mezcla quede cremosa y espumosa.",
+            "Sirve las perlas en el fondo del vaso, agrega hielo y vierte el milk tea.",
+            "Sella o tapa y entrega con pitillo grueso. Para variar la carta, cambia el polvo por Taro, Thai Milk Tea u Okinawa Brown Sugar.",
+        ],
+        tip="Cocina perlas en tandas pequeñas a lo largo del día: recién hechas tienen la mejor textura.",
+    ),
     dict(
         slug="bubble-tea-de-taro",
         title="Bubble tea de taro",
@@ -484,14 +603,14 @@ PROFILES = [
         catalog_href="polvos-bubble-tea/",
         catalog_label="Ver los polvos",
         label="Tiendas de bubble tea",
-        title="Proveedor de insumos para Bubble Tea en Colombia | Insumos Pop",
+        title="Proveedor de Bubble Tea en Colombia | Insumos Pop",
         metadesc="Polvos de taro, milk tea, brown sugar y toppings para tiendas de bubble tea. Precios con IVA, ficha técnica, muestras y envíos en Colombia.",
         eyebrow="Para tiendas de bubble tea",
         h1="Proveedor de polvos y siropes para bubble tea en Colombia",
-        lead="Cotiza taro, milk tea, brown sugar, cheese foam y otros insumos para tu tienda. Consulta precio, dosificación, disponibilidad y envío antes de comprar.",
+        lead="Taro cremoso, tiger brown sugar, thai tea y cheese foam importados de Taiwán, donde nació el bubble tea. Sabores que tus clientes reconocen al primer sorbo, con precio publicado y muestra para tu negocio.",
         cta_label="Cotizar insumos y pedir muestra",
         hero_product="polvo-okinawa-brown-sugar",
-        wa_msg="Hola Insumos Pop. Tengo una tienda de bubble tea y quiero cotizar polvos de Taiwán. ¿Me comparten precios por volumen y condiciones de la muestra?",
+        wa_msg="Hola Insumos Pop 👋 Tengo una tienda de bubble tea y quiero probar sus polvos de Taiwán. ¿Me envían muestra y precio al por mayor? Ciudad: ",
         trust=[("Precios publicados", "IVA incluido en cada ficha"),
                ("Costo calculable", "Precio por gramo en cada ficha"),
                ("Muestra para negocios", "Prueba con tu propia receta")],
@@ -533,10 +652,10 @@ PROFILES = [
         metadesc="Matcha, hojicha, milk tea y cheese foam para cafeterías. Compara mezclas listas y puros, precios con IVA, muestras y envíos en Colombia.",
         eyebrow="Para cafeterías",
         h1="Matcha, hojicha y toppings para cafeterías en Colombia",
-        lead="Elige entre mezclas listas para servicio rápido y productos puros para recetas de autor. Compara formatos, precios y aplicaciones antes de cotizar.",
+        lead="Matcha puro de Shizuoka, hojicha tostada de Japón y cheese foam sedoso: bebidas de autor con historia de origen, y mezclas listas cuando la barra necesita velocidad.",
         cta_label="Cotizar para mi cafetería",
         hero_product="matcha-shizuoka",
-        wa_msg="Hola Insumos Pop 👋 Tengo una cafetería y quiero diferenciar mi carta con matcha, hojicha y cheese foam. ¿Me envían cotización y muestra gratis?",
+        wa_msg="Hola Insumos Pop 👋 Tengo una cafetería y quiero probar su matcha, hojicha y cheese foam. ¿Me envían muestra y precio al por mayor? Ciudad: ",
         trust=[("Dos tipos de producto", "Mezclas listas y puros"),
                ("Precios con IVA", "Desde $109.250 por mezcla de 1 kg"),
                ("Prueba y documentación", "Muestra y ficha técnica al cotizar")],
@@ -562,8 +681,8 @@ PROFILES = [
              "El Taiwan Matcha es mezcla lista para un servicio rápido. El Shizuoka es matcha 100% puro sin endulzar para controlar leche, dulzor e intensidad. Elige según tu operación y el tipo de receta que quieres servir."),
             ("¿Mi barista necesita capacitación o equipo especial?",
              "Necesita herramientas básicas de barra. Las mezclas se disuelven en leche; el matcha puro se bate con agua caliente y el Cheese Foam se prepara con batidora o shaker. Al cotizar compartimos la ficha técnica."),
-            ("¿Estas bebidas son moda pasajera?",
-             "Ningún proveedor puede garantizar la demanda de tu ciudad. Empieza con una muestra, prueba dos o tres recetas con clientes reales y amplía la compra solo si la rotación y el margen funcionan."),
+            ("¿Cómo sé si les gustará a mis clientes?",
+             "Empieza con una muestra y dos o tres recetas en tu carta: tus clientes te lo dirán en la primera semana. Luego amplías la compra con los sabores que más roten."),
         ],
         extra_html="""<div class="compare"><h3>¿Mezcla lista o producto puro?</h3>
 <p><strong>Mezcla lista:</strong> reduce pasos y facilita que el equipo repita la receta durante horas de alto volumen.</p>
@@ -581,10 +700,10 @@ PROFILES = [
         metadesc="Kit inicial de polvos y siropes para montar un menú de bubble tea. Precios con IVA, recetas base, muestras, asesoría y envíos en Colombia.",
         eyebrow="Para tu primer negocio",
         h1="Kit de insumos para empezar a vender bubble tea",
-        lead="Empieza con un menú corto de polvos y siropes. Revisa el precio del kit, las recetas base y el costo por gramo antes de decidir.",
+        lead="Arranca con los sabores que todo el mundo entiende: taro, Hokkaido milk tea y matcha, más dos siropes de fruta. Un menú corto, delicioso y con el costo por vaso claro desde el primer día.",
         cta_label="Empezar con asesoría gratis",
         hero_product="polvo-taro",
-        wa_msg="Hola Insumos Pop 👋 Estoy montando mi primer negocio de bebidas y quiero asesoría para armar mi menú inicial. ¿Me ayudan con la cotización del Kit Primer Menú?",
+        wa_msg="Hola Insumos Pop 👋 Estoy montando mi negocio de bebidas y quiero asesoría para mi menú inicial y el Kit Primer Menú. Ciudad: ",
         trust=[("Costos claros", "Costo por gramo antes de invertir"),
                ("Asesoría real", "Un asesor directo por WhatsApp"),
                ("Prueba antes de comprar", "Muestra para negocios y factura")],
@@ -609,9 +728,9 @@ PROFILES = [
             ("¿Cuánto necesito para empezar?",
              "El Kit Primer Menú cuesta $580.750 con IVA incluido e incluye 3 bolsas de polvo de 1 kg y 2 siropes de 1,9 L. También puedes cotizar productos sueltos desde $74.750."),
             ("No sé nada de bubble tea, ¿me van a dejar solo?",
-             "No. Al cotizar recibes asesoría directa y ficha técnica de cada producto, y en el sitio tienes la guía para emprender y 4 recetas paso a paso con dosis sugeridas."),
-            ("¿Me garantizan que el negocio va a funcionar?",
-             "No. Las ventas dependen de tu ubicación, precio, ejecución y demanda. Nosotros publicamos precios con IVA, ofrecemos muestras y te ayudamos a calcular el costo del insumo por bebida antes de comprar."),
+             "No. Al cotizar recibes asesoría directa y ficha técnica de cada producto, y en el sitio tienes la guía para emprender y 5 recetas paso a paso con dosis sugeridas."),
+            ("¿Qué hago para que mi negocio funcione?",
+             "Un buen sabor es la base, pero también cuentan tu ubicación, tu precio y la ejecución. Por eso te damos muestra para probar antes de invertir, recetas paso a paso y ayuda para calcular el costo por bebida desde el primer día."),
         ],
         extra_html="",
         cta_title="Empecemos tu menú hoy",
@@ -626,10 +745,10 @@ PROFILES = [
         metadesc="Siropes concentrados para cócteles, mocktails, sodas y limonadas. Doce sabores en botella de 1,9 L, precios con IVA y envíos en Colombia.",
         eyebrow="Para bares y coctelería",
         h1="Siropes para bares, coctelerías y bebidas sin alcohol",
-        lead="Doce sabores concentrados en botella de 1,9 L. Con una dosis de 20 ml, el costo del sirope es de aproximadamente $1.332 por bebida y la botella alcanza para 95 preparaciones.",
+        lead="Lychee floral, maracuyá intensa, toronja amarga-cítrica: 12 concentrados de fruta de Taiwán para cócteles y mocktails que se recuerdan. Botella de 1,9 L que rinde unas 95 copas.",
         cta_label="Cotizar para mi barra",
         hero_product="siropes-de-fruta",
-        wa_msg="Hola Insumos Pop 👋 Tengo un bar y quiero cotizar los siropes concentrados de 1.9 L para coctelería. ¿Qué sabores tienen disponibles y cómo funciona la muestra?",
+        wa_msg="Hola Insumos Pop 👋 Tengo un bar y quiero probar sus siropes para cócteles. ¿Qué sabores me recomiendan y cuál es el precio al por mayor? Ciudad: ",
         trust=[("Costo por copa calculable", "≈$1.332 con una dosis de 20 ml"),
                ("Dosis bajo tu control", "Rendimiento según tu receta"),
                ("12 sabores", "De lychee a manzana verde")],

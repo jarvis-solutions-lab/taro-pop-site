@@ -124,7 +124,22 @@
     }
     store.set(q);
     renderBar();
-    toast("Agregado a tu cotización");
+    toast("Listo, agregado a tu cotización");
+  });
+
+  /* ---------- Sabor elegido: viaja también en el WhatsApp de la ficha ---------- */
+  document.addEventListener("change", function (ev) {
+    var sel = ev.target.closest("[data-flavor-for]");
+    if (!sel) return;
+    document.querySelectorAll(".pdp-main-cta, .pdp-quick-cta").forEach(function (a) {
+      var base = a.getAttribute("data-base-href") || a.href;
+      a.setAttribute("data-base-href", base);
+      if (!sel.value) { a.href = base; return; }
+      var m = base.match(/[?&]text=([^&]*)/);
+      if (!m) return;
+      var txt = decodeURIComponent(m[1]).replace(").", ", sabor " + sel.value + ").");
+      a.href = base.replace(m[1], encodeURIComponent(txt));
+    });
   });
 
   /* ---------- Kits: agregar varios productos en un clic ---------- */
@@ -225,6 +240,7 @@
         lines.push("• " + it.name + " (" + it.format + ") × " + it.qty + " — " + fmtCOP(it.price * it.qty));
       });
       lines.push("", "Total estimado: " + fmtCOP(total) + " (IVA incluido)");
+      lines.push("¿Me confirman disponibilidad, envío y descuento al por mayor?");
       if (nameF && nameF.value.trim()) lines.push("", "Nombre: " + nameF.value.trim());
       else lines.push("");
       lines.push("Ciudad: " + cityF.value.trim());
@@ -232,7 +248,10 @@
       var notes = document.getElementById("f-notas");
       if (notes && notes.value.trim()) lines.push("Notas: " + notes.value.trim());
       var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
-      window.open(url, "_blank", "noopener");
+      // Los navegadores de Instagram/Facebook suelen bloquear ventanas nuevas:
+      // si no se abre, navegamos a WhatsApp en la misma pestaña.
+      var w = window.open(url, "_blank");
+      if (w) { w.opener = null; } else { location.href = url; }
   }
   if (quoteForm) {
     quoteForm.addEventListener("submit", function (e) { e.preventDefault(); sendQuote(); });

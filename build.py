@@ -2,7 +2,7 @@
 """Generador del sitio estático Insumos Pop."""
 import html as html_mod
 import json, os, shutil, urllib.parse
-from data import WA, WA_DISPLAY, SITE, DOMAIN, MAYOREO, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES
+from data import WA, WA_DISPLAY, SITE, DOMAIN, MAYOREO, QUALITY, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES
 
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(RAIZ, "site")
@@ -55,18 +55,19 @@ def fmt_cop(n):
 def wa_link(msg):
     return "https://wa.me/" + WA + "?text=" + urllib.parse.quote(msg)
 
-WA_GENERIC = wa_link("Hola Insumos Pop 👋 Quiero información sobre sus insumos de bubble tea para mi negocio.")
+WA_GENERIC = wa_link("Hola Insumos Pop 👋 Quiero probar sus insumos. Mi negocio es: \nCiudad: ")
 
 WA_ICON = ('<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'
  '<path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.1-.3.2-.5 0-.2 0-.4-.1-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.4z"/></svg>')
 
-def head(title, desc, canonical, root, jsonld=None, og_img=None, preload=None):
+def head(title, desc, canonical, root, jsonld=None, og_img=None, preload=None, robots=None, og_type="website"):
     j = ""
     if jsonld:
         for block in jsonld:
             j += '<script type="application/ld+json">' + json.dumps(block, ensure_ascii=False) + "</script>\n"
     og = og_img or (SITE + "/assets/img/polvo-taro-bubble-tea.webp")
-    pre = f'<link rel="preload" as="image" href="{preload}">' if preload else ""
+    pre = f'<link rel="preload" as="image" href="{preload}" fetchpriority="high">' if preload else ""
+    rob = f'<meta name="robots" content="{robots}">\n' if robots else ""
     return f"""<!doctype html>
 <html lang="es-CO" data-theme="light">
 <head>
@@ -74,13 +75,15 @@ def head(title, desc, canonical, root, jsonld=None, og_img=None, preload=None):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="canonical" href="{canonical}">
-<meta property="og:type" content="website">
+{rob}<link rel="canonical" href="{canonical}">
+<meta property="og:type" content="{og_type}">
+<meta property="og:locale" content="es_CO">
 <meta property="og:site_name" content="Insumos Pop">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="{og}">
 <meta property="og:url" content="{canonical}">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#faf7f0">
 <script>(function(){{try{{var t=localStorage.getItem("ip_theme_v2");if(t==="dark"){{document.documentElement.setAttribute("data-theme","dark");document.querySelector('meta[name="theme-color"]').setAttribute("content","#0b0b0f");}}}}catch(e){{}}}})()</script>
 <link rel="icon" href="{root}favicon.ico" sizes="any">
@@ -187,7 +190,8 @@ def add_btn(p, root, cls="btn-line"):
 
 def card(p, root):
     url = root + product_url(p["slug"])
-    uses = " · ".join(p["uses"][:2])
+    uses = " · ".join(p.get("notes") or p["uses"][:2])
+    wa_mayor = wa_link(f"Hola Insumos Pop 👋 Me interesa {p['name']} ({p['format']}). ¿Cuál es el precio al por mayor? Ciudad: ")
     if p.get("flavors"):
         # Los productos con sabores se eligen en la ficha (evita pedidos sin sabor)
         actions = f'<a class="btn btn-gold" href="{url}">Elegir sabores</a>'
@@ -199,7 +203,7 @@ def card(p, root):
     <h3><a href="{url}">{p['short']}</a> <span class="zh">{p['zh']}</span></h3>
     <p class="meta">{p['format']} · {uses}</p>
     <p class="price">{fmt_cop(p['price'])} <small>IVA incluido</small></p>
-    <p><span class="tag-mayoreo">{MAYOREO['etiqueta']}</span></p>
+    <p><a class="tag-mayoreo" href="{wa_mayor}" target="_blank" rel="noopener" title="Pregunta tu precio al por mayor por WhatsApp">{MAYOREO['etiqueta']}</a></p>
     <div class="card-actions">
       {actions}
     </div>
@@ -242,7 +246,7 @@ def product_ld(p):
             # este valor antes de publicar si una referencia deja de estarlo.
             "availability": "https://schema.org/InStock",
             "itemCondition": "https://schema.org/NewCondition",
-            "seller": {"@type": "Organization", "name": "Insumos Pop"},
+            "seller": {"@type": "Organization", "@id": SITE + "/#org", "name": "Insumos Pop"},
         },
     }
 
@@ -251,6 +255,14 @@ def faq_html(faqs):
     for q, a in faqs:
         out += f'<details class="faq"><summary>{q}</summary><p>{a}</p></details>'
     return out
+
+def profile_faq_ld(faqs):
+    return {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": q,
+                        "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs],
+    }
 
 def kit_attr(items):
     data = []
@@ -275,7 +287,7 @@ def kit_html(kit, root="./", img_slug=None, show_title=True):
     if img_slug:
         ip = ALL_PRODUCTS[img_slug]
         img = f'<img src="{root}assets/img/{ip["img"]}-card.webp" alt="" loading="lazy">'
-    wa_kit = wa_link(f"Hola Insumos Pop 👋 Quiero cotizar el {kit['name']} ({fmt_cop(total)}, IVA incluido). Mi ciudad: ")
+    wa_kit = wa_link(f"Hola Insumos Pop 👋 Quiero el {kit['name']} ({fmt_cop(total)}). ¿Qué descuento al por mayor aplica? Ciudad: ")
     title = f"<h3>{kit['name']}</h3>" if show_title else ""
     return f"""<div class="kit">
       {img}
@@ -283,7 +295,7 @@ def kit_html(kit, root="./", img_slug=None, show_title=True):
       <p class="muted">{kit['pitch']}</p>
       <ul>{lis}</ul>
       <p class="kit-price">{fmt_cop(total)} <small>IVA incluido</small></p>
-      <p class="kit-note">Es la suma exacta de los precios del catálogo: lo que agregamos es la selección ya pensada y la asesoría para montarla.</p>
+      <p class="kit-note">Es la suma exacta de los precios del catálogo. Al cotizar el kit completo te confirmamos tu descuento al por mayor.</p>
       <div class="kit-cta">
         <a class="btn btn-wa" href="{wa_kit}" target="_blank" rel="noopener">{WA_ICON} Cotizar este kit</a>
         <button class="btn btn-line" data-kit="{kit_attr(kit['items'])}">Agregar a cotización</button>
@@ -327,6 +339,32 @@ def recipes_links(p, root):
     lis = "".join(f'<li><a href="{root}recetas-bubble-tea/{s}/">{RECIPES_BY_SLUG[s]["title"]}</a></li>' for s in links)
     return f'<h2>Recetas con este producto</h2><ul class="list">{lis}</ul>'
 
+def quality_html(root, compact=False):
+    """Sección «Calidad y sabor»: pilares + notas de sabor por producto."""
+    pillars = "".join(f'<div class="q-pillar"><h3>{t}</h3><p class="muted">{d}</p></div>'
+                      for t, d in QUALITY["pillars"])
+    notes = ""
+    if not compact:
+        for slug in QUALITY["notes"]:
+            p = ALL_PRODUCTS[slug]
+            chips = "".join(f"<span>{n}</span>" for n in p["notes"])
+            notes += (f'<a class="q-note" href="{root}{product_url(slug)}">'
+                      f'<img src="{root}assets/img/{p["img"]}-card.webp" alt="" loading="lazy" width="96" height="101">'
+                      f'<span class="q-note-body"><strong>{p["short"]}</strong><span class="q-chips">{chips}</span></span></a>')
+        notes = f'<h3 class="q-notes-title">Notas de sabor</h3><div class="q-notes">{notes}</div>'
+    wa = wa_link("Hola Insumos Pop 👋 Quiero una muestra para probar el sabor en mi negocio. Tipo de negocio: \nCiudad: ")
+    return f"""<section class="quality">
+  <div class="wrap">
+    <p class="eyebrow">{QUALITY['eyebrow']}</p>
+    <h2>{QUALITY['h2']}</h2>
+    <hr class="rule">
+    <p class="lead" style="max-width:44em">{QUALITY['intro']}</p>
+    <div class="q-pillars">{pillars}</div>
+    {notes}
+    <p class="center" style="margin-top:26px"><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">{WA_ICON} Pide tu muestra por WhatsApp</a></p>
+  </div>
+</section>"""
+
 # ---------------------------------------------------------------- fichas
 COMPARE = {}
 _cmp_matcha = """<div class="compare"><h3>¿Cuál matcha te conviene?</h3>
@@ -356,7 +394,7 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
     url_rel = product_url(slug)
     root = "../../"
     canonical = SITE + "/" + url_rel
-    wa_msg = wa_link(f"Hola Insumos Pop 👋 Quiero cotizar {p['name']} (SKU {p['sku']}, {p['format']}, {fmt_cop(p['price'])}) y recibir la ficha técnica con dosificación. Mi ciudad: ")
+    wa_msg = wa_link(f"Hola Insumos Pop 👋 Me interesa {p['name']} ({p['format']}). ¿Me envían muestra y el precio al por mayor? Ciudad: \n(Ref. {p['sku']})")
     crumbs = [(category_href, category_label), (url_rel, p["short"])]
     flavors_row = ""
     if p.get("flavors"):
@@ -366,11 +404,15 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
     desc_html = "".join(f"<p>{d}</p>" for d in p["desc"])
     spec_flavor = f"<tr><th>Sabores</th><td>{', '.join(p['flavors'])}</td></tr>" if p.get("flavors") else ""
     seo_name = p.get("seo_name", p["name"])
+    notes_chips = "".join(f'<span class="chip on">{n}</span>' for n in p.get("notes", []))
+    notes_row = f'<p class="eyebrow" style="margin-top:14px">Notas de sabor</p><div class="chips">{notes_chips}</div>' if notes_chips else ""
+    ratio_row = (f"<tr><th>Proporción sugerida</th><td>{p['ratio']} como punto de partida; ajústala a tu receta y tamaño de vaso.</td></tr>"
+                 if p.get("ratio") else "")
     html = head(
-        f"{seo_name} · {p['format']} | Insumos Pop",
-        f"{seo_name} para {p['uses'][0].lower()} y {p['uses'][1].lower()}. {p['format']}, {fmt_cop(p['price'])} con IVA. Consulta ficha técnica y envío en Colombia.",
-        canonical, root,
-        jsonld=[product_ld(p), breadcrumb_ld(crumbs)],
+        p.get("seo_title") or f"{seo_name} · {p['format']} | Insumos Pop",
+        p.get("seo_desc") or f"{seo_name} para {p['uses'][0].lower()} y {p['uses'][1].lower()}. {p['format']}, {fmt_cop(p['price'])} con IVA. Consulta ficha técnica y envío en Colombia.",
+        canonical, root, og_type="product",
+        jsonld=[product_ld(p), breadcrumb_ld(crumbs), profile_faq_ld(p["faqs"])],
         og_img=SITE + "/assets/img/" + p["img"] + ".webp",
         preload=root + "assets/img/" + p["img"] + ".webp",
     )
@@ -379,20 +421,22 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
     html += f"""
 <div class="wrap pdp">
   <div class="pdp-gallery">
-    <img src="{root}assets/img/{p['img']}.webp" alt="{p['alt']}" width="1100" height="1155" id="pdp-main">
+    <img src="{root}assets/img/{p['img']}.webp" alt="{p['alt']}" width="1100" height="1155" id="pdp-main" fetchpriority="high">
     {extra_gallery}
   </div>
   <div>
     <p class="eyebrow">{category_label}</p>
-    <h1>{p['name']}</h1>
+    <h1>{p.get('h1', p['name'])}</h1>
     <p class="zh">{p['zh']}</p>
     <hr class="rule">
-    <p>{p['teaser']}</p>
+    <p class="sensory">{p.get('sensory', p['teaser'])}</p>
+    {notes_row}
+    <p class="eyebrow" style="margin-top:10px">Usos</p>
     <div class="chips">{uses_chips}</div>
     {audience_chips(p, root)}
     <div class="price-box">
       <span class="big">{fmt_cop(p['price'])}</span> · {p['format']}
-      <div><span class="tag-mayoreo">{MAYOREO['etiqueta']}</span></div>
+      <div><a class="tag-mayoreo" href="{wa_msg}" target="_blank" rel="noopener">{MAYOREO['etiqueta']}</a></div>
       <div class="cond stock-status"><span aria-hidden="true">●</span> En stock</div>
       <a class="btn btn-wa pdp-quick-cta" href="{wa_msg}" target="_blank" rel="noopener">{WA_ICON} Cotizar ahora</a>
       <div class="cond">IVA incluido · Confirma el costo y plazo del envío por WhatsApp</div>
@@ -422,6 +466,7 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
         <tr><th>Precio</th><td>{fmt_cop(p['price'])} (IVA incluido)</td></tr>
         {spec_flavor}
         {cost_row(p)}
+        {ratio_row}
         <tr><th>Origen</th><td>{p['origin']}</td></tr>
         <tr><th>Nombre original</th><td>{p['zh']}</td></tr>
         <tr><th>Referencia (SKU)</th><td>{p['sku']}</td></tr>
@@ -489,13 +534,6 @@ def itemlist_ld(slugs):
         ],
     }
 
-def profile_faq_ld(faqs):
-    return {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [{"@type": "Question", "name": q,
-                        "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs],
-    }
 
 def build_profile(pr):
     root = "../"
@@ -540,6 +578,8 @@ def build_profile(pr):
     <img src="{root}assets/img/{hero_p['img']}.webp" alt="{hero_p['alt']}" width="1100" height="1155" fetchpriority="high">
   </div>
 </div>
+
+{quality_html(root, compact=True)}
 
 <section class="wrap">
   <p class="eyebrow">Por qué funciona en tu negocio</p>
@@ -614,6 +654,7 @@ html += f"""
   <h1>Polvos para bubble tea</h1>
   <hr class="rule">
   <p style="max-width:46em">Mezclas para preparar milk tea, frappés y lattes, además de matcha y hojicha puros para cartas de especialidad. Compara presentación, origen, aplicaciones y precio antes de cotizar.</p>
+  <p class="muted" style="max-width:46em">Selecciones por negocio: <a href="{root}proveedor-bubble-tea/">tiendas de bubble tea</a> · <a href="{root}bubble-tea-para-cafeterias/">cafeterías</a> · <a href="{root}kit-emprendedor-bubble-tea/">emprendedores</a>.</p>
   <p class="muted" style="max-width:46em">Los precios incluyen IVA. Si estás armando una carta nueva, revisa la <a href="{root}guia-emprender-bubble-tea/">guía para empezar</a> o <a href="{WA_GENERIC}" target="_blank" rel="noopener">pide una recomendación por WhatsApp</a>.</p>
   <h2 style="margin-top:34px">Milk tea, matcha, hojicha y toppings <span class="muted" style="font-weight:500;font-size:1rem">· mezclas listas y puros</span></h2>
   <div class="grid">{premium_cards}</div>
@@ -629,9 +670,9 @@ canonical = SITE + "/siropes-bubble-tea/"
 crumbs = [("siropes-bubble-tea/", "Siropes para bubble tea")]
 chips = "".join(f'<span class="chip on">{f}</span>' for f in SYRUP["flavors"])
 html = head(
-    "Siropes para Bebidas y Coctelería | Insumos Pop",
-    "Siropes concentrados de fruta hechos en Taiwán para bubble tea, cócteles, frappés, limonadas y sodas italianas. 12 sabores en botella de 1.9 L, $126.500 IVA incluido.",
-    canonical, root, jsonld=[breadcrumb_ld(crumbs)],
+    "Siropes para Bubble Tea y Bebidas | Insumos Pop",
+    "Siropes concentrados de Taiwán en 12 sabores para bubble tea, sodas, limonadas y cócteles. Botella 1,9 L a $126.500 con IVA. Envíos en Colombia.",
+    canonical, root, jsonld=[breadcrumb_ld(crumbs), itemlist_ld([SYRUP["slug"]])],
 )
 html += header_html(root, "siropes")
 html += breadcrumb(root, crumbs)
@@ -641,6 +682,7 @@ html += f"""
   <h1>Siropes de fruta para bebidas</h1>
   <hr class="rule">
   <p style="max-width:46em">Concentrados de fruta de Taiwán para cócteles, mocktails, frappés, limonadas, sodas italianas y tés fríos. La botella de 1,9 L cuesta $126.500 con IVA incluido.</p>
+  <p style="max-width:46em">{SYRUP['sensory']} ¿Tienes un bar? Mira la <a href="{root}siropes-para-cocteleria/">selección para coctelería</a>.</p>
   <p style="max-width:46em">Define la dosis por bebida para estandarizar sabor y costo. Como referencia matemática, una dosis de 20 ml representa cerca de $1.332 de sirope y una botella alcanza para 95 preparaciones.</p>
   <h2 style="margin-top:30px">12 sabores disponibles</h2>
   <div class="chips">{chips}</div>
@@ -656,12 +698,12 @@ root = "../"
 canonical = SITE + "/recetas-bubble-tea/"
 crumbs = [("recetas-bubble-tea/", "Recetas de bubble tea")]
 cards = ""
-recipe_imgs = {"bubble-tea-de-taro": "polvo-taro-bubble-tea", "brown-sugar-milk-tea": "polvo-okinawa-brown-sugar",
+recipe_imgs = {"como-hacer-bubble-tea": "polvo-hokkaido-milk-tea", "bubble-tea-de-taro": "polvo-taro-bubble-tea", "brown-sugar-milk-tea": "polvo-okinawa-brown-sugar",
                "matcha-latte-frio": "polvo-matcha-taiwan", "soda-italiana-con-sirope": "siropes-de-fruta-linea"}
 for r in RECIPES:
     img = recipe_imgs[r["slug"]]
     cards += f"""<article class="card">
-  <a class="card-img" href="{root}recetas-bubble-tea/{r['slug']}/" aria-hidden="true" tabindex="-1"><img src="{root}assets/img/{img}-card.webp" alt="" loading="lazy"></a>
+  <a class="card-img" href="{root}recetas-bubble-tea/{r['slug']}/" aria-hidden="true" tabindex="-1"><img src="{root}assets/img/{img}-card.webp" alt="{r['title']}: receta con insumos Insumos Pop" loading="lazy" width="520" height="546"></a>
   <div class="card-body">
     <h3><a href="{root}recetas-bubble-tea/{r['slug']}/">{r['title']}</a></h3>
     <p class="meta">{r['intro'][:110]}…</p>
@@ -678,7 +720,7 @@ html += breadcrumb(root, crumbs)
 html += f"""
 <section class="wrap" style="padding-top:26px">
   <p class="eyebrow">Aprende y vende</p>
-  <h1>Recetas de bubble tea</h1>
+  <h1>Recetas de bubble tea paso a paso</h1>
   <hr class="rule">
   <p style="max-width:46em">Recetas base para arrancar tu menú con nuestros insumos. Las cantidades son sugeridas: ajústalas a tu vaso, tu costo por bebida y el gusto de tus clientes. ¿Necesitas dosificación exacta por producto? <a href="{WA_GENERIC}" target="_blank" rel="noopener">Pídenos la ficha técnica por WhatsApp</a>.</p>
   <div class="grid" style="margin-top:26px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">{cards}</div>
@@ -691,7 +733,16 @@ for r in RECIPES:
     root = "../../"
     url_rel = "recetas-bubble-tea/" + r["slug"] + "/"
     canonical = SITE + "/" + url_rel
-    crumbs = [("recetas-bubble-tea/", "Recetas"), (url_rel, r["title"])]
+    crumbs = [("recetas-bubble-tea/", "Recetas de bubble tea"), (url_rel, r["title"])]
+    wa_r = wa_link(f"Hola Insumos Pop 👋 Quiero preparar {r['title'].lower()} en mi negocio. ¿Me cotizan los insumos? Ciudad: ")
+    recipe_ld = {
+        "@context": "https://schema.org", "@type": "Recipe", "name": r["title"],
+        "description": r["metadesc"], "image": SITE + "/assets/img/" + recipe_imgs[r["slug"]] + ".webp",
+        "author": {"@type": "Organization", "@id": SITE + "/#org", "name": "Insumos Pop"},
+        "recipeCategory": "Bebida", "recipeCuisine": "Taiwanesa", "recipeYield": "1 vaso",
+        "recipeIngredient": r["ingredients"],
+        "recipeInstructions": [{"@type": "HowToStep", "text": s} for s in r["steps"]],
+    }
     img = recipe_imgs[r["slug"]]
     ing = "".join(f"<li>{i}</li>" for i in r["ingredients"])
     steps = "".join(f"<li>{s}</li>" for s in r["steps"])
@@ -703,7 +754,7 @@ for r in RECIPES:
     html = head(
         f"{r['title']} | Receta | Insumos Pop",
         r["metadesc"], canonical, root,
-        jsonld=[breadcrumb_ld(crumbs)],
+        jsonld=[breadcrumb_ld(crumbs), recipe_ld],
         og_img=SITE + "/assets/img/" + img + ".webp",
     )
     html += header_html(root, "recetas")
@@ -724,10 +775,11 @@ for r in RECIPES:
       <h2 style="margin-top:28px">Insumos usados en esta receta</h2>
       <ul class="list">{prods}</ul>
       <div class="cta-row">
-        <a class="btn btn-wa" href="{WA_GENERIC}" target="_blank" rel="noopener">{WA_ICON} Cotizar estos insumos</a>
+        <a class="btn btn-wa" href="{wa_r}" target="_blank" rel="noopener">{WA_ICON} Cotizar estos insumos</a>
       </div>
+      <p class="muted" style="margin-top:14px"><a href="{root}recetas-bubble-tea/">← Ver todas las recetas de bubble tea</a></p>
     </div>
-    <div><img src="{root}assets/img/{img}.webp" alt="" style="border-radius:14px;border:1px solid var(--line)"></div>
+    <div><img src="{root}assets/img/{img}.webp" alt="{r['title']} preparado con insumos Insumos Pop" width="1100" height="1155" style="border-radius:14px;border:1px solid var(--line)"></div>
   </div>
 </section>
 """
@@ -923,7 +975,7 @@ biz_opts = "".join(f"<option>{o}</option>" for o in
 html = head(
     "Cotiza insumos de bubble tea para tu negocio | Insumos Pop",
     "Arma tu cotización de polvos y siropes para bubble tea y recíbela por WhatsApp. Atendemos cafeterías, restaurantes y emprendimientos en toda Colombia.",
-    canonical, root, jsonld=[breadcrumb_ld(crumbs)],
+    canonical, root, jsonld=[breadcrumb_ld(crumbs)], robots="noindex,follow",
 )
 html += header_html(root, "", body_class="p-cotizar")
 html += breadcrumb(root, crumbs)
@@ -934,11 +986,11 @@ html += f"""
   <hr class="rule">
   <div id="quote-empty" class="panel">
     <p><strong>Aún no has agregado productos.</strong></p>
-    <p class="muted">Recorre el catálogo y usa “Agregar a cotización”, o si lo prefieres escríbenos directo por WhatsApp.</p>
+    <p class="muted">La forma más rápida: escríbenos por WhatsApp y te recomendamos sabores, te enviamos muestra y te confirmamos tu precio al por mayor. También puedes recorrer el catálogo y usar “Agregar a cotización”.</p>
     <div class="cta-row">
+      <a class="btn btn-wa" href="{WA_GENERIC}" target="_blank" rel="noopener">{WA_ICON} Escribir por WhatsApp ahora</a>
       <a class="btn btn-gold" href="{root}polvos-bubble-tea/">Ver polvos</a>
       <a class="btn btn-line" href="{root}siropes-bubble-tea/">Ver siropes</a>
-      <a class="btn btn-wa" href="{WA_GENERIC}" target="_blank" rel="noopener">{WA_ICON} WhatsApp directo</a>
     </div>
   </div>
   <div id="quote-list" aria-live="polite"></div>
@@ -971,6 +1023,7 @@ canonical = SITE + "/"
 org_ld = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": SITE + "/#org",
     "name": "Insumos Pop",
     "legalName": "Taro Pop S.A.S.",
     "url": SITE + "/",
@@ -1003,11 +1056,15 @@ home_faqs = [
      "Escríbenos por WhatsApp y pregunta por la muestra gratis para negocios."),
     ("¿Los precios incluyen IVA?",
      "Sí, todos los precios publicados incluyen IVA y emitimos factura (Taro Pop S.A.S.)."),
+    ("¿Tienen precio al por mayor?",
+     "Sí. Si tu negocio compra por volumen, te confirmamos por escrito tu descuento al por mayor en la cotización por WhatsApp."),
 ]
+website_ld = {"@context": "https://schema.org", "@type": "WebSite", "name": "Insumos Pop",
+              "url": SITE + "/", "inLanguage": "es-CO", "publisher": {"@id": SITE + "/#org"}}
 html = head(
-    "Insumos para Bubble Tea y Cafeterías en Colombia | Insumos Pop",
-    "Polvos para bubble tea, matcha, hojicha, cheese foam y siropes para cafeterías y bares. Precios con IVA, muestra para negocios y envíos en Colombia.",
-    canonical, root, jsonld=[org_ld],
+    "Insumos para Bubble Tea en Colombia | Insumos Pop",
+    "Polvos de taro, milk tea, matcha y siropes de Taiwán con sabor auténtico para cafeterías y tiendas de bubble tea. Precios con IVA y envíos en Colombia.",
+    canonical, root, jsonld=[org_ld, website_ld, profile_faq_ld(home_faqs)],
     preload="./assets/img/polvo-taro-bubble-tea.webp",
 )
 html += header_html(root, "")
@@ -1015,18 +1072,18 @@ html += f"""
 <div class="hero">
   <div class="wrap hero-grid">
     <div>
-      <p class="eyebrow">Polvos y siropes para negocios HORECA</p>
-      <h1>Insumos para bubble tea, cafeterías y bares en Colombia</h1>
-      <p class="lead">Compra polvos para milk tea, matcha, hojicha, cheese foam y siropes concentrados de fruta. Precios publicados con IVA y asesoría para elegir según tu carta.</p>
+      <p class="eyebrow">Insumos para bubble tea, cafeterías y bares en Colombia</p>
+      <h1>Sabor auténtico de Taiwán y Japón, listo para tu carta</h1>
+      <p class="lead">Taro cremoso, brown sugar con notas de caramelo, matcha de Shizuoka y 12 siropes de fruta. Pide una muestra, pruébala con tu receta y decide con tu propio paladar.</p>
       <div class="cta-row">
-        <a class="btn btn-wa" href="{wa_link('Hola Insumos Pop 👋 Quiero cotizar insumos para mi negocio. Mi tipo de negocio es: ')}" target="_blank" rel="noopener">{WA_ICON} Cotizar para mi negocio</a>
-        <a class="btn btn-line" href="#catalogo">Ver catálogo y precios</a>
+        <a class="btn btn-wa" href="{wa_link('Hola Insumos Pop 👋 Quiero una muestra para mi negocio. Tipo de negocio: ' + chr(10) + 'Ciudad: ')}" target="_blank" rel="noopener">{WA_ICON} Quiero probar una muestra</a>
+        <a class="btn btn-line" href="#catalogo">Ver sabores y precios</a>
       </div>
-      <p class="sample-note"><strong>Muestra gratis para negocios:</strong> prueba el producto con tu receta antes del primer pedido.</p>
+      <p class="sample-note"><strong>Más de 40 años de oficio en cada bolsa:</strong> fabricado en Taiwán por especialistas en bubble tea.</p>
       <div class="trust">
+        <div><b>Importado directo</b>Taiwán y Japón</div>
         <div><b>Precios claros</b>IVA incluido y factura</div>
-        <div><b>Compra con menos riesgo</b>Muestra para negocios</div>
-        <div><b>Envíos en Colombia</b>Costo y plazo al cotizar</div>
+        <div><b>Descuento al por mayor</b>Te lo confirmamos al cotizar</div>
       </div>
     </div>
     <img src="{root}assets/img/polvo-taro-bubble-tea.webp" alt="Bolsa de polvo de taro Insumos Pop de 1 kg junto a un plato con polvo violeta" width="1100" height="1155" fetchpriority="high">
@@ -1045,17 +1102,19 @@ html += f"""
   </div>
 </section>
 
+{quality_html(root)}
+
 <section class="wrap" id="catalogo">
   <p class="eyebrow">Catálogo</p>
   <h2>Compra por tipo de insumo</h2>
   <hr class="rule">
   <div class="tiles">
     <a class="tile" href="{root}polvos-bubble-tea/">
-      <img src="{root}assets/img/polvo-matcha-taiwan-card.webp" alt="Polvos para bubble tea: bolsa de Taiwan Matcha de Insumos Pop" loading="lazy">
+      <img src="{root}assets/img/polvo-matcha-taiwan-card.webp" alt="Polvos para bubble tea: bolsa de Taiwan Matcha de Insumos Pop" loading="lazy" width="520" height="546">
       <div class="tile-body"><h3>Polvos para bubble tea</h3><p>Mezclas para milk tea, frappés y lattes, además de matcha, hojicha y polvos de fruta. Desde {fmt_cop(FRUIT_POWDER["price"])} el kilo.</p><span class="link">Ver los polvos →</span></div>
     </a>
     <a class="tile" href="{root}siropes-bubble-tea/">
-      <img src="{root}assets/img/siropes-de-fruta-linea-card.webp" alt="Siropes de fruta concentrados de Insumos Pop en botellas de 1.9 litros" loading="lazy">
+      <img src="{root}assets/img/siropes-de-fruta-linea-card.webp" alt="Siropes de fruta concentrados de Insumos Pop en botellas de 1.9 litros" loading="lazy" width="520" height="546">
       <div class="tile-body"><h3>Siropes de fruta</h3><p>Concentrados taiwaneses en 12 sabores para cócteles, sodas, limonadas y té. Botella 1.9 L, {fmt_cop(SYRUP["price"])}.</p><span class="link">Ver los siropes →</span></div>
     </a>
   </div>
@@ -1112,10 +1171,10 @@ html += f"""
 
 <section class="cta-final">
   <div class="wrap center">
-    <h2>Cotiza con precio, disponibilidad y envío claros</h2>
-    <p class="muted" style="max-width:38em;margin:0 auto 8px">Cuéntanos qué negocio tienes y tu ciudad. Te ayudamos a elegir referencias, confirmamos existencias y calculamos el envío antes de que pagues.</p>
+    <h2>Pruébalo en tu barra antes de comprar</h2>
+    <p class="muted" style="max-width:38em;margin:0 auto 8px">Cuéntanos qué negocio tienes y tu ciudad. Te enviamos muestra, te recomendamos sabores y te confirmamos tu precio al por mayor y el envío antes de que pagues.</p>
     <hr class="rule">
-    <a class="btn btn-wa" href="{WA_GENERIC}" target="_blank" rel="noopener">{WA_ICON} WhatsApp directo: {WA_DISPLAY}</a>
+    <a class="btn btn-wa" href="{WA_GENERIC}" target="_blank" rel="noopener">{WA_ICON} Pedir muestra por WhatsApp</a>
   </div>
 </section>
 """
@@ -1159,7 +1218,7 @@ write_page("site.webmanifest", json.dumps(manifest, ensure_ascii=False, separato
 
 urls = ["", "polvos-bubble-tea/", "siropes-bubble-tea/", "recetas-bubble-tea/",
         "guia-emprender-bubble-tea/", "nosotros/", "envios-y-pagos/",
-        "preguntas-frecuentes/", "cotizar/"]
+        "preguntas-frecuentes/"]
 urls += [product_url(p["slug"]) for p in POWDERS]
 urls += [product_url(FRUIT_POWDER["slug"]), product_url(SYRUP["slug"])]
 urls += ["recetas-bubble-tea/" + r["slug"] + "/" for r in RECIPES]
