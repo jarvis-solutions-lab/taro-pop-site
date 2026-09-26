@@ -13,13 +13,20 @@ WA_DISPLAY = "+57 301 8656016"
 SITE = os.environ.get("SITE_URL", "https://insumospop.co").rstrip("/")
 DOMAIN = SITE.replace("https://", "").replace("http://", "")
 
+# Etiqueta de descuento al por mayor: aparece en las tarjetas del catálogo y
+# en cada ficha. El porcentaje exacto se confirma al cotizar según el volumen.
+MAYOREO = dict(
+    etiqueta="Descuento al por mayor",
+    detalle="precio especial por volumen para negocios; te lo confirmamos al cotizar.",
+)
+
 POWDERS = [
     dict(
         slug="polvo-taro",
         name="Polvo de Taro",
         short="Taro",
         zh="芋頭",
-        price=95000, format="Bolsa 1 kg", grams=1000,
+        price=109250, format="Bolsa 1 kg", grams=1000,
         sku="IP-TARO-1K",
         img="polvo-taro-bubble-tea",
         alt="Bolsa negra de 1 kg de polvo de taro Insumos Pop junto a un plato con polvo violeta",
@@ -44,7 +51,7 @@ POWDERS = [
         name="Okinawa Brown Sugar",
         short="Okinawa Brown Sugar",
         zh="黑糖",
-        price=95000, format="Bolsa 1 kg", grams=1000,
+        price=109250, format="Bolsa 1 kg", grams=1000,
         sku="IP-OKBS-1K",
         img="polvo-okinawa-brown-sugar",
         alt="Bolsa de 1 kg de polvo Okinawa Brown Sugar Insumos Pop con azúcar moreno en un plato",
@@ -69,7 +76,7 @@ POWDERS = [
         name="Taiwan Matcha",
         short="Matcha",
         zh="抹茶",
-        price=95000, format="Bolsa 1 kg", grams=1000,
+        price=109250, format="Bolsa 1 kg", grams=1000,
         sku="IP-MATT-1K",
         img="polvo-matcha-taiwan",
         alt="Bolsa de 1 kg de polvo Taiwan Matcha Insumos Pop con polvo verde intenso en un plato",
@@ -94,7 +101,7 @@ POWDERS = [
         name="Shizuoka Matcha 100% puro",
         short="Shizuoka Matcha",
         zh="静岡抹茶",
-        price=110000, format="Bolsa 500 g", grams=500,
+        price=126500, format="Bolsa 500 g", grams=500,
         sku="IP-MASH-500",
         img="matcha-shizuoka-puro",
         alt="Bolsa de 500 g de Shizuoka Matcha puro single origin de Insumos Pop con polvo verde en un plato",
@@ -119,7 +126,7 @@ POWDERS = [
         name="Coral Azul (Blue Coral)",
         short="Coral Azul",
         zh="藍珊瑚",
-        price=95000, format="Bolsa 1 kg", grams=1000,
+        price=109250, format="Bolsa 1 kg", grams=1000,
         sku="IP-CORAL-1K",
         img="polvo-coral-azul",
         alt="Bolsa de 1 kg de polvo Blue Coral de Insumos Pop con polvo azul eléctrico en un plato",
@@ -144,7 +151,7 @@ POWDERS = [
         name="Hojicha",
         short="Hojicha",
         zh="ほうじ茶",
-        price=95000, format="Bolsa 1 kg", grams=1000,
+        price=109250, format="Bolsa 1 kg", grams=1000,
         sku="IP-HOJI-1K",
         img="polvo-hojicha",
         alt="Bolsa de 1 kg de polvo Hojicha de Insumos Pop con polvo tostado color caramelo en un plato",
@@ -169,7 +176,7 @@ POWDERS = [
         name="Pure Hojicha 100% puro",
         short="Pure Hojicha",
         zh="ほうじ茶",
-        price=110000, format="Bolsa 500 g", grams=500,
+        price=126500, format="Bolsa 500 g", grams=500,
         sku="IP-HOJP-500",
         img="hojicha-puro-japon",
         alt="Bolsa de 500 g de Pure Hojicha single origin de Insumos Pop con té tostado molido en un plato",
@@ -194,7 +201,7 @@ POWDERS = [
         name="Thai Milk Tea",
         short="Thai Milk Tea",
         zh="泰式奶茶",
-        price=95000, format="Bolsa 1 kg", grams=1000,
+        price=109250, format="Bolsa 1 kg", grams=1000,
         sku="IP-THAI-1K",
         img="polvo-thai-milk-tea",
         alt="Bolsa de 1 kg de polvo Thai Milk Tea de Insumos Pop con polvo naranja vibrante en un plato",
@@ -219,7 +226,7 @@ POWDERS = [
         name="Taiwan Lemon Condensed Milk",
         short="Lemon Condensed Milk",
         zh="檸檬煉乳",
-        price=95000, format="Bolsa 1 kg", grams=1000,
+        price=109250, format="Bolsa 1 kg", grams=1000,
         sku="IP-LEMON-1K",
         img="polvo-lemon-condensed-milk",
         alt="Bolsa de 1 kg de polvo Lemon Condensed Milk de Insumos Pop con polvo amarillo suave en un plato",
@@ -244,7 +251,7 @@ POWDERS = [
         name="Hokkaido Milk Tea",
         short="Hokkaido Milk Tea",
         zh="北海道奶茶",
-        price=95000, format="Bolsa 1 kg", grams=1000,
+        price=109250, format="Bolsa 1 kg", grams=1000,
         sku="IP-HOKK-1K",
         img="polvo-hokkaido-milk-tea",
         alt="Bolsa de 1 kg de polvo Hokkaido Milk Tea de Insumos Pop con polvo cremoso en un plato",
@@ -269,7 +276,7 @@ POWDERS = [
         name="Hong Kong Mango Coconut",
         short="Mango Coconut",
         zh="芒果椰子",
-        price=95000, format="Bolsa 1 kg", grams=1000,
+        price=109250, format="Bolsa 1 kg", grams=1000,
         sku="IP-HKMC-1K",
         img="polvo-mango-coco-hong-kong",
         alt="Bolsa de 1 kg de polvo Hong Kong Mango Coconut de Insumos Pop con polvo dorado en un plato",
@@ -294,7 +301,7 @@ POWDERS = [
         name="Taiwan Cheese Foam",
         short="Cheese Foam",
         zh="芝士奶蓋",
-        price=95000, format="Bolsa 1 kg", grams=1000,
+        price=109250, format="Bolsa 1 kg", grams=1000,
         sku="IP-CHFO-1K",
         img="polvo-cheese-foam",
         alt="Bolsa de 1 kg de polvo Cheese Foam de Insumos Pop con polvo claro en un plato",
@@ -322,7 +329,7 @@ FRUIT_POWDER = dict(
     name="Polvos de Fruta — Sabores Asiáticos",
     short="Polvos de Fruta",
     zh="果粉",
-    price=65000, format="Bolsa 1 kg", grams=1000,
+    price=74750, format="Bolsa 1 kg", grams=1000,
     sku="IP-FRUTA-1K",
     img="polvos-de-fruta-linea",
     img2="polvos-de-fruta-sabores",
@@ -338,7 +345,7 @@ FRUIT_POWDER = dict(
     ],
     faqs=[
         ("¿Puedo pedir varios sabores en un mismo pedido?",
-         "Claro: arma tu cotización con los sabores que necesites; cada bolsa de 1 kg cuesta $65.000 con IVA incluido."),
+         "Claro: arma tu cotización con los sabores que necesites; cada bolsa de 1 kg cuesta $74.750 con IVA incluido."),
         ("¿Qué sabores hay disponibles?",
          "Mango, Fresa, Coco, Banana, Sandía y Aguacate."),
     ],
@@ -352,7 +359,7 @@ SYRUP = dict(
     name="Siropes de Fruta — Concentrados Asiáticos",
     short="Siropes de Fruta",
     zh="果露",
-    price=110000, format="Botella 1.9 L", grams=None,
+    price=126500, format="Botella 1.9 L", grams=None,
     sku="IP-SIROPE-19L",
     img="siropes-de-fruta-linea",
     img2="sirope-melocoton",
@@ -367,7 +374,7 @@ SYRUP = dict(
     teaser="Siropes concentrados de fruta en 12 sabores para cócteles, mocktails, sodas, limonadas y té frío.",
     desc=[
         "Concentrados de fruta de Taiwán en botella de 1,9 L. La línea incluye mango, maracuyá, fresa, lychee, melocotón, piña, arándano, limón, naranja, toronja, cereza y manzana verde.",
-        "La dosis la define cada barra. Con 20 ml por bebida, una botella alcanza para 95 preparaciones y el sirope cuesta cerca de $1.158 por vaso; los demás ingredientes se calculan aparte.",
+        "La dosis la define cada barra. Con 20 ml por bebida, una botella alcanza para 95 preparaciones y el sirope cuesta cerca de $1.332 por vaso; los demás ingredientes se calculan aparte.",
     ],
     faqs=[
         ("¿Cuántos sabores puedo combinar en un pedido?",
@@ -492,7 +499,7 @@ PROFILES = [
             ("Información para comparar",
              "Cada ficha muestra presentación, precio, origen, aplicaciones y SKU. Al cotizar compartimos documentación y dosificación."),
             ("Costo por bebida calculable",
-             "Bolsas de 1 kg a $95.000: cada ficha muestra el costo por gramo para que calcules tu margen por vaso antes de comprar."),
+             "Bolsas de 1 kg a $109.250: cada ficha muestra el costo por gramo para que calcules tu margen por vaso antes de comprar."),
             ("Pruébalo antes de comprar",
              "Muestra gratis para negocios y asesoría directa: compara color, aroma y disolución contra tu insumo actual con tu propia receta."),
         ],
@@ -509,7 +516,7 @@ PROFILES = [
             ("¿En qué se diferencia de los polvos que ya uso?",
              "Son importados directamente de Taiwán, el país donde nació el bubble tea. Te enviamos muestra gratis para que compares color, aroma y disolución contra tu insumo actual con tu propia receta: la prueba la haces tú."),
             ("¿Cuánto rinde una bolsa de 1 kg?",
-             "Depende de tu dosis por vaso. Cada ficha incluye el costo por gramo (a $95.000 el kilo, $95 por gramo) para que calcules el rendimiento exacto con tu receta, y al cotizar te compartimos la ficha técnica con dosificación."),
+             "Depende de tu dosis por vaso. Cada ficha incluye el costo por gramo (a $109.250 el kilo, $109 por gramo) para que calcules el rendimiento exacto con tu receta, y al cotizar te compartimos la ficha técnica con dosificación."),
             ("¿Venden perlas de tapioca o vasos?",
              "Por ahora nuestro catálogo se concentra en polvos, puros y siropes. Al cotizar te asesoramos sobre cómo integrarlos con los demás insumos de tu operación."),
         ],
@@ -531,11 +538,11 @@ PROFILES = [
         hero_product="matcha-shizuoka",
         wa_msg="Hola Insumos Pop 👋 Tengo una cafetería y quiero diferenciar mi carta con matcha, hojicha y cheese foam. ¿Me envían cotización y muestra gratis?",
         trust=[("Dos tipos de producto", "Mezclas listas y puros"),
-               ("Precios con IVA", "Desde $95.000 por mezcla de 1 kg"),
+               ("Precios con IVA", "Desde $109.250 por mezcla de 1 kg"),
                ("Prueba y documentación", "Muestra y ficha técnica al cotizar")],
         benefits=[
             ("Dos niveles para tu operación",
-             "Mezclas listas ($95.000/kg) para servicio rápido y puros ($110.000/500 g) para bebidas de autor: tú eliges margen y posicionamiento."),
+             "Mezclas listas ($109.250/kg) para servicio rápido y puros ($126.500/500 g) para bebidas de autor: tú eliges margen y posicionamiento."),
             ("Origen y composición diferenciados",
              "Shizuoka Matcha y Pure Hojicha son referencias puras de Japón; las mezclas de Taiwán están formuladas para preparación rápida."),
             ("Un topping para ampliar la carta",
@@ -600,7 +607,7 @@ PROFILES = [
         recipe_slugs=["bubble-tea-de-taro", "matcha-latte-frio"],
         faqs=[
             ("¿Cuánto necesito para empezar?",
-             "El Kit Primer Menú cuesta $505.000 con IVA incluido e incluye 3 bolsas de polvo de 1 kg y 2 siropes de 1,9 L. También puedes cotizar productos sueltos desde $65.000."),
+             "El Kit Primer Menú cuesta $580.750 con IVA incluido e incluye 3 bolsas de polvo de 1 kg y 2 siropes de 1,9 L. También puedes cotizar productos sueltos desde $74.750."),
             ("No sé nada de bubble tea, ¿me van a dejar solo?",
              "No. Al cotizar recibes asesoría directa y ficha técnica de cada producto, y en el sitio tienes la guía para emprender y 4 recetas paso a paso con dosis sugeridas."),
             ("¿Me garantizan que el negocio va a funcionar?",
@@ -619,16 +626,16 @@ PROFILES = [
         metadesc="Siropes concentrados para cócteles, mocktails, sodas y limonadas. Doce sabores en botella de 1,9 L, precios con IVA y envíos en Colombia.",
         eyebrow="Para bares y coctelería",
         h1="Siropes para bares, coctelerías y bebidas sin alcohol",
-        lead="Doce sabores concentrados en botella de 1,9 L. Con una dosis de 20 ml, el costo del sirope es de aproximadamente $1.158 por bebida y la botella alcanza para 95 preparaciones.",
+        lead="Doce sabores concentrados en botella de 1,9 L. Con una dosis de 20 ml, el costo del sirope es de aproximadamente $1.332 por bebida y la botella alcanza para 95 preparaciones.",
         cta_label="Cotizar para mi barra",
         hero_product="siropes-de-fruta",
         wa_msg="Hola Insumos Pop 👋 Tengo un bar y quiero cotizar los siropes concentrados de 1.9 L para coctelería. ¿Qué sabores tienen disponibles y cómo funciona la muestra?",
-        trust=[("Costo por copa calculable", "≈$1.158 con una dosis de 20 ml"),
+        trust=[("Costo por copa calculable", "≈$1.332 con una dosis de 20 ml"),
                ("Dosis bajo tu control", "Rendimiento según tu receta"),
                ("12 sabores", "De lychee a manzana verde")],
         benefits=[
             ("Costo por copa que puedes calcular",
-             "Botella de 1.9 L a $110.000: ≈$58 por ml. Tú decides el chorro y sabes tu costo exacto antes de armar el cóctel (la operación completa está abajo)."),
+             "Botella de 1.9 L a $126.500: ≈$67 por ml. Tú decides el chorro y sabes tu costo exacto antes de armar el cóctel (la operación completa está abajo)."),
             ("Una referencia para varias secciones de la carta",
              "El mismo sabor puede usarse en cócteles, mocktails, sodas y limonadas. La dosis y la receta las controla tu barra."),
             ("12 sabores para toda la carta",
@@ -651,11 +658,11 @@ PROFILES = [
         ],
         extra_html="""<div class="compare"><h3>Hagamos la cuenta juntos</h3>
 <div class="trust" style="margin:6px 0 14px">
-  <div><b>~$1.200</b>de sirope por cóctel (chorro de 20 ml)</div>
+  <div><b>~$1.300</b>de sirope por cóctel (chorro de 20 ml)</div>
   <div><b>95</b>cócteles por botella de 1.9 L</div>
-  <div><b>≈$58</b>por ml de concentrado</div>
+  <div><b>≈$67</b>por ml de concentrado</div>
 </div>
-<p class="muted">La derivación, para que la compruebes: botella de 1.9 L = 1.900 ml por $110.000 (IVA incluido) → $110.000 ÷ 1.900 ≈ $57,9 por ml. Un chorro de 20 ml × $57,9 ≈ $1.158, y 1.900 ÷ 20 = 95 copas. Con 15 ml: ≈$870 por copa y ~126 copas.</p>
+<p class="muted">La derivación, para que la compruebes: botella de 1.9 L = 1.900 ml por $126.500 (IVA incluido) → $126.500 ÷ 1.900 ≈ $66,6 por ml. Un chorro de 20 ml × $66,6 ≈ $1.332, y 1.900 ÷ 20 = 95 copas. Con 15 ml: ≈$999 por copa y ~126 copas.</p>
 <p class="muted">Es el costo del sirope, no del cóctel completo (licor, hielo, garnish y vaso van aparte). La dosis exacta la defines tú; por eso te damos muestra gratis antes de comprar.</p></div>""",
         cta_title="Haz la cuenta en tu barra",
         cta_text="Pide tu muestra, define tu chorro estándar y calcula tu costo por copa con datos reales.",

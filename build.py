@@ -2,7 +2,7 @@
 """Generador del sitio estático Insumos Pop."""
 import html as html_mod
 import json, os, shutil, urllib.parse
-from data import WA, WA_DISPLAY, SITE, DOMAIN, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES
+from data import WA, WA_DISPLAY, SITE, DOMAIN, MAYOREO, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES
 
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(RAIZ, "site")
@@ -199,6 +199,7 @@ def card(p, root):
     <h3><a href="{url}">{p['short']}</a> <span class="zh">{p['zh']}</span></h3>
     <p class="meta">{p['format']} · {uses}</p>
     <p class="price">{fmt_cop(p['price'])} <small>IVA incluido</small></p>
+    <p><span class="tag-mayoreo">{MAYOREO['etiqueta']}</span></p>
     <div class="card-actions">
       {actions}
     </div>
@@ -329,12 +330,12 @@ def recipes_links(p, root):
 # ---------------------------------------------------------------- fichas
 COMPARE = {}
 _cmp_matcha = """<div class="compare"><h3>¿Cuál matcha te conviene?</h3>
-<p><strong>Mezcla lista (Taiwan Matcha, $95.000 · 1 kg):</strong> servicio rápido, sabor ya balanceado y costo por bebida controlado. Ideal para volumen.</p>
-<p><strong>100% puro (Shizuoka Matcha, $110.000 · 500 g):</strong> tú controlas dosis, leche y dulzor; carta de especialidad con historia de origen real.</p>
+<p><strong>Mezcla lista (Taiwan Matcha, $109.250 · 1 kg):</strong> servicio rápido, sabor ya balanceado y costo por bebida controlado. Ideal para volumen.</p>
+<p><strong>100% puro (Shizuoka Matcha, $126.500 · 500 g):</strong> tú controlas dosis, leche y dulzor; carta de especialidad con historia de origen real.</p>
 <p class="muted">¿Cuál pido? Si vendes volumen, la mezcla; si tu carta es de autor, el puro — o ambos: uno para la carta base y otro para especiales.</p></div>"""
 _cmp_hojicha = """<div class="compare"><h3>¿Cuál hojicha te conviene?</h3>
-<p><strong>Mezcla lista (Hojicha, $95.000 · 1 kg):</strong> lista para bebidas, servicio rápido y costo por vaso controlado.</p>
-<p><strong>100% puro (Pure Hojicha, $110.000 · 500 g):</strong> té tostado single origin de Japón para lattes y postres de autor.</p>
+<p><strong>Mezcla lista (Hojicha, $109.250 · 1 kg):</strong> lista para bebidas, servicio rápido y costo por vaso controlado.</p>
+<p><strong>100% puro (Pure Hojicha, $126.500 · 500 g):</strong> té tostado single origin de Japón para lattes y postres de autor.</p>
 <p class="muted">¿Cuál pido? Si vendes volumen, la mezcla; si tu carta es de autor, el puro — o ambos.</p></div>"""
 COMPARE["polvo-matcha-taiwan"] = _cmp_matcha
 COMPARE["matcha-shizuoka"] = _cmp_matcha
@@ -347,7 +348,7 @@ def cost_row(p):
         per_g_txt = f"${per_g:,.0f}".replace(",", ".")
         return (f"<tr><th>Costo por gramo</th><td>Equivale a {per_g_txt} por gramo: multiplica por tu dosis "
                 "por vaso y obtienes tu costo de insumo por bebida. Si quieres, te ayudamos a calcularlo por WhatsApp.</td></tr>")
-    return ("<tr><th>Costo por litro</th><td>Equivale a ≈ $58.000 por litro de concentrado (botella de 1.9 L), "
+    return ("<tr><th>Costo por litro</th><td>Equivale a ≈ $66.600 por litro de concentrado (botella de 1.9 L), "
             "y al ser concentrado, cada botella rinde muchas bebidas.</td></tr>")
 
 def build_ficha(p, category_href, category_label, extra_gallery="", flavor_select=""):
@@ -391,9 +392,11 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
     {audience_chips(p, root)}
     <div class="price-box">
       <span class="big">{fmt_cop(p['price'])}</span> · {p['format']}
+      <div><span class="tag-mayoreo">{MAYOREO['etiqueta']}</span></div>
       <div class="cond stock-status"><span aria-hidden="true">●</span> En stock</div>
       <a class="btn btn-wa pdp-quick-cta" href="{wa_msg}" target="_blank" rel="noopener">{WA_ICON} Cotizar ahora</a>
       <div class="cond">IVA incluido · Confirma el costo y plazo del envío por WhatsApp</div>
+      <div class="cond"><strong class="gold">{MAYOREO['etiqueta']}:</strong> {MAYOREO['detalle']}</div>
       <div class="cond"><strong class="gold">Muestra para negocios:</strong> consulta condiciones antes del primer pedido.</div>
     </div>
     {flavor_select}
@@ -627,7 +630,7 @@ crumbs = [("siropes-bubble-tea/", "Siropes para bubble tea")]
 chips = "".join(f'<span class="chip on">{f}</span>' for f in SYRUP["flavors"])
 html = head(
     "Siropes para Bebidas y Coctelería | Insumos Pop",
-    "Siropes concentrados de fruta hechos en Taiwán para bubble tea, cócteles, frappés, limonadas y sodas italianas. 12 sabores en botella de 1.9 L, $110.000 IVA incluido.",
+    "Siropes concentrados de fruta hechos en Taiwán para bubble tea, cócteles, frappés, limonadas y sodas italianas. 12 sabores en botella de 1.9 L, $126.500 IVA incluido.",
     canonical, root, jsonld=[breadcrumb_ld(crumbs)],
 )
 html += header_html(root, "siropes")
@@ -637,8 +640,8 @@ html += f"""
   <p class="eyebrow">Catálogo</p>
   <h1>Siropes de fruta para bebidas</h1>
   <hr class="rule">
-  <p style="max-width:46em">Concentrados de fruta de Taiwán para cócteles, mocktails, frappés, limonadas, sodas italianas y tés fríos. La botella de 1,9 L cuesta $110.000 con IVA incluido.</p>
-  <p style="max-width:46em">Define la dosis por bebida para estandarizar sabor y costo. Como referencia matemática, una dosis de 20 ml representa cerca de $1.158 de sirope y una botella alcanza para 95 preparaciones.</p>
+  <p style="max-width:46em">Concentrados de fruta de Taiwán para cócteles, mocktails, frappés, limonadas, sodas italianas y tés fríos. La botella de 1,9 L cuesta $126.500 con IVA incluido.</p>
+  <p style="max-width:46em">Define la dosis por bebida para estandarizar sabor y costo. Como referencia matemática, una dosis de 20 ml representa cerca de $1.332 de sirope y una botella alcanza para 95 preparaciones.</p>
   <h2 style="margin-top:30px">12 sabores disponibles</h2>
   <div class="chips">{chips}</div>
   <div class="grid" style="margin-top:22px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">{card(SYRUP, root)}</div>
@@ -864,6 +867,8 @@ faqs = [
      "Nuestro foco son los negocios: cafeterías, restaurantes, heladerías, reposterías, tiendas de bubble tea y emprendimientos. Si tienes un proyecto en marcha, escríbenos y lo cotizamos."),
     ("¿Los precios incluyen IVA?",
      "Sí. Todos los precios publicados en el catálogo incluyen IVA."),
+    ("¿Tienen descuento al por mayor?",
+     "Sí. Los precios publicados son por unidad; si tu negocio compra por volumen, aplicamos un descuento al por mayor que te confirmamos por escrito en la cotización, según las cantidades y referencias de tu pedido."),
     ("¿Hacen envíos a toda Colombia?",
      "Sí, coordinamos envíos a las principales ciudades del país. El valor y tiempo de entrega se confirman en tu cotización según tu ciudad y el tamaño del pedido."),
     ("¿Puedo pedir una muestra?",
@@ -1047,11 +1052,11 @@ html += f"""
   <div class="tiles">
     <a class="tile" href="{root}polvos-bubble-tea/">
       <img src="{root}assets/img/polvo-matcha-taiwan-card.webp" alt="Polvos para bubble tea: bolsa de Taiwan Matcha de Insumos Pop" loading="lazy">
-      <div class="tile-body"><h3>Polvos para bubble tea</h3><p>Mezclas para milk tea, frappés y lattes, además de matcha, hojicha y polvos de fruta. Desde {fmt_cop(65000)} el kilo.</p><span class="link">Ver los polvos →</span></div>
+      <div class="tile-body"><h3>Polvos para bubble tea</h3><p>Mezclas para milk tea, frappés y lattes, además de matcha, hojicha y polvos de fruta. Desde {fmt_cop(FRUIT_POWDER["price"])} el kilo.</p><span class="link">Ver los polvos →</span></div>
     </a>
     <a class="tile" href="{root}siropes-bubble-tea/">
       <img src="{root}assets/img/siropes-de-fruta-linea-card.webp" alt="Siropes de fruta concentrados de Insumos Pop en botellas de 1.9 litros" loading="lazy">
-      <div class="tile-body"><h3>Siropes de fruta</h3><p>Concentrados taiwaneses en 12 sabores para cócteles, sodas, limonadas y té. Botella 1.9 L, {fmt_cop(110000)}.</p><span class="link">Ver los siropes →</span></div>
+      <div class="tile-body"><h3>Siropes de fruta</h3><p>Concentrados taiwaneses en 12 sabores para cócteles, sodas, limonadas y té. Botella 1.9 L, {fmt_cop(SYRUP["price"])}.</p><span class="link">Ver los siropes →</span></div>
     </a>
   </div>
 </section>
