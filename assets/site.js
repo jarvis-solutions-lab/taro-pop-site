@@ -9,7 +9,7 @@
   function applyTheme(t) {
     document.documentElement.setAttribute("data-theme", t);
     var mc = document.querySelector('meta[name="theme-color"]');
-    if (mc) mc.setAttribute("content", t === "light" ? "#faf7f0" : "#0b0b0f");
+    if (mc) mc.setAttribute("content", t === "light" ? "#ffffff" : "#13111b");
     if (themeBtn) {
       themeBtn.textContent = t === "light" ? "🌙" : "☀️";
       themeBtn.setAttribute("aria-label", t === "light" ? "Cambiar a modo oscuro" : "Cambiar a modo claro");

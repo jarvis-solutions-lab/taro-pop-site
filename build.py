@@ -84,14 +84,17 @@ def head(title, desc, canonical, root, jsonld=None, og_img=None, preload=None, r
 <meta property="og:image" content="{og}">
 <meta property="og:url" content="{canonical}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#faf7f0">
-<script>(function(){{try{{var t=localStorage.getItem("ip_theme_v2");if(t==="dark"){{document.documentElement.setAttribute("data-theme","dark");document.querySelector('meta[name="theme-color"]').setAttribute("content","#0b0b0f");}}}}catch(e){{}}}})()</script>
+<meta name="theme-color" content="#ffffff">
+<script>(function(){{try{{var t=localStorage.getItem("ip_theme_v2");if(t==="dark"){{document.documentElement.setAttribute("data-theme","dark");document.querySelector('meta[name="theme-color"]').setAttribute("content","#13111b");}}}}catch(e){{}}}})()</script>
 <link rel="icon" href="{root}favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="{root}assets/img/favicon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="{root}assets/img/favicon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="{root}assets/img/apple-touch-icon.png">
 <link rel="manifest" href="{root}site.webmanifest">
 {pre}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="{root}assets/styles.css">
 {j}</head>
 """
@@ -1199,8 +1202,8 @@ manifest = {
     "start_url": "/",
     "scope": "/",
     "display": "browser",
-    "background_color": "#faf7f0",
-    "theme_color": "#faf7f0",
+    "background_color": "#ffffff",
+    "theme_color": "#6a3fa0",
     "icons": [
         {"src": "/assets/img/favicon-192.png", "sizes": "192x192", "type": "image/png"},
         {"src": "/assets/img/logo-insumos-pop.png", "sizes": "512x512", "type": "image/png"},
