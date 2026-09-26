@@ -312,8 +312,6 @@ AUDIENCES = {
     "polvo-coral-azul": ["siropes-para-cocteleria", "proveedor-bubble-tea"],
     "polvo-matcha-taiwan": ["bubble-tea-para-cafeterias"],
     "matcha-shizuoka": ["bubble-tea-para-cafeterias"],
-    "polvo-hojicha": ["bubble-tea-para-cafeterias"],
-    "hojicha-puro": ["bubble-tea-para-cafeterias"],
     "polvos-de-fruta": ["kit-emprendedor-bubble-tea"],
     "siropes-de-fruta": ["siropes-para-cocteleria"],
 }
@@ -371,14 +369,8 @@ _cmp_matcha = """<div class="compare"><h3>¿Cuál matcha te conviene?</h3>
 <p><strong>Mezcla lista (Taiwan Matcha, $109.250 · 1 kg):</strong> servicio rápido, sabor ya balanceado y costo por bebida controlado. Ideal para volumen.</p>
 <p><strong>Especialidad (Shizuoka Matcha, $126.500 · 500 g):</strong> sabor más intenso y concentrado (1 parte por 20 de líquido) para lattes de autor.</p>
 <p class="muted">¿Cuál pido? Si vendes volumen, la mezcla; si tu carta es de autor, el Shizuoka — o ambos: uno para la carta base y otro para especiales.</p></div>"""
-_cmp_hojicha = """<div class="compare"><h3>¿Cuál hojicha te conviene?</h3>
-<p><strong>Mezcla lista (Hojicha, $109.250 · 1 kg):</strong> lista para bebidas, servicio rápido y costo por vaso controlado.</p>
-<p><strong>100% puro (Pure Hojicha, $126.500 · 500 g):</strong> té tostado single origin de Japón para lattes y postres de autor.</p>
-<p class="muted">¿Cuál pido? Si vendes volumen, la mezcla; si tu carta es de autor, el puro — o ambos.</p></div>"""
 COMPARE["polvo-matcha-taiwan"] = _cmp_matcha
 COMPARE["matcha-shizuoka"] = _cmp_matcha
-COMPARE["polvo-hojicha"] = _cmp_hojicha
-COMPARE["hojicha-puro"] = _cmp_hojicha
 
 def cost_row(p):
     if p.get("grams"):
@@ -643,7 +635,7 @@ crumbs = [("polvos-bubble-tea/", "Polvos para bubble tea")]
 premium_cards = "".join(card(p, root) for p in POWDERS)
 html = head(
     "Polvos para Bubble Tea en Colombia | Insumos Pop",
-    "Polvos para bubble tea: taro, matcha, hojicha, brown sugar, milk tea, cheese foam y frutas. Precios con IVA para negocios en Colombia.",
+    "Polvos para bubble tea: taro, matcha, brown sugar, milk tea, cheese foam y frutas. Precios con IVA para negocios en Colombia.",
     canonical, root, jsonld=[breadcrumb_ld(crumbs)],
 )
 html += header_html(root, "polvos")
@@ -653,10 +645,10 @@ html += f"""
   <p class="eyebrow">Catálogo</p>
   <h1>Polvos para bubble tea</h1>
   <hr class="rule">
-  <p style="max-width:46em">Mezclas para preparar milk tea, frappés y lattes, además de matcha y hojicha de especialidad para cartas de autor. Compara presentación, origen, aplicaciones y precio antes de cotizar.</p>
+  <p style="max-width:46em">Mezclas para preparar milk tea, frappés y lattes, además de matcha de especialidad para cartas de autor. Compara presentación, origen, aplicaciones y precio antes de cotizar.</p>
   <p class="muted" style="max-width:46em">Selecciones por negocio: <a href="{root}proveedor-bubble-tea/">tiendas de bubble tea</a> · <a href="{root}bubble-tea-para-cafeterias/">cafeterías</a> · <a href="{root}kit-emprendedor-bubble-tea/">emprendedores</a>.</p>
   <p class="muted" style="max-width:46em">Los precios incluyen IVA. Si estás armando una carta nueva, revisa la <a href="{root}guia-emprender-bubble-tea/">guía para empezar</a> o <a href="{WA_GENERIC}" target="_blank" rel="noopener">pide una recomendación por WhatsApp</a>.</p>
-  <h2 style="margin-top:34px">Milk tea, matcha, hojicha y toppings <span class="muted" style="font-weight:500;font-size:1rem">· mezclas listas y especialidad</span></h2>
+  <h2 style="margin-top:34px">Milk tea, matcha y toppings <span class="muted" style="font-weight:500;font-size:1rem">· mezclas listas y especialidad</span></h2>
   <div class="grid">{premium_cards}</div>
   <h2 style="margin-top:44px">Polvos de Fruta <span class="muted" style="font-weight:500;font-size:1rem">· 6 sabores asiáticos</span></h2>
   <div class="grid">{card(FRUIT_POWDER, root)}</div>
@@ -807,14 +799,14 @@ html += f"""
   <h2>1. Lo que necesitas para empezar</h2>
   <p>Con un menú corto y bien elegido puedes arrancar sin sobre-invertir:</p>
   <ul class="list">
-    <li><strong>2 o 3 polvos base:</strong> una opción visual (<a href="{root}polvos-bubble-tea/polvo-taro/">Taro</a>), una de perfil lácteo (<a href="{root}polvos-bubble-tea/polvo-hokkaido-milk-tea/">Hokkaido Milk Tea</a>) y una de té (<a href="{root}polvos-bubble-tea/polvo-matcha-taiwan/">Matcha</a> u <a href="{root}polvos-bubble-tea/polvo-hojicha/">Hojicha</a>).</li>
+    <li><strong>2 o 3 polvos base:</strong> una opción visual (<a href="{root}polvos-bubble-tea/polvo-taro/">Taro</a>), una de perfil lácteo (<a href="{root}polvos-bubble-tea/polvo-hokkaido-milk-tea/">Hokkaido Milk Tea</a>) y una de té (<a href="{root}polvos-bubble-tea/polvo-matcha-taiwan/">Matcha</a> o <a href="{root}polvos-bubble-tea/matcha-shizuoka/">Shizuoka Matcha</a>).</li>
     <li><strong>1 o 2 siropes de fruta</strong> para limonadas, sodas italianas y tés fríos: <a href="{root}siropes-bubble-tea/siropes-de-fruta/">12 sabores disponibles</a>.</li>
     <li><strong>Un producto adicional:</strong> <a href="{root}polvos-bubble-tea/polvo-cheese-foam/">Cheese Foam</a> o el efecto tigre con <a href="{root}polvos-bubble-tea/polvo-okinawa-brown-sugar/">Okinawa Brown Sugar</a> amplían las opciones de la carta.</li>
     <li><strong>Básicos de barra:</strong> té preparado, leche, hielo, perlas de tapioca, vasos con tapa de cúpula y pitillos gruesos.</li>
   </ul>
 
   <h2>2. Arma un menú corto que rote</h2>
-  <p>Un menú corto facilita la capacitación, el inventario y la consistencia. Como punto de partida: dos milk teas, una bebida de matcha o hojicha, dos bebidas frutales y un especial. En nuestras <a href="{root}recetas-bubble-tea/">recetas base</a> tienes el paso a paso de cada estilo.</p>
+  <p>Un menú corto facilita la capacitación, el inventario y la consistencia. Como punto de partida: dos milk teas, una bebida de matcha, dos bebidas frutales y un especial. En nuestras <a href="{root}recetas-bubble-tea/">recetas base</a> tienes el paso a paso de cada estilo.</p>
 
   <h2>3. Cuida el costo por vaso</h2>
   <p>Los polvos y siropes concentrados te permiten estandarizar: define la dosis por bebida, pésala y calcula tu costo real por vaso antes de fijar el precio de carta. Escríbenos y te ayudamos a calcular la dosificación según tu vaso y tu receta.</p>
@@ -825,7 +817,7 @@ html += f"""
   <h2>5. Según tu negocio</h2>
   <p>Preparamos una página con la selección, el kit y las respuestas específicas de cada tipo de negocio:</p>
   <ul class="list">
-    <li><strong>Cafetería de especialidad:</strong> matcha de origen, hojicha y cheese foam. <a href="{root}bubble-tea-para-cafeterias/">Mira los insumos para cafeterías →</a></li>
+    <li><strong>Cafetería de especialidad:</strong> matcha de especialidad y cheese foam. <a href="{root}bubble-tea-para-cafeterias/">Mira los insumos para cafeterías →</a></li>
     <li><strong>Tienda de bubble tea:</strong> polvos de Taiwán con precio y presentación publicados. <a href="{root}proveedor-bubble-tea/">Mira la selección para tiendas de bubble tea →</a></li>
     <li><strong>Bar o coctelería:</strong> siropes concentrados con costo por copa calculable. <a href="{root}siropes-para-cocteleria/">Mira los siropes para coctelería →</a></li>
     <li><strong>Primer negocio:</strong> kit inicial, recetas y asesoría para arrancar sin adivinar. <a href="{root}kit-emprendedor-bubble-tea/">Mira el kit para emprendedores →</a></li>
@@ -860,7 +852,7 @@ html += f"""
   <p class="eyebrow">Quiénes somos</p>
   <h1>Proveedor de polvos y siropes para negocios en Colombia</h1>
   <hr class="rule">
-  <p>Insumos Pop distribuye polvos para milk tea, matcha, hojicha, cheese foam, polvos de fruta y siropes concentrados para cafeterías, restaurantes, bares y tiendas de bubble tea.</p>
+  <p>Insumos Pop distribuye polvos para milk tea, matcha, cheese foam, polvos de fruta y siropes concentrados para cafeterías, restaurantes, bares y tiendas de bubble tea.</p>
   <p>Publicamos presentación y precio con IVA de cada referencia. Al cotizar confirmamos disponibilidad, envío a tu ciudad y documentación del producto.</p>
   <p>Emitimos factura como Taro Pop S.A.S. y ofrecemos muestras para que los negocios prueben el producto con su propia receta antes del primer pedido.</p>
   <div class="benefits" style="margin-top:26px">
@@ -928,7 +920,7 @@ faqs = [
     ("¿Cómo hago un pedido?",
      "Agrega productos a tu cotización en la web y envíala por WhatsApp, o escríbenos directamente al " + WA_DISPLAY + ". Un asesor confirma disponibilidad, envío y pago."),
     ("¿De dónde vienen los productos?",
-     "Importamos directo de Taiwán, sin intermediarios. El Pure Hojicha es té tostado de Japón."),
+     "Importamos directo de Taiwán, sin intermediarios."),
     ("¿Tienen dosis y rendimiento por producto?",
      "Sí: la dosificación depende de tu receta y tamaño de vaso, por eso la compartimos junto con la ficha técnica cuando cotizas. Así no te prometemos rendimientos genéricos que no aplican a tu operación."),
     ("¿Emiten factura?",
@@ -1039,7 +1031,7 @@ org_ld = {
                      "telephone": "+57-301-8656016", "availableLanguage": "es"},
 }
 feat = [ALL_PRODUCTS[s] for s in ["polvo-taro", "polvo-okinawa-brown-sugar", "polvo-matcha-taiwan",
-                                  "polvo-coral-azul", "polvo-cheese-foam", "polvo-hojicha"]]
+                                  "polvo-coral-azul", "polvo-cheese-foam", "polvo-thai-milk-tea"]]
 feat_cards = "".join(card(p, root) for p in feat)
 
 HOME_KIT1 = dict(name="Kit Primer Menú",
@@ -1096,7 +1088,7 @@ html += f"""
   <hr class="rule">
   <div class="audience-grid">
     <a class="audience-card" href="{root}proveedor-bubble-tea/"><strong>Tienda de bubble tea</strong><span>Taro, milk tea, brown sugar y toppings</span></a>
-    <a class="audience-card" href="{root}bubble-tea-para-cafeterias/"><strong>Cafetería</strong><span>Matcha, hojicha, frappés y cheese foam</span></a>
+    <a class="audience-card" href="{root}bubble-tea-para-cafeterias/"><strong>Cafetería</strong><span>Matcha, milk tea, frappés y cheese foam</span></a>
     <a class="audience-card" href="{root}siropes-para-cocteleria/"><strong>Bar o restaurante</strong><span>Siropes para cócteles, mocktails y sodas</span></a>
     <a class="audience-card" href="{root}kit-emprendedor-bubble-tea/"><strong>Voy a empezar</strong><span>Kit inicial, recetas y ayuda para costear</span></a>
   </div>
@@ -1111,7 +1103,7 @@ html += f"""
   <div class="tiles">
     <a class="tile" href="{root}polvos-bubble-tea/">
       <img src="{root}assets/img/polvo-matcha-taiwan-card.webp" alt="Polvos para bubble tea: bolsa de Taiwan Matcha de Insumos Pop" loading="lazy" width="520" height="546">
-      <div class="tile-body"><h3>Polvos para bubble tea</h3><p>Mezclas para milk tea, frappés y lattes, además de matcha, hojicha y polvos de fruta. Desde {fmt_cop(FRUIT_POWDER["price"])} el kilo.</p><span class="link">Ver los polvos →</span></div>
+      <div class="tile-body"><h3>Polvos para bubble tea</h3><p>Mezclas para milk tea, frappés y lattes, además de matcha y polvos de fruta. Desde {fmt_cop(FRUIT_POWDER["price"])} el kilo.</p><span class="link">Ver los polvos →</span></div>
     </a>
     <a class="tile" href="{root}siropes-bubble-tea/">
       <img src="{root}assets/img/siropes-de-fruta-linea-card.webp" alt="Siropes de fruta concentrados de Insumos Pop en botellas de 1.9 litros" loading="lazy" width="520" height="546">

@@ -1,6 +1,6 @@
 # Insumos Pop — sitio web
 
-Sitio estático (32 páginas) de Insumos Pop: importador directo de insumos premium para bubble tea desde Taiwán, para negocios en Colombia.
+Sitio estático (31 páginas) de Insumos Pop: importador directo de insumos premium para bubble tea desde Taiwán, para negocios en Colombia.
 
 **Se publica solo:** cada `git push` a `main` reconstruye el sitio y lo publica. No hay que subir archivos a mano.
 
@@ -38,7 +38,7 @@ Ver `DESPLIEGUE.md`. Es una sola variable, no hay que editar código.
 
 ```
 ├── data.py                    Todo el contenido: productos, precios, recetas, perfiles
-├── build.py                   Genera las 32 páginas HTML desde data.py
+├── build.py                   Genera las 31 páginas HTML desde data.py
 ├── verificar.py               Revisa enlaces, JSON-LD, precios y títulos antes de publicar
 ├── site/                      Salida generada localmente (no se versiona)
 │   ├── index.html             ...y las demás páginas
@@ -73,7 +73,7 @@ SITE_URL=https://insumospop.co python3 build.py
 Si algo de esto falla, la publicación se detiene y **el sitio en vivo no se rompe**:
 
 - Ningún enlace interno roto
-- JSON-LD (datos estructurados de Google) válido en las 32 páginas
+- JSON-LD (datos estructurados de Google) válido en las 31 páginas
 - Títulos únicos por página
 - Los precios de los kits coinciden con la suma real del catálogo
 - Existen `CNAME`, `sitemap.xml`, `robots.txt` e `index.html`
@@ -82,10 +82,10 @@ Si algo de esto falla, la publicación se detiene y **el sitio en vivo no se rom
 
 ## Qué incluye el sitio
 
-- 14 fichas de producto con precios del catálogo (IVA incluido) y costo por gramo
+- 12 fichas de producto con precios del catálogo (IVA incluido) y costo por gramo
 - 2 categorías: polvos y siropes
 - 4 páginas por perfil de cliente (tiendas de bubble tea, cafeterías, emprendedores, bares) con kit propio y WhatsApp segmentado
-- 4 recetas paso a paso y guía para emprender
+- 5 recetas paso a paso y guía para emprender
 - Cotizador que arma el pedido y lo envía por WhatsApp, sin servidor ni base de datos
 - Modo claro y oscuro con preferencia recordada
 - SEO: URLs limpias, datos estructurados (Product, FAQ, Organization, ItemList, Breadcrumb), sitemap y robots
