@@ -369,8 +369,8 @@ def quality_html(root, compact=False):
 COMPARE = {}
 _cmp_matcha = """<div class="compare"><h3>¿Cuál matcha te conviene?</h3>
 <p><strong>Mezcla lista (Taiwan Matcha, $109.250 · 1 kg):</strong> servicio rápido, sabor ya balanceado y costo por bebida controlado. Ideal para volumen.</p>
-<p><strong>100% puro (Shizuoka Matcha, $126.500 · 500 g):</strong> tú controlas dosis, leche y dulzor; carta de especialidad con historia de origen real.</p>
-<p class="muted">¿Cuál pido? Si vendes volumen, la mezcla; si tu carta es de autor, el puro — o ambos: uno para la carta base y otro para especiales.</p></div>"""
+<p><strong>Especialidad (Shizuoka Matcha, $126.500 · 500 g):</strong> sabor más intenso y concentrado (1 parte por 20 de líquido) para lattes de autor.</p>
+<p class="muted">¿Cuál pido? Si vendes volumen, la mezcla; si tu carta es de autor, el Shizuoka — o ambos: uno para la carta base y otro para especiales.</p></div>"""
 _cmp_hojicha = """<div class="compare"><h3>¿Cuál hojicha te conviene?</h3>
 <p><strong>Mezcla lista (Hojicha, $109.250 · 1 kg):</strong> lista para bebidas, servicio rápido y costo por vaso controlado.</p>
 <p><strong>100% puro (Pure Hojicha, $126.500 · 500 g):</strong> té tostado single origin de Japón para lattes y postres de autor.</p>
@@ -441,7 +441,7 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
       <a class="btn btn-wa pdp-quick-cta" href="{wa_msg}" target="_blank" rel="noopener">{WA_ICON} Cotizar ahora</a>
       <div class="cond">IVA incluido · Confirma el costo y plazo del envío por WhatsApp</div>
       <div class="cond"><strong class="gold">{MAYOREO['etiqueta']}:</strong> {MAYOREO['detalle']}</div>
-      <div class="cond"><strong class="gold">Muestra para negocios:</strong> consulta condiciones antes del primer pedido.</div>
+      <div class="cond"><strong class="gold">Muestra para negocios:</strong> pídela por WhatsApp y prueba la calidad antes de tu primer pedido.</div>
     </div>
     {flavor_select}
     <div class="cta-row">
@@ -572,7 +572,7 @@ def build_profile(pr):
         <a class="btn btn-wa" href="{wa_url}" target="_blank" rel="noopener">{WA_ICON} {pr['cta_label']}</a>
         <a class="btn btn-line" href="{root}{pr['catalog_href']}">{pr['catalog_label']}</a>
       </div>
-      <p class="sample-note">Pide tu <strong>muestra gratis para negocios</strong> por WhatsApp y prueba antes de tu primer pedido.</p>
+      <p class="sample-note"><strong>Pide tu muestra por WhatsApp</strong> y comprueba la calidad con tu receta antes de tu primer pedido.</p>
       <div class="trust">{trust}</div>
     </div>
     <img src="{root}assets/img/{hero_p['img']}.webp" alt="{hero_p['alt']}" width="1100" height="1155" fetchpriority="high">
@@ -653,10 +653,10 @@ html += f"""
   <p class="eyebrow">Catálogo</p>
   <h1>Polvos para bubble tea</h1>
   <hr class="rule">
-  <p style="max-width:46em">Mezclas para preparar milk tea, frappés y lattes, además de matcha y hojicha puros para cartas de especialidad. Compara presentación, origen, aplicaciones y precio antes de cotizar.</p>
+  <p style="max-width:46em">Mezclas para preparar milk tea, frappés y lattes, además de matcha y hojicha de especialidad para cartas de autor. Compara presentación, origen, aplicaciones y precio antes de cotizar.</p>
   <p class="muted" style="max-width:46em">Selecciones por negocio: <a href="{root}proveedor-bubble-tea/">tiendas de bubble tea</a> · <a href="{root}bubble-tea-para-cafeterias/">cafeterías</a> · <a href="{root}kit-emprendedor-bubble-tea/">emprendedores</a>.</p>
   <p class="muted" style="max-width:46em">Los precios incluyen IVA. Si estás armando una carta nueva, revisa la <a href="{root}guia-emprender-bubble-tea/">guía para empezar</a> o <a href="{WA_GENERIC}" target="_blank" rel="noopener">pide una recomendación por WhatsApp</a>.</p>
-  <h2 style="margin-top:34px">Milk tea, matcha, hojicha y toppings <span class="muted" style="font-weight:500;font-size:1rem">· mezclas listas y puros</span></h2>
+  <h2 style="margin-top:34px">Milk tea, matcha, hojicha y toppings <span class="muted" style="font-weight:500;font-size:1rem">· mezclas listas y especialidad</span></h2>
   <div class="grid">{premium_cards}</div>
   <h2 style="margin-top:44px">Polvos de Fruta <span class="muted" style="font-weight:500;font-size:1rem">· 6 sabores asiáticos</span></h2>
   <div class="grid">{card(FRUIT_POWDER, root)}</div>
@@ -837,7 +837,7 @@ html += f"""
 
   <div class="panel center" style="margin-top:30px">
     <h2>¿Montamos tu menú juntos?</h2>
-    <p class="muted">Cuéntanos qué tipo de negocio tienes y te recomendamos el kit inicial ideal — y si quieres, te enviamos una muestra gratis.</p>
+    <p class="muted">Cuéntanos qué tipo de negocio tienes y te recomendamos el kit inicial ideal. Pide también una muestra y prueba la calidad antes de decidir.</p>
     <a class="btn btn-wa" href="{wa_link('Hola Insumos Pop 👋 Quiero emprender con bubble tea. Mi negocio es: ')}" target="_blank" rel="noopener">{WA_ICON} Hablar con un asesor</a>
   </div>
 </section>
@@ -924,11 +924,11 @@ faqs = [
     ("¿Hacen envíos a toda Colombia?",
      "Sí, coordinamos envíos a las principales ciudades del país. El valor y tiempo de entrega se confirman en tu cotización según tu ciudad y el tamaño del pedido."),
     ("¿Puedo pedir una muestra?",
-     "Escríbenos por WhatsApp: contamos con muestras gratis para negocios que quieren probar la calidad antes de su primer pedido."),
+     "Sí. Pide tu muestra por WhatsApp y prueba la calidad y el sabor con tu propia receta antes de tu primer pedido."),
     ("¿Cómo hago un pedido?",
      "Agrega productos a tu cotización en la web y envíala por WhatsApp, o escríbenos directamente al " + WA_DISPLAY + ". Un asesor confirma disponibilidad, envío y pago."),
     ("¿De dónde vienen los productos?",
-     "Importamos directo de Taiwán, sin intermediarios. Algunas referencias, como el Shizuoka Matcha y el Pure Hojicha, son single origin de Japón."),
+     "Importamos directo de Taiwán, sin intermediarios. El Pure Hojicha es té tostado de Japón."),
     ("¿Tienen dosis y rendimiento por producto?",
      "Sí: la dosificación depende de tu receta y tamaño de vaso, por eso la compartimos junto con la ficha técnica cuando cotizas. Así no te prometemos rendimientos genéricos que no aplican a tu operación."),
     ("¿Emiten factura?",
@@ -948,7 +948,7 @@ faq_ld = {
 }
 html = head(
     "Preguntas frecuentes | Insumos Pop",
-    "Resolvemos las dudas más comunes: pedidos mínimos, envíos en Colombia, muestras gratis, facturación, origen de los productos y cómo cotizar.",
+    "Resolvemos las dudas más comunes: pedidos mínimos, envíos en Colombia, muestras, facturación, origen de los productos y cómo cotizar.",
     canonical, root, jsonld=[breadcrumb_ld(crumbs), faq_ld],
 )
 html += header_html(root, "")
@@ -1053,7 +1053,7 @@ home_faqs = [
     ("¿Atienden negocios en cualquier ciudad de Colombia?",
      "Sí. Coordinamos el envío a tu ciudad y te confirmamos valor y tiempos en la cotización."),
     ("¿Puedo probar antes de comprar?",
-     "Escríbenos por WhatsApp y pregunta por la muestra gratis para negocios."),
+     "Sí. Pide una muestra por WhatsApp y comprueba la calidad con tu propia receta."),
     ("¿Los precios incluyen IVA?",
      "Sí, todos los precios publicados incluyen IVA y emitimos factura (Taro Pop S.A.S.)."),
     ("¿Tienen precio al por mayor?",
@@ -1074,12 +1074,12 @@ html += f"""
     <div>
       <p class="eyebrow">Insumos para bubble tea, cafeterías y bares en Colombia</p>
       <h1>Sabor auténtico de Taiwán y Japón, listo para tu carta</h1>
-      <p class="lead">Taro cremoso, brown sugar con notas de caramelo, matcha de Shizuoka y 12 siropes de fruta. Pide una muestra, pruébala con tu receta y decide con tu propio paladar.</p>
+      <p class="lead">Taro cremoso, brown sugar con notas de caramelo, matcha intenso estilo Shizuoka y 12 siropes de fruta. Pide una muestra, pruébala con tu receta y decide con tu propio paladar.</p>
       <div class="cta-row">
         <a class="btn btn-wa" href="{wa_link('Hola Insumos Pop 👋 Quiero una muestra para mi negocio. Tipo de negocio: ' + chr(10) + 'Ciudad: ')}" target="_blank" rel="noopener">{WA_ICON} Quiero probar una muestra</a>
         <a class="btn btn-line" href="#catalogo">Ver sabores y precios</a>
       </div>
-      <p class="sample-note"><strong>Más de 40 años de oficio en cada bolsa:</strong> fabricado en Taiwán por especialistas en bubble tea.</p>
+      <p class="sample-note"><strong>Pide una muestra y comprueba la calidad:</strong> pruébala con tu receta antes de tu primer pedido.</p>
       <div class="trust">
         <div><b>Importado directo</b>Taiwán y Japón</div>
         <div><b>Precios claros</b>IVA incluido y factura</div>
