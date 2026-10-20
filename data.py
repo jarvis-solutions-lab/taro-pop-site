@@ -13,6 +13,14 @@ WA_DISPLAY = "+57 301 8656016"
 SITE = os.environ.get("SITE_URL", "https://insumospop.co").rstrip("/")
 DOMAIN = SITE.replace("https://", "").replace("http://", "")
 
+# Google Ads: etiqueta global (gtag.js) en todas las páginas.
+# GOOGLE_ADS_WA_LABEL es la etiqueta de la acción de conversión «Clic en
+# WhatsApp» que entrega Google Ads (la parte después de la barra en
+# "AW-18526164304/xxxxxxxx"). Mientras esté vacía, los clics se registran
+# como evento pero no cuentan como conversión en Ads.
+GOOGLE_ADS_ID = "AW-18526164304"
+GOOGLE_ADS_WA_LABEL = ""
+
 # Etiqueta de descuento al por mayor: aparece en las tarjetas del catálogo y
 # en cada ficha. El porcentaje exacto se confirma al cotizar según el volumen.
 MAYOREO = dict(

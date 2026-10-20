@@ -2,7 +2,7 @@
 """Generador del sitio estático Insumos Pop."""
 import html as html_mod
 import json, os, shutil, urllib.parse
-from data import WA, WA_DISPLAY, SITE, DOMAIN, MAYOREO, QUALITY, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES
+from data import WA, WA_DISPLAY, SITE, DOMAIN, GOOGLE_ADS_ID, GOOGLE_ADS_WA_LABEL, MAYOREO, QUALITY, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES
 
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(RAIZ, "site")
@@ -71,6 +71,15 @@ def head(title, desc, canonical, root, jsonld=None, og_img=None, preload=None, r
     return f"""<!doctype html>
 <html lang="es-CO" data-theme="light">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GOOGLE_ADS_ID}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', '{GOOGLE_ADS_ID}');
+  window.IP_ADS = {{id: '{GOOGLE_ADS_ID}', waLabel: '{GOOGLE_ADS_WA_LABEL}'}};
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>

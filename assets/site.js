@@ -4,6 +4,20 @@
   var WA_NUMBER = "573018656016";
   var ROOT = document.body.getAttribute("data-root") || "./";
 
+  /* ---------- Google Ads: medir contactos por WhatsApp ---------- */
+  function trackWhatsApp(origen) {
+    if (typeof window.gtag !== "function") return;
+    var ads = window.IP_ADS || {};
+    window.gtag("event", "whatsapp_click", { origen: origen, pagina: location.pathname });
+    if (ads.id && ads.waLabel) {
+      window.gtag("event", "conversion", { send_to: ads.id + "/" + ads.waLabel });
+    }
+  }
+  document.addEventListener("click", function (ev) {
+    var a = ev.target.closest('a[href*="wa.me/"]');
+    if (a) trackWhatsApp(a.className.indexOf("wa-float") > -1 ? "boton_flotante" : "enlace");
+  });
+
   /* ---------- Tema claro / oscuro ---------- */
   var themeBtn = document.querySelector(".theme-toggle");
   function applyTheme(t) {
@@ -250,6 +264,7 @@
       var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
       // Los navegadores de Instagram/Facebook suelen bloquear ventanas nuevas:
       // si no se abre, navegamos a WhatsApp en la misma pestaña.
+      trackWhatsApp("cotizacion");
       var w = window.open(url, "_blank");
       if (w) { w.opener = null; } else { location.href = url; }
   }
