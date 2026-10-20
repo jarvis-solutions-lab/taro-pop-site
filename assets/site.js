@@ -5,6 +5,31 @@
   var ROOT = document.body.getAttribute("data-root") || "./";
 
   /* ---------- Google Ads: medir contactos por WhatsApp ---------- */
+  /* Atribución: si el visitante llegó desde un anuncio de Google (gclid,
+     gbraid, wbraid o utm_source=google), lo recordamos 30 días y lo
+     marcamos en el mensaje de WhatsApp para poder contar ventas reales. */
+  var REF_KEY = "ip_ref_google", REF_TXT = "(Ref: Google)";
+  try {
+    var qs = new URLSearchParams(location.search);
+    if (qs.get("gclid") || qs.get("gbraid") || qs.get("wbraid") || /google/i.test(qs.get("utm_source") || "")) {
+      localStorage.setItem(REF_KEY, String(Date.now()));
+    }
+  } catch (e) {}
+  function fromGoogleAds() {
+    try {
+      var t = Number(localStorage.getItem(REF_KEY) || 0);
+      return t && Date.now() - t < 30 * 24 * 3600 * 1000;
+    } catch (e) { return false; }
+  }
+  function withRef(url) {
+    if (!fromGoogleAds()) return url;
+    var m = url.match(/([?&]text=)([^&]*)/);
+    if (!m) return url + (url.indexOf("?") > -1 ? "&" : "?") + "text=" + encodeURIComponent(REF_TXT);
+    var txt = decodeURIComponent(m[2]);
+    if (txt.indexOf(REF_TXT) > -1) return url;
+    return url.replace(m[0], m[1] + encodeURIComponent(txt + "\n\n" + REF_TXT));
+  }
+
   function trackWhatsApp(origen) {
     if (typeof window.gtag !== "function") return;
     var ads = window.IP_ADS || {};
@@ -15,7 +40,9 @@
   }
   document.addEventListener("click", function (ev) {
     var a = ev.target.closest('a[href*="wa.me/"]');
-    if (a) trackWhatsApp(a.className.indexOf("wa-float") > -1 ? "boton_flotante" : "enlace");
+    if (!a) return;
+    a.href = withRef(a.href);
+    trackWhatsApp(a.className.indexOf("wa-float") > -1 ? "boton_flotante" : "enlace");
   });
 
   /* ---------- Tema claro / oscuro ---------- */
@@ -262,6 +289,7 @@
       var notes = document.getElementById("f-notas");
       if (notes && notes.value.trim()) lines.push("Notas: " + notes.value.trim());
       var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
+      url = withRef(url);
       // Los navegadores de Instagram/Facebook suelen bloquear ventanas nuevas:
       // si no se abre, navegamos a WhatsApp en la misma pestaña.
       trackWhatsApp("cotizacion");
