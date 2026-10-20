@@ -19,7 +19,7 @@ DOMAIN = SITE.replace("https://", "").replace("http://", "")
 # "AW-18526164304/xxxxxxxx"). Mientras esté vacía, los clics se registran
 # como evento pero no cuentan como conversión en Ads.
 GOOGLE_ADS_ID = "AW-18526164304"
-GOOGLE_ADS_WA_LABEL = ""
+GOOGLE_ADS_WA_LABEL = "sR0BCLjh9qIdENCq-4FF"
 
 # Etiqueta de descuento al por mayor: aparece en las tarjetas del catálogo y
 # en cada ficha. El porcentaje exacto se confirma al cotizar según el volumen.
