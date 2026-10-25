@@ -105,7 +105,19 @@ for titulo, cuales in titulos.items():
     if len(cuales) > 1:
         errores.append(f"Título duplicado en {len(cuales)} páginas: {', '.join(cuales)}")
 
-# 6. Archivos que GitHub Pages necesita
+# 7. Las páginas noindex (p. ej. la cata de muestras) no deben ir al sitemap
+sitemap_path = os.path.join(SITE_DIR, "sitemap.xml")
+if os.path.exists(sitemap_path):
+    sitemap = open(sitemap_path, encoding="utf-8").read()
+    for pagina in paginas:
+        rel = os.path.relpath(pagina, SITE_DIR)
+        if rel == "404.html" or 'name="robots" content="noindex' not in open(pagina, encoding="utf-8").read():
+            continue
+        ruta = "/" + rel[:-len("index.html")] if rel.endswith("index.html") else "/" + rel
+        if f"{ruta}</loc>" in sitemap:
+            errores.append(f"{rel}: tiene noindex pero aparece en sitemap.xml")
+
+# 8. Archivos que GitHub Pages necesita
 for necesario in ["CNAME", "sitemap.xml", "robots.txt", "index.html", "favicon.ico", "site.webmanifest"]:
     if not os.path.exists(os.path.join(SITE_DIR, necesario)):
         errores.append(f"Falta el archivo {necesario} en site/")

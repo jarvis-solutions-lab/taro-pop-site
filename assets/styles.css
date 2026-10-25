@@ -402,3 +402,9 @@ footer.site{border-top:1px solid var(--line);background:var(--bg-2);padding:52px
 .foot .btn-wa,.foot .btn-wa:hover{color:#05240f}
 .foot .brand span{color:var(--accent)}
 .legal{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;text-align:center}
+
+/* ---------- Cata de muestras ---------- */
+.cata-note{margin-top:14px;background:var(--taro);border-color:transparent}
+.cata-note h2{margin-top:.2rem}
+.cata-note p:last-child{margin-bottom:0}
+.cata-tips{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}

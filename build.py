@@ -2,7 +2,7 @@
 """Generador del sitio estático Insumos Pop."""
 import html as html_mod
 import json, os, shutil, urllib.parse
-from data import WA, WA_DISPLAY, SITE, DOMAIN, GOOGLE_ADS_ID, GOOGLE_ADS_WA_LABEL, MAYOREO, QUALITY, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES
+from data import WA, WA_DISPLAY, SITE, DOMAIN, GOOGLE_ADS_ID, GOOGLE_ADS_WA_LABEL, MAYOREO, QUALITY, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES, CATA
 
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(RAIZ, "site")
@@ -1184,6 +1184,69 @@ html += f"""
 """
 html += footer_html(root)
 write_page("index.html", html)
+
+# ---------------------------------------------------------------- cata de muestras (privada)
+# Solo se comparte por enlace: noindex, sin JSON-LD, fuera del menú y del sitemap.
+root = "../"
+canonical = SITE + "/" + CATA["slug"] + "/"
+wa_cata = wa_link("Hola Insumos Pop 👋 Ya caté mi muestra. Mi punto fue con ___ ml de leche. Me gustaría: ")
+needs = "".join(f'<div class="benefit"><h3>{t}</h3><p class="muted">{d}</p></div>' for t, d in CATA["needs"])
+cata_steps = "".join(f"<li>{s}</li>" for s in CATA["steps"])
+tips = "".join(f'<div class="benefit"><h3>{t}</h3><p class="muted">{d}</p></div>' for t, d in CATA["tips"])
+milk_chips = "".join(f'<span class="chip{" on" if ml == 100 else ""}">{ml} ml</span>' for ml in range(100, 200, 20))
+html = head(
+    "Cómo catar tu muestra | Insumos Pop",
+    "Instrucciones para catar tu muestra de Insumos Pop: dosis, temperatura del agua, cuánta leche usar y cómo encontrar la receta de tu negocio.",
+    canonical, root, robots="noindex,nofollow,noarchive",
+)
+html += header_html(root, "")
+html += f"""
+<section class="wrap" style="padding-top:34px;max-width:860px">
+  <p class="eyebrow">Para quienes recibieron una muestra</p>
+  <h1>Cómo catar tu muestra Insumos Pop</h1>
+  <hr class="rule">
+  <p class="lead muted" style="font-size:1.1rem;max-width:40em">Gracias por probar nuestros insumos. Sigue estos 5 pasos para conocer el sabor completo del polvo antes de llevarlo a tu receta. Toma unos 5 minutos.</p>
+
+  <h2 style="margin-top:34px">Lo que necesitas</h2>
+  <div class="benefits cata-tips" style="margin-top:14px">{needs}</div>
+
+  <h2 style="margin-top:40px">Paso a paso</h2>
+  <ol class="steps" style="margin-top:16px">{cata_steps}</ol>
+
+  <div class="panel cata-note">
+    <p class="eyebrow">Importante</p>
+    <h2>Va a quedar dulce. Eso es lo que queremos.</h2>
+    <p>Con 100 ml de leche la mezcla queda concentrada a propósito, para que percibas el sabor completo: <strong>el cuerpo, el retrogusto y la textura</strong>. Así se catan los insumos.</p>
+  </div>
+
+  <h2 style="margin-top:40px">Encuentra tu punto</h2>
+  <p>Desde ahí, ajusta a tu gusto: <strong>agrega leche de 20 en 20 ml</strong>, revuelve y vuelve a probar hasta encontrar tu punto.</p>
+  <div class="chips" aria-label="Ejemplo de ajuste de leche">{milk_chips}<span class="chip">…</span></div>
+  <p><strong>Anota cuánta leche le pusiste: ese número es tu receta ✅</strong></p>
+  <p class="muted">Todo lo anterior es una guía para probar el insumo por primera vez. La receta final la creas tú, para darle ese toque especial propio de tu marca 😉</p>
+</section>
+
+<section class="quality" style="margin:10px 0 0">
+  <div class="wrap" style="max-width:860px">
+    <p class="eyebrow">Del vaso de prueba a tu carta</p>
+    <h2>Recomendaciones para bebidas deliciosas</h2>
+    <hr class="rule">
+    <div class="benefits cata-tips">{tips}</div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="wrap center">
+    <h2>¿Ya encontraste tu punto?</h2>
+    <p class="muted" style="max-width:36em;margin:0 auto 8px">Cuéntanos cómo te fue con la muestra. Te ayudamos a ajustar la receta, calcular tu costo por vaso y armar tu primer pedido.</p>
+    <hr class="rule">
+    <a class="btn btn-wa" href="{wa_cata}" target="_blank" rel="noopener">{WA_ICON} Contar cómo me fue</a>
+    <p class="muted" style="margin-top:18px"><a href="{root}recetas-bubble-tea/">Ver recetas de bubble tea</a> · <a href="{root}polvos-bubble-tea/">Ver todos los sabores</a></p>
+  </div>
+</section>
+"""
+html += footer_html(root, wa_cata)
+write_page(CATA["slug"] + "/index.html", html)
 
 # ---------------------------------------------------------------- 404
 html = head("Página no encontrada | Insumos Pop", "La página que buscas no existe.", SITE + "/404.html", "/")
