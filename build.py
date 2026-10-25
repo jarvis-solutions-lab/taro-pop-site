@@ -1207,33 +1207,47 @@ html = head(
 )
 html += header_html(root, "")
 html += f"""
-<section class="wrap" style="padding-top:34px;max-width:860px">
-  <p class="eyebrow">Para quienes recibieron una muestra</p>
-  <h1>Cómo catar tu muestra Insumos Pop</h1>
-  <hr class="rule">
-  <p class="lead muted" style="font-size:1.1rem;max-width:40em">Gracias por probar nuestros insumos. Sigue estos 5 pasos para conocer el sabor completo del polvo antes de llevarlo a tu receta. Toma unos 5 minutos.</p>
+<section class="wrap cata-hero">
+  <div>
+    <p class="eyebrow">Para quienes recibieron una muestra</p>
+    <h1>Cómo catar tu muestra Insumos Pop</h1>
+    <hr class="rule">
+    <p class="lead muted">Gracias por probar nuestros insumos. Sigue estos 5 pasos para conocer el sabor completo del polvo antes de llevarlo a tu receta. Toma unos 5 minutos.</p>
+    <h2 class="cata-h2">Lo que necesitas</h2>
+    <div class="cata-needs">{needs}</div>
+  </div>
+  <aside class="cata-hero-img">
+    <a href="{root}assets/img/cata-muestra-infografia.png" target="_blank" rel="noopener"><img src="{root}assets/img/cata-muestra-infografia.webp" alt="Infografía: cómo catar tu muestra Insumos Pop en 5 pasos" width="540" height="675"></a>
+    <a class="btn btn-line" href="{root}assets/img/cata-muestra-infografia.png" download="como-catar-tu-muestra-insumos-pop.png">Descargar infografía</a>
+  </aside>
+</section>
 
-  <h2 style="margin-top:34px">Lo que necesitas</h2>
-  <div class="benefits cata-tips" style="margin-top:14px">{needs}</div>
-
-  <h2 style="margin-top:40px">Paso a paso</h2>
+<section class="wrap cata-sec">
+  <h2>Paso a paso</h2>
   <ol class="cata-strip" aria-hidden="true">{cata_strip}</ol>
-  <ol class="steps" style="margin-top:22px">{cata_steps}</ol>
-
-  <div class="panel cata-note">
-    <p class="eyebrow">Importante</p>
-    <h2>Va a quedar dulce. Eso es lo que queremos.</h2>
-    <p>Con 100 ml de leche la mezcla queda concentrada a propósito, para que percibas el sabor completo: <strong>el cuerpo, el retrogusto y la textura</strong>. Así se catan los insumos.</p>
+  <div class="cata-pair">
+    <ol class="steps">{cata_steps}</ol>
+    <div class="panel cata-note">
+      <p class="eyebrow">Importante</p>
+      <h2>Va a quedar dulce. Eso es lo que queremos.</h2>
+      <p>Con 100 ml de leche la mezcla queda concentrada a propósito, para que percibas el sabor completo: <strong>el cuerpo, el retrogusto y la textura</strong>. Así se catan los insumos.</p>
+    </div>
   </div>
+</section>
 
-  <h2 style="margin-top:40px">Encuentra tu punto</h2>
-  <p>Desde ahí, ajusta a tu gusto: <strong>agrega leche de 20 en 20 ml</strong>, revuelve y vuelve a probar hasta encontrar tu punto.</p>
-  <div class="cata-scale">
-    <ol aria-label="Ejemplo de ajuste: 100, 120, 140, 160 y 180 ml de leche">{milk_scale}</ol>
-    <p class="cata-scale-axis"><span>← Más intenso y dulce</span><span>Más suave →</span></p>
+<section class="wrap cata-sec">
+  <div class="cata-pair">
+    <div>
+      <h2>Encuentra tu punto</h2>
+      <p>Desde ahí, ajusta a tu gusto: <strong>agrega leche de 20 en 20 ml</strong>, revuelve y vuelve a probar hasta encontrar tu punto.</p>
+      <p><strong>Anota cuánta leche le pusiste: ese número es tu receta ✅</strong></p>
+      <p class="muted">Todo lo anterior es una guía para probar el insumo por primera vez. La receta final la creas tú, para darle ese toque especial propio de tu marca 😉</p>
+    </div>
+    <div class="cata-scale">
+      <ol aria-label="Ejemplo de ajuste: 100, 120, 140, 160 y 180 ml de leche">{milk_scale}</ol>
+      <p class="cata-scale-axis"><span>← Más intenso y dulce</span><span>Más suave →</span></p>
+    </div>
   </div>
-  <p><strong>Anota cuánta leche le pusiste: ese número es tu receta ✅</strong></p>
-  <p class="muted">Todo lo anterior es una guía para probar el insumo por primera vez. La receta final la creas tú, para darle ese toque especial propio de tu marca 😉</p>
 
   <div class="panel cata-download">
     <a href="{root}assets/img/cata-muestra-infografia.png" target="_blank" rel="noopener"><img src="{root}assets/img/cata-muestra-infografia.webp" alt="Infografía: cómo catar tu muestra Insumos Pop en 5 pasos" width="540" height="675" loading="lazy"></a>
@@ -1247,7 +1261,7 @@ html += f"""
 </section>
 
 <section class="quality" style="margin:10px 0 0">
-  <div class="wrap" style="max-width:860px">
+  <div class="wrap">
     <p class="eyebrow">Del vaso de prueba a tu carta</p>
     <h2>Recomendaciones para bebidas deliciosas</h2>
     <hr class="rule">

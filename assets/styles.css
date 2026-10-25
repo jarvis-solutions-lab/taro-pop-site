@@ -404,7 +404,16 @@ footer.site{border-top:1px solid var(--line);background:var(--bg-2);padding:52px
 .legal{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;text-align:center}
 
 /* ---------- Cata de muestras ---------- */
-.cata-note{margin-top:14px;background:var(--taro);border-color:transparent}
+/* Móvil primero: una columna. Desde 900px: encabezado con la infografía al lado y bloques en pareja. */
+.cata-hero{padding-top:34px;padding-bottom:10px;display:grid;gap:48px;align-items:start}
+.cata-hero .lead{font-size:1.1rem;max-width:40em}
+.cata-h2{margin-top:30px}
+.cata-hero-img{display:none}
+.cata-sec{padding:34px 20px}
+.cata-needs{display:grid;gap:14px;margin-top:14px}
+.cata-pair{display:grid;gap:22px;margin-top:22px}
+.cata-pair > div > h2:first-child{margin-top:0}
+.cata-note{background:var(--taro);border-color:transparent}
 .cata-note h2{margin-top:.2rem}
 .cata-note p:last-child{margin-bottom:0}
 .cata-tips{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
@@ -424,7 +433,7 @@ footer.site{border-top:1px solid var(--line);background:var(--bg-2);padding:52px
   .cata-strip{grid-template-columns:repeat(3,1fr);row-gap:20px}
   .cata-strip li:nth-child(4)::before{display:none}
 }
-.cata-scale{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 12px;margin:6px 0 18px}
+.cata-scale{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 12px}
 .cata-scale ol{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:end}
 .cata-scale li{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.85rem;color:var(--muted);font-weight:600}
 .cata-scale li.on{color:var(--accent-2);font-weight:800}
@@ -435,3 +444,18 @@ footer.site{border-top:1px solid var(--line);background:var(--bg-2);padding:52px
 .cata-download img{border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow)}
 .cata-download .btn{margin-top:4px}
 @media(max-width:560px){.cata-download{grid-template-columns:1fr}.cata-download img{max-width:240px}}
+@media(min-width:600px){.cata-needs,.cata-tips{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){
+  .cata-hero{grid-template-columns:minmax(0,1fr) 380px;padding-top:44px}
+  .cata-hero-img{display:flex;flex-direction:column;align-items:center;gap:14px;position:sticky;top:90px}
+  .cata-hero-img img{border-radius:20px;border:1px solid var(--line);box-shadow:var(--shadow)}
+  .cata-download{display:none}
+  .cata-strip{padding:30px 28px 24px;gap:24px}
+  .cata-strip li + li::before{left:-20px;font-size:1.3rem}
+  .cata-cup{max-width:140px}
+  .cata-lbl{font-size:.95rem}
+  .cata-pair{grid-template-columns:1.25fr 1fr;gap:40px;align-items:center}
+  .cata-tips{grid-template-columns:1fr 1fr;gap:22px}
+  .cata-scale{padding:26px 24px 16px}
+  .cata-scale-cup{max-width:80px}
+}
