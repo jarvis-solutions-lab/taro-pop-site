@@ -742,26 +742,28 @@ PROFILES = [
 CATA = dict(
     slug="cata-tu-muestra",
     needs=[
-        ("30 g de polvo", "Tu muestra. Sin balanza: unas 3 cucharadas soperas rasas."),
-        ("60 ml de agua a 85 °C", "Sin termómetro: hierve el agua y déjala reposar 2–3 minutos."),
-        ("100 ml de leche fría", "Entera, para catar. Luego pruebas con la que uses en tu negocio."),
-        ("Hielo y un vaso", "Más una cuchara o un batidor de leche para mezclar."),
+        ("polvo", "30 g de polvo", "Tu muestra. Sin balanza: unas 3 cucharadas soperas rasas."),
+        ("agua", "60 ml de agua a 85 °C", "Sin termómetro: hierve el agua y déjala reposar 2–3 minutos."),
+        ("leche", "100 ml de leche fría", "Entera, para catar. Luego pruebas con la que uses en tu negocio."),
+        ("hielo", "Hielo y un vaso", "Más una cuchara o un batidor de leche para mezclar."),
     ],
+    # Rótulos cortos de la infografía (uno por paso, en el mismo orden).
+    step_labels=["30&nbsp;g de polvo", "60&nbsp;ml de agua a 85&nbsp;°C", "Revuelve 30&nbsp;s", "100&nbsp;ml de leche fría", "Hielo y prueba"],
     steps=[
         "<strong>Pon 30 g de polvo en el vaso.</strong>",
-        "<strong>Agrega 60 ml de agua caliente a 85 °C</strong> — no hirviendo. El agua hirviendo puede quemar el polvo y apagar sus notas.",
+        "<strong>Agrega 60 ml de agua caliente a 85&nbsp;°C</strong> — no hirviendo. El agua hirviendo puede quemar el polvo y apagar sus notas.",
         "<strong>Revuelve 30 segundos</strong> hasta que no queden grumos. Esta pasta concentrada es la base del sabor.",
         "<strong>Agrega solo 100 ml de leche fría.</strong> No más por ahora.",
         "<strong>Agrega un poco de hielo y prueba.</strong>",
     ],
     tips=[
-        ("Elige bien tu té",
+        ("te", "Elige bien tu té",
          "Los bubble tea premium suelen llevar té verde o negro de calidad en pequeñas cantidades. El té que elijas puede ser tu diferenciador: le da a la bebida un sabor más complejo al paladar."),
-        ("Todo entra por los ojos",
+        ("ojos", "Todo entra por los ojos",
          "El secreto de un bubble tea exitoso está en los colores que se mezclan en el vaso; una bebida bonita es marketing gratis. Prepara una mezcla concentrada de agua o té con el polvo y viértela sobre la leche sin revolver para lograr ese efecto."),
-        ("Prueba diferentes toppings",
+        ("toppings", "Prueba diferentes toppings",
          "La magia del bubble tea está en encontrar el topping ideal para cada bebida: tapioca, perlas explosivas, jelly o fruta fresca."),
-        ("Experimenta y crea tu receta",
+        ("receta", "Experimenta y crea tu receta",
          "Nuestros insumos te dan una ventaja competitiva: son asiáticos, únicos en el país y de alta calidad. Pero la bebida que tus clientes van a recordar es la que solo tú sabes preparar. Explora con leche condensada, evaporada, crema de leche, gaseosas, vainilla o nuez hasta dar con la combinación que nadie más tiene. Ahí nace tu marca."),
     ],
 )

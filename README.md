@@ -40,6 +40,8 @@ Ver `DESPLIEGUE.md`. Es una sola variable, no hay que editar código.
 ├── data.py                    Todo el contenido: productos, precios, recetas, perfiles
 ├── build.py                   Genera las 31 páginas HTML desde data.py
 ├── verificar.py               Revisa enlaces, JSON-LD, precios y títulos antes de publicar
+├── ilustraciones_cata.py      Dibujos SVG de la página privada /cata-tu-muestra/
+├── generar_infografia_cata.py Regenera la infografía de la cata (solo si cambian los pasos)
 ├── site/                      Salida generada localmente (no se versiona)
 │   ├── index.html             ...y las demás páginas
 │   └── assets/                Copia de los recursos durante el build

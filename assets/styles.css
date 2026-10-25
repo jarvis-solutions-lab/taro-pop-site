@@ -408,3 +408,30 @@ footer.site{border-top:1px solid var(--line);background:var(--bg-2);padding:52px
 .cata-note h2{margin-top:.2rem}
 .cata-note p:last-child{margin-bottom:0}
 .cata-tips{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.cata-icon{width:44px;height:44px;color:var(--text);flex:none}
+.cata-need{display:flex;gap:16px;align-items:flex-start}
+.cata-need p{margin:0}
+.cata-tips > .benefit > .cata-icon{margin-bottom:10px}
+.cata-strip{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px;
+  background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:22px 16px 18px}
+.cata-strip li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;position:relative}
+.cata-strip li + li::before{content:"→";position:absolute;left:-12px;top:42%;color:var(--accent);font-weight:800}
+.cata-cup{width:100%;max-width:112px;height:auto;color:var(--text)}
+.cata-n{width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent-2);
+  font-weight:800;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+.cata-lbl{font-weight:700;font-size:.86rem;line-height:1.3}
+@media(max-width:640px){
+  .cata-strip{grid-template-columns:repeat(3,1fr);row-gap:20px}
+  .cata-strip li:nth-child(4)::before{display:none}
+}
+.cata-scale{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 12px;margin:6px 0 18px}
+.cata-scale ol{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:end}
+.cata-scale li{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.85rem;color:var(--muted);font-weight:600}
+.cata-scale li.on{color:var(--accent-2);font-weight:800}
+.cata-scale-cup{width:100%;max-width:64px;height:auto;color:var(--text)}
+.cata-scale-axis{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin:10px 0 0;
+  border-top:1px dashed var(--line);padding-top:8px}
+.cata-download{display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:center;margin-top:30px}
+.cata-download img{border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.cata-download .btn{margin-top:4px}
+@media(max-width:560px){.cata-download{grid-template-columns:1fr}.cata-download img{max-width:240px}}

@@ -3,6 +3,7 @@
 import html as html_mod
 import json, os, shutil, urllib.parse
 from data import WA, WA_DISPLAY, SITE, DOMAIN, GOOGLE_ADS_ID, GOOGLE_ADS_WA_LABEL, MAYOREO, QUALITY, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES, CATA
+from ilustraciones_cata import cup_svg, milk_scale_svg, ICONOS
 
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(RAIZ, "site")
@@ -1190,14 +1191,19 @@ write_page("index.html", html)
 root = "../"
 canonical = SITE + "/" + CATA["slug"] + "/"
 wa_cata = wa_link("Hola Insumos Pop 👋 Ya caté mi muestra. Mi punto fue con ___ ml de leche. Me gustaría: ")
-needs = "".join(f'<div class="benefit"><h3>{t}</h3><p class="muted">{d}</p></div>' for t, d in CATA["needs"])
+needs = "".join(f'<div class="benefit cata-need">{ICONOS[i]}<div><h3>{t}</h3><p class="muted">{d}</p></div></div>'
+                for i, t, d in CATA["needs"])
+cata_strip = "".join(f'<li><span class="cata-n">{n}</span>{cup_svg(n)}<span class="cata-lbl">{lbl}</span></li>'
+                     for n, lbl in enumerate(CATA["step_labels"], 1))
 cata_steps = "".join(f"<li>{s}</li>" for s in CATA["steps"])
-tips = "".join(f'<div class="benefit"><h3>{t}</h3><p class="muted">{d}</p></div>' for t, d in CATA["tips"])
-milk_chips = "".join(f'<span class="chip{" on" if ml == 100 else ""}">{ml} ml</span>' for ml in range(100, 200, 20))
+tips = "".join(f'<div class="benefit">{ICONOS[i]}<h3>{t}</h3><p class="muted">{d}</p></div>' for i, t, d in CATA["tips"])
+milk_scale = "".join(f'<li{" class=on" if ml == 100 else ""}>{milk_scale_svg(ml)}<span>{ml} ml</span></li>'
+                     for ml in range(100, 200, 20))
 html = head(
     "Cómo catar tu muestra | Insumos Pop",
     "Instrucciones para catar tu muestra de Insumos Pop: dosis, temperatura del agua, cuánta leche usar y cómo encontrar la receta de tu negocio.",
     canonical, root, robots="noindex,nofollow,noarchive",
+    og_img=SITE + "/assets/img/cata-muestra-og.png",
 )
 html += header_html(root, "")
 html += f"""
@@ -1211,7 +1217,8 @@ html += f"""
   <div class="benefits cata-tips" style="margin-top:14px">{needs}</div>
 
   <h2 style="margin-top:40px">Paso a paso</h2>
-  <ol class="steps" style="margin-top:16px">{cata_steps}</ol>
+  <ol class="cata-strip" aria-hidden="true">{cata_strip}</ol>
+  <ol class="steps" style="margin-top:22px">{cata_steps}</ol>
 
   <div class="panel cata-note">
     <p class="eyebrow">Importante</p>
@@ -1221,9 +1228,22 @@ html += f"""
 
   <h2 style="margin-top:40px">Encuentra tu punto</h2>
   <p>Desde ahí, ajusta a tu gusto: <strong>agrega leche de 20 en 20 ml</strong>, revuelve y vuelve a probar hasta encontrar tu punto.</p>
-  <div class="chips" aria-label="Ejemplo de ajuste de leche">{milk_chips}<span class="chip">…</span></div>
+  <div class="cata-scale">
+    <ol aria-label="Ejemplo de ajuste: 100, 120, 140, 160 y 180 ml de leche">{milk_scale}</ol>
+    <p class="cata-scale-axis"><span>← Más intenso y dulce</span><span>Más suave →</span></p>
+  </div>
   <p><strong>Anota cuánta leche le pusiste: ese número es tu receta ✅</strong></p>
   <p class="muted">Todo lo anterior es una guía para probar el insumo por primera vez. La receta final la creas tú, para darle ese toque especial propio de tu marca 😉</p>
+
+  <div class="panel cata-download">
+    <a href="{root}assets/img/cata-muestra-infografia.png" target="_blank" rel="noopener"><img src="{root}assets/img/cata-muestra-infografia.webp" alt="Infografía: cómo catar tu muestra Insumos Pop en 5 pasos" width="540" height="675" loading="lazy"></a>
+    <div>
+      <p class="eyebrow">Para tener a mano</p>
+      <h2>Guarda la infografía</h2>
+      <p class="muted">Los 5 pasos en una sola imagen. Descárgala y pégala en tu barra o compártela con tu equipo.</p>
+      <a class="btn btn-gold" href="{root}assets/img/cata-muestra-infografia.png" download="como-catar-tu-muestra-insumos-pop.png">Descargar infografía</a>
+    </div>
+  </div>
 </section>
 
 <section class="quality" style="margin:10px 0 0">
