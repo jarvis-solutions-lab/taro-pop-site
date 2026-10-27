@@ -21,6 +21,16 @@ DOMAIN = SITE.replace("https://", "").replace("http://", "")
 GOOGLE_ADS_ID = "AW-18526164304"
 GOOGLE_ADS_WA_LABEL = "sR0BCLjh9qIdENCq-4FF"
 
+# Muestras: se ofrecen como una «cata guiada» para negocios, no como un regalo.
+# El mensaje de WhatsApp pide negocio, ciudad y sabor: así llegan solicitudes de
+# negocios que de verdad están evaluando proveedor y la conversación sigue
+# después de la cata (ver la página privada /cata-tu-muestra/).
+MUESTRA = dict(
+    nombre="Muestra de cata",
+    nota="para negocios que están evaluando proveedor. Te la preparamos según tu carta e incluye guía de cata y un asesor que te acompaña hasta tu primera receta.",
+    wa="Hola Insumos Pop 👋 Quiero solicitar una muestra de cata para mi negocio.\nNegocio: \nCiudad: \nSabor que quiero probar: ",
+)
+
 # Etiqueta de descuento al por mayor: aparece en las tarjetas del catálogo y
 # en cada ficha. El porcentaje exacto se confirma al cotizar según el volumen.
 MAYOREO = dict(
@@ -41,7 +51,7 @@ QUALITY = dict(
         ("Sabor reconocible, igual en cada vaso",
          "El violeta cremoso del taro, las vetas de caramelo del brown sugar, el verde herbal del matcha. Al trabajar por gramos, tu bebida sabe igual el lunes y el sábado."),
         ("Pruébalo tú primero",
-         "Te enviamos una muestra para que la compares con tu insumo actual, con tu propia receta y tu propio paladar."),
+         "Solicita tu muestra de cata: la comparas con tu insumo actual, con tu propia receta y tu propio paladar, y un asesor te acompaña hasta dar con tu receta."),
     ],
     notes=["polvo-taro", "polvo-okinawa-brown-sugar", "polvo-cheese-foam",
            "matcha-shizuoka", "polvo-thai-milk-tea", "siropes-de-fruta"],
@@ -555,20 +565,20 @@ PROFILES = [
         metadesc="Polvos de taro, milk tea, brown sugar y toppings para tiendas de bubble tea. Precios con IVA, ficha técnica, muestras y envíos en Colombia.",
         eyebrow="Para tiendas de bubble tea",
         h1="Proveedor de polvos y siropes para bubble tea en Colombia",
-        lead="Taro cremoso, tiger brown sugar, thai tea y cheese foam importados de Taiwán, donde nació el bubble tea. Sabores que tus clientes reconocen al primer sorbo, con precio publicado y muestra para tu negocio.",
-        cta_label="Cotizar insumos y pedir muestra",
+        lead="Taro cremoso, tiger brown sugar, thai tea y cheese foam importados de Taiwán, donde nació el bubble tea. Sabores que tus clientes reconocen al primer sorbo, con precio publicado y cata guiada para tu negocio.",
+        cta_label="Cotizar y solicitar muestra de cata",
         hero_product="polvo-okinawa-brown-sugar",
-        wa_msg="Hola Insumos Pop 👋 Tengo una tienda de bubble tea y quiero probar sus polvos de Taiwán. ¿Me envían muestra y precio al por mayor? Ciudad: ",
+        wa_msg="Hola Insumos Pop 👋 Tengo una tienda de bubble tea y quiero evaluar sus polvos de Taiwán. ¿Me comparten precio al por mayor y cómo solicitar una muestra de cata?\nCiudad: \nSabor que quiero probar: ",
         trust=[("Precios publicados", "IVA incluido en cada ficha"),
                ("Costo calculable", "Precio por gramo en cada ficha"),
-               ("Muestra para negocios", "Prueba con tu propia receta")],
+               ("Muestra de cata", "Con guía y asesor para tu receta")],
         benefits=[
             ("Información para comparar",
              "Cada ficha muestra presentación, precio, origen, aplicaciones y SKU. Al cotizar compartimos documentación y dosificación."),
             ("Costo por bebida calculable",
              "Bolsas de 1 kg a $109.250: cada ficha muestra el costo por gramo para que calcules tu margen por vaso antes de comprar."),
             ("Pruébalo antes de comprar",
-             "Pide tu muestra y comprueba la calidad: compara color, aroma, sabor y disolución contra tu insumo actual con tu propia receta."),
+             "Solicita tu muestra de cata y compara color, aroma, sabor y disolución contra tu insumo actual, con tu propia receta y la guía de un asesor."),
         ],
         product_slugs=["polvo-taro", "polvo-okinawa-brown-sugar", "polvo-thai-milk-tea",
                        "polvo-hokkaido-milk-tea", "polvo-cheese-foam", "polvo-coral-azul"],
@@ -581,7 +591,7 @@ PROFILES = [
         recipe_slugs=["bubble-tea-de-taro", "brown-sugar-milk-tea"],
         faqs=[
             ("¿En qué se diferencia de los polvos que ya uso?",
-             "Son importados directamente de Taiwán, el país donde nació el bubble tea. Pide una muestra y compara color, aroma, sabor y disolución contra tu insumo actual con tu propia receta: la prueba la haces tú."),
+             "Son importados directamente de Taiwán, el país donde nació el bubble tea. Solicita una muestra de cata y compara color, aroma, sabor y disolución contra tu insumo actual con tu propia receta: la prueba la haces tú, con nuestra guía."),
             ("¿Cuánto rinde una bolsa de 1 kg?",
              "Depende de tu dosis por vaso. Cada ficha incluye el costo por gramo (a $109.250 el kilo, $109 por gramo) para que calcules el rendimiento exacto con tu receta, y al cotizar te compartimos la ficha técnica con dosificación."),
             ("¿Venden perlas de tapioca o vasos?",
@@ -589,7 +599,7 @@ PROFILES = [
         ],
         extra_html="",
         cta_title="¿Listo para que tu barra sepa a Taiwán?",
-        cta_text="Pide tu muestra, prueba la calidad con tu propia receta y compárala con tu insumo actual.",
+        cta_text="Solicita tu muestra de cata, pruébala con tu propia receta y compárala con tu insumo actual. Te acompañamos hasta tu primer pedido.",
     ),
     dict(
         slug="bubble-tea-para-cafeterias",
@@ -603,10 +613,10 @@ PROFILES = [
         lead="Matcha intenso estilo Shizuoka, milk tea Hokkaido y cheese foam sedoso: bebidas de autor que se recuerdan, y mezclas listas cuando la barra necesita velocidad.",
         cta_label="Cotizar para mi cafetería",
         hero_product="matcha-shizuoka",
-        wa_msg="Hola Insumos Pop 👋 Tengo una cafetería y quiero probar su matcha y cheese foam. ¿Me envían muestra y precio al por mayor? Ciudad: ",
+        wa_msg="Hola Insumos Pop 👋 Tengo una cafetería y quiero evaluar su matcha y cheese foam. ¿Me comparten precio al por mayor y cómo solicitar una muestra de cata?\nCiudad: \nBebidas que quiero preparar: ",
         trust=[("Dos niveles de producto", "Mezclas listas y especialidad"),
                ("Precios con IVA", "Desde $109.250 por mezcla de 1 kg"),
-               ("Prueba y documentación", "Muestra y ficha técnica al cotizar")],
+               ("Cata y documentación", "Muestra de cata y ficha técnica")],
         benefits=[
             ("Dos niveles para tu operación",
              "Mezclas listas ($109.250/kg) para servicio rápido y referencias de especialidad ($126.500/500 g) para bebidas de autor: tú eliges margen y posicionamiento."),
@@ -630,14 +640,14 @@ PROFILES = [
             ("¿Mi barista necesita capacitación o equipo especial?",
              "Necesita herramientas básicas de barra. Las mezclas se disuelven en leche; el matcha se bate con agua caliente y el Cheese Foam se prepara con batidora o shaker. Al cotizar compartimos la ficha técnica."),
             ("¿Cómo sé si les gustará a mis clientes?",
-             "Empieza con una muestra y dos o tres recetas en tu carta: tus clientes te lo dirán en la primera semana. Luego amplías la compra con los sabores que más roten."),
+             "Empieza con una muestra de cata y dos o tres recetas en tu carta: tus clientes te lo dirán en la primera semana. Luego amplías la compra con los sabores que más roten."),
         ],
         extra_html="""<div class="compare"><h3>¿Mezcla lista o referencia de especialidad?</h3>
 <p><strong>Mezcla lista:</strong> reduce pasos y facilita que el equipo repita la receta durante horas de alto volumen.</p>
 <p><strong>Especialidad:</strong> sabor más intenso y más control de dosis, leche y dulzor para bebidas de autor.</p>
 <p class="muted">La mejor opción depende de tu velocidad de servicio, precio de carta y nivel de personalización.</p></div>""",
         cta_title="Prueba qué formato funciona en tu barra",
-        cta_text="Cotiza matcha o cheese foam y solicita una muestra para evaluarla con tu equipo.",
+        cta_text="Cotiza matcha o cheese foam y solicita una muestra de cata para evaluarla con tu equipo, con guía paso a paso.",
     ),
     dict(
         slug="kit-emprendedor-bubble-tea",
@@ -654,14 +664,14 @@ PROFILES = [
         wa_msg="Hola Insumos Pop 👋 Estoy montando mi negocio de bebidas y quiero asesoría para mi menú inicial y el Kit Primer Menú. Ciudad: ",
         trust=[("Costos claros", "Costo por gramo antes de invertir"),
                ("Asesoría real", "Un asesor directo por WhatsApp"),
-               ("Prueba antes de comprar", "Muestra para negocios y factura")],
+               ("Prueba antes de invertir", "Muestra de cata y factura")],
         benefits=[
             ("Costos claros antes de invertir",
              "Cada ficha muestra el costo por gramo: sabes cuánto te cuesta cada bebida antes de comprar la primera bolsa."),
             ("Asesoría para tomar decisiones",
              "Te ayudamos a elegir sabores, revisar dosis y adaptar las recetas base al tamaño de vaso de tu negocio."),
             ("Prueba antes de una compra mayor",
-             "Puedes solicitar muestra, recibes factura de Taro Pop S.A.S. y puedes ajustar los productos del kit antes de cotizar."),
+             "Puedes solicitar una muestra de cata, recibes factura de Taro Pop S.A.S. y puedes ajustar los productos del kit antes de cotizar."),
         ],
         product_slugs=["polvo-taro", "polvo-hokkaido-milk-tea", "polvo-matcha-taiwan",
                        "siropes-de-fruta", "polvos-de-fruta"],
@@ -678,7 +688,7 @@ PROFILES = [
             ("No sé nada de bubble tea, ¿me van a dejar solo?",
              "No. Al cotizar recibes asesoría directa y ficha técnica de cada producto, y en el sitio tienes la guía para emprender y 5 recetas paso a paso con dosis sugeridas."),
             ("¿Qué hago para que mi negocio funcione?",
-             "Un buen sabor es la base, pero también cuentan tu ubicación, tu precio y la ejecución. Por eso te damos muestra para probar antes de invertir, recetas paso a paso y ayuda para calcular el costo por bebida desde el primer día."),
+             "Un buen sabor es la base, pero también cuentan tu ubicación, tu precio y la ejecución. Por eso te ofrecemos una cata guiada antes de invertir, recetas paso a paso y ayuda para calcular el costo por bebida desde el primer día."),
         ],
         extra_html="",
         cta_title="Empecemos tu menú hoy",
@@ -730,9 +740,9 @@ PROFILES = [
   <div><b>≈$67</b>por ml de concentrado</div>
 </div>
 <p class="muted">La derivación, para que la compruebes: botella de 1.9 L = 1.900 ml por $126.500 (IVA incluido) → $126.500 ÷ 1.900 ≈ $66,6 por ml. Un chorro de 20 ml × $66,6 ≈ $1.332, y 1.900 ÷ 20 = 95 copas. Con 15 ml: ≈$999 por copa y ~126 copas.</p>
-<p class="muted">Es el costo del sirope, no del cóctel completo (licor, hielo, garnish y vaso van aparte). La dosis exacta la defines tú; por eso te invitamos a pedir una muestra y probarla antes de comprar.</p></div>""",
+<p class="muted">Es el costo del sirope, no del cóctel completo (licor, hielo, garnish y vaso van aparte). La dosis exacta la defines tú; por eso te invitamos a solicitar una muestra de cata y probarla en tu barra antes de comprar.</p></div>""",
         cta_title="Haz la cuenta en tu barra",
-        cta_text="Pide tu muestra, define tu chorro estándar y calcula tu costo por copa con datos reales.",
+        cta_text="Solicita tu muestra de cata, define tu chorro estándar y calcula tu costo por copa con datos reales.",
     ),
 ]
 
@@ -760,7 +770,7 @@ CATA = dict(
         ("te", "Elige bien tu té",
          "Los bubble tea premium suelen llevar té verde o negro de calidad en pequeñas cantidades. El té que elijas puede ser tu diferenciador: le da a la bebida un sabor más complejo al paladar."),
         ("ojos", "Todo entra por los ojos",
-         "El secreto de un bubble tea exitoso está en los colores que se mezclan en el vaso; una bebida bonita es marketing gratis. Prepara una mezcla concentrada de agua o té con el polvo y viértela sobre la leche sin revolver para lograr ese efecto."),
+         "El secreto de un bubble tea exitoso está en los colores que se mezclan en el vaso; una bebida bonita se promociona sola. Prepara una mezcla concentrada de agua o té con el polvo y viértela sobre la leche sin revolver para lograr ese efecto."),
         ("toppings", "Prueba diferentes toppings",
          "La magia del bubble tea está en encontrar el topping ideal para cada bebida: tapioca, perlas explosivas, jelly o fruta fresca."),
         ("receta", "Experimenta y crea tu receta",

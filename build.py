@@ -2,7 +2,7 @@
 """Generador del sitio estático Insumos Pop."""
 import html as html_mod
 import json, os, shutil, urllib.parse
-from data import WA, WA_DISPLAY, SITE, DOMAIN, GOOGLE_ADS_ID, GOOGLE_ADS_WA_LABEL, MAYOREO, QUALITY, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES, CATA
+from data import WA, WA_DISPLAY, SITE, DOMAIN, GOOGLE_ADS_ID, GOOGLE_ADS_WA_LABEL, MAYOREO, QUALITY, POWDERS, FRUIT_POWDER, SYRUP, RECIPES, PROFILES, CATA, MUESTRA
 from ilustraciones_cata import cup_svg, milk_scale_svg, ICONOS
 
 RAIZ = os.path.dirname(os.path.abspath(__file__))
@@ -56,6 +56,7 @@ def fmt_cop(n):
 def wa_link(msg):
     return "https://wa.me/" + WA + "?text=" + urllib.parse.quote(msg)
 
+WA_MUESTRA = wa_link(MUESTRA["wa"])
 WA_GENERIC = wa_link("Hola Insumos Pop 👋 Quiero probar sus insumos. Mi negocio es: \nCiudad: ")
 
 WA_ICON = ('<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'
@@ -363,7 +364,6 @@ def quality_html(root, compact=False):
                       f'<img src="{root}assets/img/{p["img"]}-card.webp" alt="" loading="lazy" width="96" height="101">'
                       f'<span class="q-note-body"><strong>{p["short"]}</strong><span class="q-chips">{chips}</span></span></a>')
         notes = f'<h3 class="q-notes-title">Notas de sabor</h3><div class="q-notes">{notes}</div>'
-    wa = wa_link("Hola Insumos Pop 👋 Quiero una muestra para probar el sabor en mi negocio. Tipo de negocio: \nCiudad: ")
     return f"""<section class="quality">
   <div class="wrap">
     <p class="eyebrow">{QUALITY['eyebrow']}</p>
@@ -372,7 +372,7 @@ def quality_html(root, compact=False):
     <p class="lead" style="max-width:44em">{QUALITY['intro']}</p>
     <div class="q-pillars">{pillars}</div>
     {notes}
-    <p class="center" style="margin-top:26px"><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">{WA_ICON} Pide tu muestra por WhatsApp</a></p>
+    <p class="center" style="margin-top:26px"><a class="btn btn-wa" href="{WA_MUESTRA}" target="_blank" rel="noopener">{WA_ICON} Solicitar mi muestra de cata</a></p>
   </div>
 </section>"""
 
@@ -399,7 +399,7 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
     url_rel = product_url(slug)
     root = "../../"
     canonical = SITE + "/" + url_rel
-    wa_msg = wa_link(f"Hola Insumos Pop 👋 Me interesa {p['name']} ({p['format']}). ¿Me envían muestra y el precio al por mayor? Ciudad: \n(Ref. {p['sku']})")
+    wa_msg = wa_link(f"Hola Insumos Pop 👋 Me interesa {p['name']} ({p['format']}). ¿Me comparten el precio al por mayor y cómo solicitar una muestra de cata?\nNegocio: \nCiudad: \n(Ref. {p['sku']})")
     crumbs = [(category_href, category_label), (url_rel, p["short"])]
     flavors_row = ""
     if p.get("flavors"):
@@ -446,7 +446,7 @@ def build_ficha(p, category_href, category_label, extra_gallery="", flavor_selec
       <a class="btn btn-wa pdp-quick-cta" href="{wa_msg}" target="_blank" rel="noopener">{WA_ICON} Cotizar ahora</a>
       <div class="cond">IVA incluido · Confirma el costo y plazo del envío por WhatsApp</div>
       <div class="cond"><strong class="gold">{MAYOREO['etiqueta']}:</strong> {MAYOREO['detalle']}</div>
-      <div class="cond"><strong class="gold">Muestra para negocios:</strong> pídela por WhatsApp y prueba la calidad antes de tu primer pedido.</div>
+      <div class="cond"><strong class="gold">{MUESTRA['nombre']}:</strong> {MUESTRA['nota']}</div>
     </div>
     {flavor_select}
     <div class="cta-row">
@@ -577,7 +577,7 @@ def build_profile(pr):
         <a class="btn btn-wa" href="{wa_url}" target="_blank" rel="noopener">{WA_ICON} {pr['cta_label']}</a>
         <a class="btn btn-line" href="{root}{pr['catalog_href']}">{pr['catalog_label']}</a>
       </div>
-      <p class="sample-note"><strong>Pide tu muestra por WhatsApp</strong> y comprueba la calidad con tu receta antes de tu primer pedido.</p>
+      <p class="sample-note"><strong>{MUESTRA['nombre']}</strong> {MUESTRA['nota']}</p>
       <div class="trust">{trust}</div>
     </div>
     <img src="{root}assets/img/{hero_p['img']}.webp" alt="{hero_p['alt']}" width="1100" height="1155" fetchpriority="high">
@@ -842,7 +842,7 @@ html += f"""
 
   <div class="panel center" style="margin-top:30px">
     <h2>¿Montamos tu menú juntos?</h2>
-    <p class="muted">Cuéntanos qué tipo de negocio tienes y te recomendamos el kit inicial ideal. Pide también una muestra y prueba la calidad antes de decidir.</p>
+    <p class="muted">Cuéntanos qué tipo de negocio tienes y te recomendamos el kit inicial ideal. Solicita también una muestra de cata: te guiamos para que pruebes la calidad antes de decidir.</p>
     <a class="btn btn-wa" href="{wa_link('Hola Insumos Pop 👋 Quiero emprender con bubble tea. Mi negocio es: ')}" target="_blank" rel="noopener">{WA_ICON} Hablar con un asesor</a>
   </div>
 </section>
@@ -855,7 +855,7 @@ canonical = SITE + "/nosotros/"
 crumbs = [("nosotros/", "Nosotros")]
 html = head(
     "Proveedor de Insumos para Bebidas en Colombia | Insumos Pop",
-    "Conoce a Insumos Pop, proveedor de polvos y siropes para cafeterías, bares y tiendas de bubble tea. Precios con IVA, factura y muestras para negocios.",
+    "Conoce a Insumos Pop, proveedor de polvos y siropes para cafeterías, bares y tiendas de bubble tea. Precios con IVA, factura y cata guiada para negocios.",
     canonical, root, jsonld=[breadcrumb_ld(crumbs)],
 )
 html += header_html(root, "nosotros")
@@ -867,11 +867,11 @@ html += f"""
   <hr class="rule">
   <p>Insumos Pop distribuye polvos para milk tea, matcha, cheese foam, polvos de fruta y siropes concentrados para cafeterías, restaurantes, bares y tiendas de bubble tea.</p>
   <p>Publicamos presentación y precio con IVA de cada referencia. Al cotizar confirmamos disponibilidad, envío a tu ciudad y documentación del producto.</p>
-  <p>Emitimos factura como Taro Pop S.A.S. y ofrecemos muestras para que los negocios prueben el producto con su propia receta antes del primer pedido.</p>
+  <p>Emitimos factura como Taro Pop S.A.S. y ofrecemos muestras de cata para que los negocios prueben el producto con su propia receta, con la guía de un asesor, antes del primer pedido.</p>
   <div class="benefits" style="margin-top:26px">
     <div class="benefit"><h3>Información antes de comprar</h3><p class="muted">Formato, precio, origen y usos en cada ficha.</p></div>
     <div class="benefit"><h3>Compra formal</h3><p class="muted">Precios con IVA y factura.</p></div>
-    <div class="benefit"><h3>Prueba en tu operación</h3><p class="muted">Muestras disponibles para negocios.</p></div>
+    <div class="benefit"><h3>Prueba en tu operación</h3><p class="muted">Muestra de cata con guía paso a paso y un asesor que te acompaña.</p></div>
     <div class="benefit"><h3>Asesoría por WhatsApp</h3><p class="muted">Disponibilidad, dosificación y envío.</p></div>
   </div>
   <div class="cta-row" style="margin-top:30px">
@@ -929,7 +929,7 @@ faqs = [
     ("¿Hacen envíos a toda Colombia?",
      "Sí, coordinamos envíos a las principales ciudades del país. El valor y tiempo de entrega se confirman en tu cotización según tu ciudad y el tamaño del pedido."),
     ("¿Puedo pedir una muestra?",
-     "Sí. Pide tu muestra por WhatsApp y prueba la calidad y el sabor con tu propia receta antes de tu primer pedido."),
+     "Sí. Las muestras de cata son para negocios que están evaluando proveedor: escríbenos por WhatsApp con tu tipo de negocio, ciudad y el sabor que quieres probar. La preparamos según tu carta y te enviamos una guía de cata; después, un asesor te acompaña para ajustar tu receta antes de tu primer pedido."),
     ("¿Cómo hago un pedido?",
      "Agrega productos a tu cotización en la web y envíala por WhatsApp, o escríbenos directamente al " + WA_DISPLAY + ". Un asesor confirma disponibilidad, envío y pago."),
     ("¿De dónde vienen los productos?",
@@ -991,7 +991,7 @@ html += f"""
   <hr class="rule">
   <div id="quote-empty" class="panel">
     <p><strong>Aún no has agregado productos.</strong></p>
-    <p class="muted">La forma más rápida: escríbenos por WhatsApp y te recomendamos sabores, te enviamos muestra y te confirmamos tu precio al por mayor. También puedes recorrer el catálogo y usar “Agregar a cotización”.</p>
+    <p class="muted">La forma más rápida: escríbenos por WhatsApp y te recomendamos sabores, coordinamos tu muestra de cata y te confirmamos tu precio al por mayor. También puedes recorrer el catálogo y usar “Agregar a cotización”.</p>
     <div class="cta-row">
       <a class="btn btn-wa" href="{WA_GENERIC}" target="_blank" rel="noopener">{WA_ICON} Escribir por WhatsApp ahora</a>
       <a class="btn btn-gold" href="{root}polvos-bubble-tea/">Ver polvos</a>
@@ -1058,7 +1058,7 @@ home_faqs = [
     ("¿Atienden negocios en cualquier ciudad de Colombia?",
      "Sí. Coordinamos el envío a tu ciudad y te confirmamos valor y tiempos en la cotización."),
     ("¿Puedo probar antes de comprar?",
-     "Sí. Pide una muestra por WhatsApp y comprueba la calidad con tu propia receta."),
+     "Sí. Solicita una muestra de cata por WhatsApp: te la preparamos según tu negocio, con una guía para probarla con tu receta y un asesor que te acompaña."),
     ("¿Los precios incluyen IVA?",
      "Sí, todos los precios publicados incluyen IVA y emitimos factura (Taro Pop S.A.S.)."),
     ("¿Tienen precio al por mayor?",
@@ -1079,12 +1079,12 @@ html += f"""
     <div>
       <p class="eyebrow">Insumos para bubble tea, cafeterías y bares en Colombia</p>
       <h1>Sabor auténtico de Taiwán y Japón, listo para tu carta</h1>
-      <p class="lead">Taro cremoso, brown sugar con notas de caramelo, matcha intenso estilo Shizuoka y 12 siropes de fruta. Pide una muestra, pruébala con tu receta y decide con tu propio paladar.</p>
+      <p class="lead">Taro cremoso, brown sugar con notas de caramelo, matcha intenso estilo Shizuoka y 12 siropes de fruta. Solicita una muestra de cata, pruébala con tu receta y decide con tu propio paladar.</p>
       <div class="cta-row">
-        <a class="btn btn-wa" href="{wa_link('Hola Insumos Pop 👋 Quiero una muestra para mi negocio. Tipo de negocio: ' + chr(10) + 'Ciudad: ')}" target="_blank" rel="noopener">{WA_ICON} Quiero probar una muestra</a>
+        <a class="btn btn-wa" href="{WA_MUESTRA}" target="_blank" rel="noopener">{WA_ICON} Solicitar muestra de cata</a>
         <a class="btn btn-line" href="#catalogo">Ver sabores y precios</a>
       </div>
-      <p class="sample-note"><strong>Pide una muestra y comprueba la calidad:</strong> pruébala con tu receta antes de tu primer pedido.</p>
+      <p class="sample-note"><strong>{MUESTRA['nombre']}</strong> {MUESTRA['nota']}</p>
       <div class="trust">
         <div><b>Importado directo</b>Taiwán y Japón</div>
         <div><b>Precios claros</b>IVA incluido y factura</div>
@@ -1177,9 +1177,9 @@ html += f"""
 <section class="cta-final">
   <div class="wrap center">
     <h2>Pruébalo en tu barra antes de comprar</h2>
-    <p class="muted" style="max-width:38em;margin:0 auto 8px">Cuéntanos qué negocio tienes y tu ciudad. Te enviamos muestra, te recomendamos sabores y te confirmamos tu precio al por mayor y el envío antes de que pagues.</p>
+    <p class="muted" style="max-width:38em;margin:0 auto 8px">Cuéntanos qué negocio tienes, tu ciudad y qué sabor quieres probar. Preparamos tu muestra de cata, te guiamos para probarla y te confirmamos tu precio al por mayor y el envío antes de que pagues.</p>
     <hr class="rule">
-    <a class="btn btn-wa" href="{WA_GENERIC}" target="_blank" rel="noopener">{WA_ICON} Pedir muestra por WhatsApp</a>
+    <a class="btn btn-wa" href="{WA_MUESTRA}" target="_blank" rel="noopener">{WA_ICON} Solicitar mi muestra de cata</a>
   </div>
 </section>
 """
